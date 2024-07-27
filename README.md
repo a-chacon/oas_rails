@@ -133,7 +133,7 @@ Contributions are what make the open source community such an amazing place to l
 
 ### Roadmap and Ideas for Improvement
 
-- Clean and structure the code
+- Clean, document and structure the code
 - Support documentation of authentication methods
 - Define Global Tags/Configuration (e.g., common responses like 404 errors)
 - Post-process the JSON and replace common objects with references to components
