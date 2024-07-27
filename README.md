@@ -1,6 +1,11 @@
+![Gem Version](https://img.shields.io/gem/v/oas_rails)
+![GitHub License](https://img.shields.io/github/license/a-chacon/oas_rails)
+
 # Open API Specification For Rails
 
 OasRails is a Rails engine for generating **automatic interactive documentation for your Rails APIs**. It generates an **OAS 3.1** document and displays it using **[RapiDoc](https://rapidocweb.com)**.
+
+![Screenshot](https://github.com/a-chacon/oas_rails/blob/master/oas_rails_ui.png?raw=true)
 
 ## Related Projects
 
