@@ -69,7 +69,8 @@ Then complete the created file with your data.
 
 Almost every description in an OAS file supports simple markdown. The following tags are available for documenting your endpoints:
 
-### @summary
+<details>
+<summary style="font-weight: bold; font-size: 1.2em;">@summary</summary>
 
 **Structure**: `@summary text`
 
@@ -78,7 +79,10 @@ Used to add a summary to the endpoint. It replaces the default summary/title of 
 **Example**:
 `# @summary This endpoint creates a User`
 
-### @parameter
+</details>
+
+<details>
+<summary style="font-weight: bold; font-size: 1.2em;">@parameter</summary>
 
 **Structure**: `@parameter name(position) [type] text`
 
@@ -88,7 +92,10 @@ Represents a parameter for the endpoint. The position can be: `header`, `path`, 
 `# @parameter page(query) [Integer] The page number.`
 `# @parameter slug(path) [String!] Slug of the Project.`
 
-### @request_body
+</details>
+
+<details>
+<summary style="font-weight: bold; font-size: 1.2em;">@request_body</summary>
 
 **Structure**: `@request_body text [type] structure`
 
@@ -97,7 +104,10 @@ Documents the request body needed by the endpoint. The structure is optional if 
 **Example**:
 `# @request_body The user to be created [Hash] {user: {name: String, age: Integer, password: String}}`
 
-### @request_body_example
+</details>
+
+<details>
+<summary style="font-weight: bold; font-size: 1.2em;">@request_body_example</summary>
 
 **Structure**: `@request_body_example text [type] structure`
 
@@ -106,7 +116,10 @@ Adds examples to the provided request body.
 **Example**:
 `# @request_body_example A complete User. [Hash] {user: {name: 'Luis', age: 30, password: 'MyWeakPassword123'}}`
 
-### @response
+</details>
+
+<details>
+<summary style="font-weight: bold; font-size: 1.2em;">@response</summary>
 
 **Structure**: `@response text(code) [type] structure`
 
@@ -115,7 +128,10 @@ Documents the responses of the endpoint and overrides the default responses foun
 **Example**:
 `# @response User not found by the provided Id(404) [Hash] {success: Boolean, message: String}`
 
-### @tag
+</details>
+
+<details>
+<summary style="font-weight: bold; font-size: 1.2em;">@tag</summary>
 
 **Structure**: `@tag text`
 
@@ -123,6 +139,8 @@ Tags your endpoints. You can complete the tag documentation in the initializer f
 
 **Example**:
 `# @tag Users`
+
+</details>
 
 You can use these tags in your controller methods to enhance the automatically generated documentation. Remember to use markdown formatting in your descriptions for better readability in the generated OAS document.
 
