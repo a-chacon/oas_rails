@@ -1,5 +1,6 @@
 ![Gem Version](https://img.shields.io/gem/v/oas_rails)
 ![GitHub License](https://img.shields.io/github/license/a-chacon/oas_rails)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/a-chacon/oas_rails/.github%2Fworkflows%2Frubyonrails.yml)
 
 # Open API Specification For Rails
 
@@ -39,15 +40,15 @@ The goal is to minimize the effort required to create comprehensive documentatio
 
 2. Execute:
 
-```bash
-bundle
-```
+   ```bash
+   bundle
+   ```
 
 3. Mount the engine in your config/routes.rb file
 
-```ruby
-mount OasRails::Engine => '/docs'
-```
+   ```ruby
+   mount OasRails::Engine => '/docs'
+   ```
 
 You'll now have **basic documentation** based on your routes and automatically gathered information at `localhost:3000/docs`. To enhance it, create an initializer file and add [Yard](https://yardoc.org/) tags to your controller methods.
 
@@ -57,9 +58,9 @@ You'll now have **basic documentation** based on your routes and automatically g
 
 You can easy create the initializer file with:
 
-```
-rails generate oas_rails:config
-```
+    ```bash
+    rails generate oas_rails:config
+    ```
 
 Then complete the created file with your data.
 
