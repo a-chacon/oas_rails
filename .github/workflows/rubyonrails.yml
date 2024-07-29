@@ -50,6 +50,8 @@ jobs:
         with:
           bundler-cache: true
       # Add or replace any other lints here
+      - name: Install Security Scan Gems
+        run: gem install bundler-audit brakeman rubocop
       - name: Security audit dependencies
         run: bin/bundler-audit --update
       - name: Security audit application code
