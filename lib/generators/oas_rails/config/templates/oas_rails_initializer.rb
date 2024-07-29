@@ -44,6 +44,6 @@ OasRails.configure do |config|
   config.tags = [{ name: "Users", description: "Manage the `amazing` Users table." }]
 
   # config.default_tags_from = :namespace # Could be: :namespace or :controller
-  # config.request_body_automatically = true # Try to get request body for create and update methos based on the controller name.
+  # config.autodiscover_request_body = true # Try to get request body for create and update methods based on the controller name.
   # config.autodiscover_responses = true # Looks for renders in your source code and try to generate the responses.
 end

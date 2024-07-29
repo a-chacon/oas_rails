@@ -1,6 +1,6 @@
 module OasRails
   class Configuration
-    attr_accessor :info, :default_tags_from, :request_body_automatically, :autodiscover_responses
+    attr_accessor :info, :default_tags_from, :autodiscover_request_body, :autodiscover_responses
     attr_reader :servers, :tags
 
     def initialize(**kwargs)
@@ -9,7 +9,7 @@ module OasRails
       @tags = []
       @swagger_version = '3.1.0'
       @default_tags_from = "namespace"
-      @request_body_automatically = true
+      @autodiscover_request_body = true
       @autodiscover_responses = true
     end
 

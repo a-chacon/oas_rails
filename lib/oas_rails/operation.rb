@@ -89,7 +89,7 @@ module OasRails
 
       def extract_request_body(oas_route:)
         tag_request_body = oas_route.docstring.tags(:request_body).first
-        if tag_request_body.nil? && OasRails.config.request_body_automatically
+        if tag_request_body.nil? && OasRails.config.autodiscover_request_body
           oas_route.detect_request_body if %w[create update].include? oas_route.method
         elsif !tag_request_body.nil?
           RequestBody.from_tags(tag: tag_request_body, examples_tags: oas_route.docstring.tags(:request_body_example))
