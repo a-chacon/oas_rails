@@ -1,4 +1,3 @@
 OasRails::Engine.routes.draw do
-  root 'oas_rails#index'
-  get '/oas', to: 'oas_rails#oas'
+  get '(.:format)', to: 'oas_rails#index'
 end
