@@ -46,4 +46,5 @@ OasRails.configure do |config|
   # config.default_tags_from = :namespace # Could be: :namespace or :controller
   # config.autodiscover_request_body = true # Try to get request body for create and update methods based on the controller name.
   # config.autodiscover_responses = true # Looks for renders in your source code and try to generate the responses.
+  # config.api_path = "/" # set this config if your api is in a different namespace other than /
 end

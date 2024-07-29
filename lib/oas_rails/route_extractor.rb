@@ -79,6 +79,7 @@ module OasRails
         return false if route.defaults[:controller].nil?
         return false if RAILS_DEFAULT_CONTROLLERS.any? { |default| route.defaults[:controller].start_with?(default) }
         return false if RAILS_DEFAULT_PATHS.any? { |path| route.path.spec.to_s.include?(path) }
+        return false unless route.path.spec.to_s.start_with?(OasRails.config.api_path)
 
         true
       end

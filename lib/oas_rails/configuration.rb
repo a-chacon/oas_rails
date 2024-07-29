@@ -1,6 +1,6 @@
 module OasRails
   class Configuration
-    attr_accessor :info, :default_tags_from, :autodiscover_request_body, :autodiscover_responses
+    attr_accessor :info, :default_tags_from, :autodiscover_request_body, :autodiscover_responses, :api_path
     attr_reader :servers, :tags
 
     def initialize(**kwargs)
@@ -11,6 +11,7 @@ module OasRails
       @default_tags_from = "namespace"
       @autodiscover_request_body = true
       @autodiscover_responses = true
+      @api_path = "/"
     end
 
     def default_servers
