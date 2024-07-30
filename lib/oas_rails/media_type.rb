@@ -21,7 +21,7 @@ module OasRails
       end
 
       def search_for_examples_in_tests(klass:)
-        case OasRails.detect_test_framework
+        case Utils.detect_test_framework
         when :factory_bot
           {}
           # TODO: create examples with FactoryBot

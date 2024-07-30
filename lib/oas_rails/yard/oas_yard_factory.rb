@@ -55,7 +55,7 @@ module OasRails
 
             begin
               hash = eval(hash_string)
-              hash = OasRails.hash_to_json_schema(hash)
+              hash = Utils.hash_to_json_schema(hash)
             rescue StandardError
               hash = {}
             end
@@ -94,7 +94,7 @@ module OasRails
           text = match[1].strip
           name, location = parse_position_name(text)
           type, required = parse_type(match[2].strip)
-          schema = OasRails.type_to_schema(type)
+          schema = Utils.type_to_schema(type)
 
           ParameterTag.new(tag_name, name, match[3].strip, schema, location, required:)
         else
@@ -109,7 +109,7 @@ module OasRails
 
           begin
             hash = parse_str_to_hash(match[3].strip)
-            hash = OasRails.hash_to_json_schema(hash)
+            hash = Utils.hash_to_json_schema(hash)
           rescue StandardError
             hash = {}
           end

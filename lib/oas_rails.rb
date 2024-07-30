@@ -25,6 +25,8 @@ module OasRails
   autoload :Response, "oas_rails/response"
   autoload :Responses, "oas_rails/responses"
 
+  autoload :Utils, "oas_rails/utils"
+
   module Yard
     autoload :OasYardFactory, 'oas_rails/yard/oas_yard_factory'
   end
@@ -61,65 +63,6 @@ module OasRails
         config.exclude_foreign_keys = true
         config.excluded_columns = %i[id created_at updated_at deleted_at]
       end
-    end
-
-    def detect_test_framework
-      if defined?(FactoryBot)
-        :factory_bot
-      elsif ActiveRecord::Base.connection.table_exists?('ar_internal_metadata')
-        :fixtures
-      else
-        :unknown
-      end
-    end
-
-    TYPE_MAPPING = {
-      'String' => 'string',
-      'Integer' => 'number',
-      'Float' => 'number',
-      'TrueClass' => 'boolean',
-      'FalseClass' => 'boolean',
-      'Boolean' => 'boolean',
-      'NilClass' => 'null',
-      'Hash' => 'object',
-      'Object' => 'object',
-      'DateTime' => 'string'
-    }.freeze
-
-    def type_to_schema(type_string)
-      if type_string.start_with?('Array<')
-        inner_type = type_string[/Array<(.+)>$/, 1]
-        {
-          "type" => "array",
-          "items" => type_to_schema(inner_type)
-        }
-      else
-        { "type" => TYPE_MAPPING.fetch(type_string, 'string') }
-      end
-    end
-
-    def hash_to_json_schema(hash)
-      {
-        type: 'object',
-        properties: hash_to_properties(hash),
-        required: []
-      }
-    end
-
-    def hash_to_properties(hash)
-      hash.transform_values do |value|
-        if value.is_a?(Hash)
-          hash_to_json_schema(value)
-        elsif value.is_a?(Class)
-          { type: ruby_type_to_json_type(value.name) }
-        else
-          { type: ruby_type_to_json_type(value.class.name) }
-        end
-      end
-    end
-
-    def ruby_type_to_json_type(ruby_type)
-      TYPE_MAPPING.fetch(ruby_type, 'string')
     end
   end
 end

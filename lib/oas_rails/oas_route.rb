@@ -59,7 +59,7 @@ module OasRails
         schema = {}
         begin
           schema = if content.start_with?('{')
-                     OasRails.hash_to_json_schema(parse_hash_structure(content))
+                     Utils.hash_to_json_schema(parse_hash_structure(content))
                    else
                      # It's likely a variable or method call
                      maybe_a_model, errors = content.gsub('@', "").split(".")
