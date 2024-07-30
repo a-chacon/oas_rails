@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    oas_rails (0.1.1)
+    oas_rails (0.2.0)
       esquema (~> 0.1.2)
       method_source (~> 1.0)
       rails (~> 7.0, >= 7.0.0)
