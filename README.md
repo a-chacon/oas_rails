@@ -58,13 +58,96 @@ You'll now have **basic documentation** based on your routes and automatically g
 
 You can easy create the initializer file with:
 
-    ```bash
-    rails generate oas_rails:config
-    ```
+```bash
+rails generate oas_rails:config
+```
 
 Then complete the created file with your data.
 
 **Almost every description in a OAS file support simple markdown**
+
+## Configuration
+
+To configure OasRails, edit the `config/initializers/oas_rails.rb` file. Below are the available configuration options:
+
+### Basic Information about the API
+
+- `config.info.title`: The title of your API documentation.
+- `config.info.summary`: A brief summary of your API.
+- `config.info.description`: A detailed description of your API. This can include markdown formatting and will be displayed prominently in your documentation.
+- `config.info.contact.name`: The name of the contact person or organization.
+- `config.info.contact.email`: The contact email address.
+- `config.info.contact.url`: The URL for more information or support.
+
+### Servers Information
+
+- `config.servers`: An array of server objects, each containing `url` and `description` keys. For more details, refer to the [OpenAPI Specification](https://spec.openapis.org/oas/latest.html#server-object).
+
+### Tag Information
+
+- `config.tags`: An array of tag objects, each containing `name` and `description` keys. For more details, refer to the [OpenAPI Specification](https://spec.openapis.org/oas/latest.html#tag-object).
+
+### Optional Settings
+
+- `config.default_tags_from`: Determines the source of default tags for operations. Can be set to `:namespace` or `:controller`.
+- `config.autodiscover_request_body`: Automatically detects request bodies for create/update methods. Default is `true`.
+- `config.autodiscover_responses`: Automatically detects responses from controller renders. Default is `true`.
+- `config.api_path`: Sets the API path if your API is under a different namespace.
+
+### Authentication Settings
+
+- `config.authenticate_all_routes_by_default`: Determines whether to authenticate all routes by default. Default is `true`.
+- `config.security_schema`: The default security schema used for authentication. Choose a predefined security schema from `[:api_key_cookie, :api_key_header, :api_key_query, :basic, :bearer, :bearer_jwt, :mutual_tls]`.
+- `config.security_schemas`: Custom security schemas. Follow the [OpenAPI Specification](https://spec.openapis.org/oas/latest.html#security-scheme-object) for defining these schemas.
+
+## Securing the OasRails Engine
+
+To secure the OasRails engine, which exposes an endpoint for showing the OAS definition, you can configure authentication to ensure that only authorized users have access. Here are a few methods to achieve this:
+
+### 1. Using Basic Authentication
+
+Use basic authentication to protect the OasRails endpoint. You can set this up in an initializer:
+
+```ruby
+# config/initializers/oas_rails.rb
+OasRails::Engine.middleware.use(Rack::Auth::Basic) do |username, password|
+  ActiveSupport::SecurityUtils.secure_compare(Rails.application.credentials.oas_rails_username, username) &
+    ActiveSupport::SecurityUtils.secure_compare(Rails.application.credentials.oas_rails_password, password)
+end
+```
+
+### 2. Using Devise's `authenticate` Helper
+
+You can use Devise's `authenticate` helper to restrict access to the OasRails endpoint. For example, you can allow only admin users to access the endpoint:
+
+```ruby
+# config/routes.rb
+# ...
+authenticate :user, ->(user) { user.admin? } do
+  mount OasRails::Engine, at: '/docs'
+end
+```
+
+### 3. Custom Authentication
+
+To support custom authentication, you can extend the OasRails' ApplicationController using a hook. This allows you to add custom before actions to check for specific user permissions:
+
+```ruby
+# config/initializers/oas_rails.rb
+
+ActiveSupport.on_load(:oas_rails_application_controller) do
+  # context here is OasRails::ApplicationController
+
+  before_action do
+    raise ActionController::RoutingError.new('Not Found') unless current_user&.admin?
+  end
+
+  def current_user
+    # Load the current user
+    User.find(session[:user_id]) # Adjust according to your authentication logic
+  end
+end
+```
 
 ## Documenting Your Endpoints
 
@@ -143,6 +226,30 @@ Tags your endpoints. You can complete the tag documentation in the initializer f
 
 </details>
 
+<details>
+<summary style="font-weight: bold; font-size: 1.2em;">@no_auth</summary>
+
+**Structure**: `@no_auth`
+
+This tag will remove any security requirement from the endpoint. Useful when most of your endpoints require authentication and only a few do not.(Ex: Login, Registration...)
+
+**Example**:
+`# @no_auth`
+
+</details>
+
+<details>
+<summary style="font-weight: bold; font-size: 1.2em;">@auth</summary>
+
+**Structure**: `@auth [types]`
+
+This tag will set which security mechanisms can be used for the endpoint. The security mechanisms MUST be defined previously in the initializer file.
+
+**Example**:
+`# @auth [bearer, basic]`
+
+</details>
+
 You can use these tags in your controller methods to enhance the automatically generated documentation. Remember to use markdown formatting in your descriptions for better readability in the generated OAS document.
 
 ### Example of documented endpoints
@@ -161,6 +268,7 @@ class UsersController < ApplicationController
   end
 
   # @summary Get a user by id.
+  # @auth [bearer]
   #
   # This method show a User by ID. The id must exist of other way it will be returning a **`404`**.
   #
@@ -173,6 +281,7 @@ class UsersController < ApplicationController
   end
 
   # @summary Create a User
+  # @no_auth
   #
   # @request_body The user to be created. At least include an `email`. [User!]
   # @request_body_example basic user [Hash] {user: {name: "Luis", email: "luis@gmail.ocom"}}
@@ -235,12 +344,12 @@ Contributions are what make the open source community such an amazing place to l
 ### Roadmap and Ideas for Improvement
 
 - Clean, document and structure the code
-- Support documentation of authentication methods
+- [x] Support documentation of authentication methods
 - Define Global Tags/Configuration (e.g., common responses like 404 errors)
 - Post-process the JSON and replace common objects with references to components
 - Create a temporary file with the JSON in production mode to avoid rebuilding it on every request
 - Create tags for popular gems used in APIs (e.g., a `@pagy` tag for common pagination parameters)
-- Add basic authentication to OAS and UI for security reasons
+- [x] Add basic authentication to OAS and UI for security reasons (Solution documented, not need to be managed by the engine)
 - Implement ability to define OAS by namespaces (e.g., generate OAS for specific routes like `/api` or separate versions V1 and V2)
 
 ## License
