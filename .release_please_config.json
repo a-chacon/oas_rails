@@ -1,0 +1,10 @@
+{
+  "release-type": "ruby",
+  "packages": {
+    ".": {
+      "release-type": "ruby",
+      "package-name": "oas_rails",
+      "version-file": "lib/oas_rails/version.rb"
+    }
+  }
+}
