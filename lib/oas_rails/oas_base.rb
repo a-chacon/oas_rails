@@ -13,7 +13,8 @@ module OasRails
                             value
                           end
 
-        hash[camel_case_key] = processed_value unless (processed_value.is_a?(Hash) || processed_value.is_a?(Array)) && processed_value.empty?
+        # hash[camel_case_key] = processed_value unless (processed_value.is_a?(Hash) || processed_value.is_a?(Array)) && processed_value.empty?
+        hash[camel_case_key] = processed_value
       end
       hash
     end

@@ -1,6 +1,6 @@
 module OasRails
   class Operation < OasBase
-    attr_accessor :tags, :summary, :description, :operation_id, :parameters, :method, :docstring, :request_body, :responses
+    attr_accessor :tags, :summary, :description, :operation_id, :parameters, :method, :docstring, :request_body, :responses, :security
 
     def initialize(method:, summary:, operation_id:, **kwargs)
       super()
@@ -12,6 +12,7 @@ module OasRails
       @parameters = kwargs[:parameters] || []
       @request_body = kwargs[:request_body] || {}
       @responses = kwargs[:responses] || {}
+      @security = kwargs[:security] || []
     end
 
     class << self
@@ -23,7 +24,8 @@ module OasRails
         parameters = extract_parameters(oas_route:)
         request_body = extract_request_body(oas_route:)
         responses = extract_responses(oas_route:)
-        new(method: oas_route.verb.downcase, summary:, operation_id:, tags:, description:, parameters:, request_body:, responses:)
+        security = extract_security(oas_route:)
+        new(method: oas_route.verb.downcase, summary:, operation_id:, tags:, description:, parameters:, request_body:, responses:, security:)
       end
 
       def extract_summary(oas_route:)
@@ -110,6 +112,20 @@ module OasRails
         end
 
         responses
+      end
+
+      def extract_security(oas_route:)
+        return [] if oas_route.docstring.tags(:no_auth).any?
+
+        if (methods = oas_route.docstring.tags(:auth).first)
+          OasRails.config.security_schemas.keys.map { |key| { key => [] } }.select do |schema|
+            methods.types.include?(schema.keys.first.to_s)
+          end
+        elsif OasRails.config.authenticate_all_routes_by_default
+          OasRails.config.security_schemas.keys.map { |key| { key => [] } }
+        else
+          []
+        end
       end
 
       def external_docs; end

@@ -2,7 +2,23 @@
 
 # Manage Users Here
 class UsersController < ApplicationController
+  before_action :authorize!, except: [:create, :login]
   before_action :set_user, only: %i[show update destroy]
+
+  # @summary Login
+  # @request_body Valid Login Params [Hash!] { email: String, password: String}
+  # @no_auth
+  def login
+    @user = User.find_by_email(params[:email])
+    if @user&.authenticate(params[:password])
+      token = JsonWebToken.encode(user_id: @user.id)
+      time = Time.now + 24.hours.to_i
+      render json: { token:, exp: time.strftime("%m-%d-%Y %H:%M"),
+                     username: @user.name }, status: :ok
+    else
+      render json: { error: 'unauthorized' }, status: :unauthorized
+    end
+  end
 
   # Returns a list of Users.
   #
@@ -17,7 +33,7 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
-  # Get a user by id.
+  # @summary Get a user by id.
   #
   # This method show a User by ID. The id must exist of other way it will be returning a 404.
   # @parameter id(path) [Integer] Used for identify the user.
@@ -29,6 +45,7 @@ class UsersController < ApplicationController
   end
 
   # @summary Create a User Newwww
+  # @no_auth
   #
   # To act as connected accounts, clients can issue requests using the Stripe-Account special header. Make sure that this header contains a Stripe account ID, which usually starts with the acct_ prefix.
   # The value is set per-request as shown in the adjacent code sample. Methods on the returned object reuse the same account ID.ased on the strings
@@ -49,7 +66,6 @@ class UsersController < ApplicationController
   # A `user` can be updated with this method
   # - There is no option
   # - It must work
-  # @tags users, update
   # @request_body User to be created [Hash] {user: { name: String, email: String, age: Integer}}
   # @request_body_example Update user [Hash] {user: {name: "Luis", email: "luis@gmail.com"}}
   # @request_body_example Complete User [Hash] {user: {name: "Luis", email: "luis@gmail.com", age: 21}}
@@ -76,6 +92,10 @@ class UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:name, :email)
+    params.require(:user).permit(:name, :email, :password)
+  end
+
+  def login_params
+    params.permit(:email, :password)
   end
 end

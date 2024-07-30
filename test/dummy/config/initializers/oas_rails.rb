@@ -27,4 +27,8 @@ OasRails.configure do |config|
   config.servers = [{ url: 'http://localhost:3000', description: 'Local' },
                     { url: 'https://example.rb', description: 'Dev' }]
   config.tags = [{ name: "Users", description: "Manage the `amazing` Users table." }]
+
+  config.security_schema = :bearer
+  # config.security_schemas = {
+  # }
 end

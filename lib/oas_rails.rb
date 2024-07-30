@@ -2,30 +2,33 @@ require "yard"
 require "method_source"
 require "esquema"
 
-require_relative 'oas_rails/version'
-require_relative 'oas_rails/engine'
-require_relative 'oas_rails/oas_base'
-require_relative 'oas_rails/configuration'
-require_relative 'oas_rails/specification'
-require_relative 'oas_rails/route_extractor'
-require_relative 'oas_rails/oas_route'
-require_relative 'oas_rails/operation'
-
-require_relative 'oas_rails/info'
-require_relative 'oas_rails/contact'
-require_relative 'oas_rails/paths'
-require_relative 'oas_rails/path_item'
-require_relative 'oas_rails/parameter'
-require_relative 'oas_rails/tag'
-require_relative 'oas_rails/license'
-require_relative 'oas_rails/server'
-require_relative "oas_rails/request_body"
-require_relative "oas_rails/media_type"
-require_relative 'oas_rails/yard/oas_yard_factory'
-require_relative "oas_rails/response"
-require_relative "oas_rails/responses"
-
 module OasRails
+  require "oas_rails/version"
+  require "oas_rails/engine"
+
+  autoload :OasBase, "oas_rails/oas_base"
+  autoload :Configuration, "oas_rails/configuration"
+  autoload :Specification, "oas_rails/specification"
+  autoload :RouteExtractor, "oas_rails/route_extractor"
+  autoload :OasRoute, "oas_rails/oas_route"
+  autoload :Operation, "oas_rails/operation"
+  autoload :Info, "oas_rails/info"
+  autoload :Contact, "oas_rails/contact"
+  autoload :Paths, "oas_rails/paths"
+  autoload :PathItem, "oas_rails/path_item"
+  autoload :Parameter, "oas_rails/parameter"
+  autoload :Tag, "oas_rails/tag"
+  autoload :License, "oas_rails/license"
+  autoload :Server, "oas_rails/server"
+  autoload :RequestBody, "oas_rails/request_body"
+  autoload :MediaType, "oas_rails/media_type"
+  autoload :Response, "oas_rails/response"
+  autoload :Responses, "oas_rails/responses"
+
+  module Yard
+    autoload :OasYardFactory, 'oas_rails/yard/oas_yard_factory'
+  end
+
   class << self
     def configure
       yield config
@@ -43,7 +46,9 @@ module OasRails
         'Parameter' => [:parameter, :with_parameter],
         'Response' => [:response, :with_response],
         'Endpoint Tags' => [:tags],
-        'Summary' => [:summary]
+        'Summary' => [:summary],
+        'No Auth' => [:no_auth],
+        'Auth methods' => [:auth, :with_types]
       }
       yard_tags.each do |tag_name, (method_name, handler)|
         ::YARD::Tags::Library.define_tag(tag_name, method_name, handler)
