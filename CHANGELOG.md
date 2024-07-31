@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.2.0...oas_rails/v0.2.1) (2024-07-31)
+
+
+### Bug Fixes
+
+* **route_extractor:** Verify the correct implementation of a route. If ([e8ab706](https://github.com/a-chacon/oas_rails/commit/e8ab70668b32708f3c82ad69e7064da9adece5cf))
+
 ## [0.2.0](https://github.com/a-chacon/oas_rails/compare/oas_rails-v0.1.1...oas_rails/v0.2.0) (2024-07-30)
 
 
