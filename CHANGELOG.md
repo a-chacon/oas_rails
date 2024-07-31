@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.2.1...oas_rails/v0.2.2) (2024-07-31)
+
+
+### Bug Fixes
+
+* **media_types:** fixtures could be not present when looking for examples. It was raising an Errno::ENOENT. Now will be rescue and returned a default {}. ([03ff14d](https://github.com/a-chacon/oas_rails/commit/03ff14de0ad60751f01a94efcd7097d982821001))
+
 ## [0.2.1](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.2.0...oas_rails/v0.2.1) (2024-07-31)
 
 
