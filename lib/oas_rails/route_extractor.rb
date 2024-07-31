@@ -76,12 +76,35 @@ module OasRails
       end
 
       def valid_api_route?(route)
-        return false if route.defaults[:controller].nil?
+        return false unless valid_route_implementation?(route)
         return false if RAILS_DEFAULT_CONTROLLERS.any? { |default| route.defaults[:controller].start_with?(default) }
         return false if RAILS_DEFAULT_PATHS.any? { |path| route.path.spec.to_s.include?(path) }
         return false unless route.path.spec.to_s.start_with?(OasRails.config.api_path)
 
         true
+      end
+
+      # Checks if a route has a valid implementation.
+      #
+      # This method verifies that both the controller and the action specified
+      # in the route exist. It checks if the controller class is defined and
+      # if the action method is implemented within that controller.
+      #
+      # @param route [ActionDispatch::Journey::Route] The route to check.
+      # @return [Boolean] true if both the controller and action exist, false otherwise.
+      def valid_route_implementation?(route)
+        controller_name = route.defaults[:controller]&.camelize
+        action_name = route.defaults[:action]
+
+        return false if controller_name.blank? || action_name.blank?
+
+        controller_class = "#{controller_name}Controller".safe_constantize
+
+        if controller_class.nil?
+          false
+        else
+          controller_class.instance_methods.include?(action_name.to_sym)
+        end
       end
     end
   end
