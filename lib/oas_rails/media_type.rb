@@ -20,23 +20,42 @@ module OasRails
         new(media_type: "", schema:, examples:)
       end
 
-      def search_for_examples_in_tests(klass:)
-        case Utils.detect_test_framework
+      # Searches for examples in test files based on the provided class and test framework.
+      #
+      # This method handles different test frameworks to fetch examples for the given class.
+      # Currently, it supports FactoryBot and fixtures.
+      #
+      # @param klass [Class] the class to search examples for.
+      # @param utils [Module] a utility module that provides the `detect_test_framework` method. Defaults to `Utils`.
+      # @return [Hash] a hash containing examples data or an empty hash if no examples are found.
+      # @example Usage with FactoryBot
+      #   search_for_examples_in_tests(klass: User)
+      #
+      # @example Usage with fixtures
+      #   search_for_examples_in_tests(klass: Project)
+      #
+      # @example Usage with a custom utils module
+      #   custom_utils = Module.new do
+      #     def self.detect_test_framework
+      #       :factory_bot
+      #     end
+      #   end
+      #   search_for_examples_in_tests(klass: User, utils: custom_utils)
+      def search_for_examples_in_tests(klass:, utils: Utils)
+        case utils.detect_test_framework
         when :factory_bot
           {}
           # TODO: create examples with FactoryBot
         when :fixtures
-          # Handle fixtures scenario
           fixture_file = Rails.root.join('test', 'fixtures', "#{klass.to_s.pluralize.downcase}.yml")
-          fixture_data = YAML.load_file(fixture_file).with_indifferent_access
 
-          users_hash = {}
-
-          # Convert the fixture data to a hash
-          fixture_data.each do |name, attributes|
-            users_hash[name] = { value: { klass.to_s.downcase => attributes } }
+          begin
+            fixture_data = YAML.load_file(fixture_file).with_indifferent_access
+          rescue Errno::ENOENT
+            return {}
           end
-          users_hash
+
+          fixture_data.transform_values { |attributes| { value: { klass.to_s.downcase => attributes } } }
         else
           {}
         end
