@@ -32,7 +32,10 @@ module OasRails
   end
 
   class << self
+    # Configurations for make the OasRails engine Work.
     def configure
+      OasRails.configure_esquema!
+      OasRails.configure_yard!
       yield config
     end
 

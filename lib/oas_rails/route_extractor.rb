@@ -28,6 +28,14 @@ module OasRails
         @host_routes ||= extract_host_routes
       end
 
+      # Clear Class Instance Variable @host_routes
+      #
+      # This method clear the class instance variable @host_routes
+      # to force a extraction of the routes again.
+      def clear_cache
+        @host_routes = nil
+      end
+
       def host_paths
         @host_paths ||= host_routes.map(&:path).uniq.sort
       end
