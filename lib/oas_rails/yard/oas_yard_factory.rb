@@ -1,5 +1,5 @@
 module OasRails
-  module Yard
+  module YARD
     class RequestBodyTag < ::YARD::Tags::Tag
       attr_accessor :klass, :schema, :required
 
@@ -41,7 +41,7 @@ module OasRails
       end
     end
 
-    class OasYardFactory < ::YARD::Tags::DefaultFactory
+    class OasYARDFactory < ::YARD::Tags::DefaultFactory
       ## parse_tag is a prefix used by YARD
 
       def parse_tag_with_request_body(tag_name, text)

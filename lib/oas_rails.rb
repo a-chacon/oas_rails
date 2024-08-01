@@ -27,12 +27,15 @@ module OasRails
 
   autoload :Utils, "oas_rails/utils"
 
-  module Yard
-    autoload :OasYardFactory, 'oas_rails/yard/oas_yard_factory'
+  module YARD
+    autoload :OasYARDFactory, 'oas_rails/yard/oas_yard_factory'
   end
 
   class << self
+    # Configurations for make the OasRails engine Work.
     def configure
+      OasRails.configure_esquema!
+      OasRails.configure_yard!
       yield config
     end
 
@@ -41,7 +44,7 @@ module OasRails
     end
 
     def configure_yard!
-      ::YARD::Tags::Library.default_factory = Yard::OasYardFactory
+      ::YARD::Tags::Library.default_factory = YARD::OasYARDFactory
       yard_tags = {
         'Request body' => [:request_body, :with_request_body],
         'Request body Example' => [:request_body_example, :with_request_body_example],

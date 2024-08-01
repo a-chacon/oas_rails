@@ -25,7 +25,7 @@ module OasRails
     end
 
     def extract_docstring
-      YARD::Docstring.parser.parse(
+      ::YARD::Docstring.parser.parse(
         controller_class.constantize.instance_method(method).comment.lines.map { |line| line.sub(/^#\s*/, '') }.join
       ).to_docstring
     end

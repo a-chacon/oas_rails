@@ -2,10 +2,20 @@ require 'json'
 
 module OasRails
   class Specification
+    # Initializes a new Specification object.
+    # Clears the cache if running in the development environment.
     def initialize
-      OasRails.configure_esquema!
-      OasRails.configure_yard!
+      clear_cache unless Rails.env.production?
+
       @specification = base_spec
+    end
+
+    # Clears the cache for MethodSource and RouteExtractor.
+    #
+    # @return [void]
+    def clear_cache
+      MethodSource.clear_cache
+      RouteExtractor.clear_cache
     end
 
     def to_json(*_args)

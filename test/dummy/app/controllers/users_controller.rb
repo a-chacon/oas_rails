@@ -44,7 +44,7 @@ class UsersController < ApplicationController
     render json: @user
   end
 
-  # @summary Create a User Newwww
+  # @summary Create a User New
   # @no_auth
   #
   # To act as connected accounts, clients can issue requests using the Stripe-Account special header. Make sure that this header contains a Stripe account ID, which usually starts with the acct_ prefix.

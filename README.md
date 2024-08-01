@@ -30,6 +30,24 @@ After experiencing the interactive documentation in Python's fast-api framework,
 
 The goal is to minimize the effort required to create comprehensive documentation. By following REST principles in Rails, we believe this is achievable. You can enhance the documentation using [Yard](https://yardoc.org/) tags.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Configuration](#configuration)
+  - [Basic Information about the API](#basic-information-about-the-api)
+  - [Servers Information](#servers-information)
+  - [Tag Information](#tag-information)
+  - [Optional Settings](#optional-settings)
+  - [Authentication Settings](#authentication-settings)
+- [Usage](#usage)
+  - [Documenting Your Endpoints](#documenting-your-endpoints)
+  - [Example](#example-of-documented-endpoints)
+- [Securing the OasRails Engine](#securing-the-oasrails-engine)
+- [Customizing the View](#customizing-the-view)
+- [Contributing](#contributing)
+  - [Roadmap and Ideas for Improvement](#roadmap-and-ideas-for-improvement)
+- [License](#license)
+
 ## Installation
 
 1. Add this line to your Rails application's Gemfile:
@@ -52,23 +70,15 @@ The goal is to minimize the effort required to create comprehensive documentatio
 
 You'll now have **basic documentation** based on your routes and automatically gathered information at `localhost:3000/docs`. To enhance it, create an initializer file and add [Yard](https://yardoc.org/) tags to your controller methods.
 
-## Usage
+## Configuration
 
-### Initializer File
-
-You can easy create the initializer file with:
+To configure OasRails, you MUST create an initializer file including all your settings. The first step is to create your initializer file, which you can easily do with:
 
 ```bash
 rails generate oas_rails:config
 ```
 
-Then complete the created file with your data.
-
-**Almost every description in a OAS file support simple markdown**
-
-## Configuration
-
-To configure OasRails, edit the `config/initializers/oas_rails.rb` file. Below are the available configuration options:
+Then fill it with your data. Below are the available configuration options:
 
 ### Basic Information about the API
 
@@ -100,56 +110,11 @@ To configure OasRails, edit the `config/initializers/oas_rails.rb` file. Below a
 - `config.security_schema`: The default security schema used for authentication. Choose a predefined security schema from `[:api_key_cookie, :api_key_header, :api_key_query, :basic, :bearer, :bearer_jwt, :mutual_tls]`.
 - `config.security_schemas`: Custom security schemas. Follow the [OpenAPI Specification](https://spec.openapis.org/oas/latest.html#security-scheme-object) for defining these schemas.
 
-## Securing the OasRails Engine
+## Usage
 
-To secure the OasRails engine, which exposes an endpoint for showing the OAS definition, you can configure authentication to ensure that only authorized users have access. Here are a few methods to achieve this:
+In addition to the information provided in the initializer file and the data that can be extracted from the routes and methods automatically, it is essential to document your API in the following way. The documentation is created **with the help of YARD**, so the methods are documented with **comment tags**.
 
-### 1. Using Basic Authentication
-
-Use basic authentication to protect the OasRails endpoint. You can set this up in an initializer:
-
-```ruby
-# config/initializers/oas_rails.rb
-OasRails::Engine.middleware.use(Rack::Auth::Basic) do |username, password|
-  ActiveSupport::SecurityUtils.secure_compare(Rails.application.credentials.oas_rails_username, username) &
-    ActiveSupport::SecurityUtils.secure_compare(Rails.application.credentials.oas_rails_password, password)
-end
-```
-
-### 2. Using Devise's `authenticate` Helper
-
-You can use Devise's `authenticate` helper to restrict access to the OasRails endpoint. For example, you can allow only admin users to access the endpoint:
-
-```ruby
-# config/routes.rb
-# ...
-authenticate :user, ->(user) { user.admin? } do
-  mount OasRails::Engine, at: '/docs'
-end
-```
-
-### 3. Custom Authentication
-
-To support custom authentication, you can extend the OasRails' ApplicationController using a hook. This allows you to add custom before actions to check for specific user permissions:
-
-```ruby
-# config/initializers/oas_rails.rb
-
-ActiveSupport.on_load(:oas_rails_application_controller) do
-  # context here is OasRails::ApplicationController
-
-  before_action do
-    raise ActionController::RoutingError.new('Not Found') unless current_user&.admin?
-  end
-
-  def current_user
-    # Load the current user
-    User.find(session[:user_id]) # Adjust according to your authentication logic
-  end
-end
-```
-
-## Documenting Your Endpoints
+### Documenting Your Endpoints
 
 Almost every description in an OAS file supports simple markdown. The following tags are available for documenting your endpoints:
 
@@ -330,6 +295,71 @@ class UsersController < ApplicationController
   end
 end
 ```
+
+## Securing the OasRails Engine
+
+To secure the OasRails engine, which exposes an endpoint for showing the OAS definition, you can configure authentication to ensure that only authorized users have access. Here are a few methods to achieve this:
+
+### 1. Using Basic Authentication
+
+Use basic authentication to protect the OasRails endpoint. You can set this up in an initializer:
+
+```ruby
+# config/initializers/oas_rails.rb
+OasRails::Engine.middleware.use(Rack::Auth::Basic) do |username, password|
+  ActiveSupport::SecurityUtils.secure_compare(Rails.application.credentials.oas_rails_username, username) &
+    ActiveSupport::SecurityUtils.secure_compare(Rails.application.credentials.oas_rails_password, password)
+end
+```
+
+### 2. Using Devise's `authenticate` Helper
+
+You can use Devise's `authenticate` helper to restrict access to the OasRails endpoint. For example, you can allow only admin users to access the endpoint:
+
+```ruby
+# config/routes.rb
+# ...
+authenticate :user, ->(user) { user.admin? } do
+  mount OasRails::Engine, at: '/docs'
+end
+```
+
+### 3. Custom Authentication
+
+To support custom authentication, you can extend the OasRails' ApplicationController using a hook. This allows you to add custom before actions to check for specific user permissions:
+
+```ruby
+# config/initializers/oas_rails.rb
+
+ActiveSupport.on_load(:oas_rails_application_controller) do
+  # context here is OasRails::ApplicationController
+
+  before_action do
+    raise ActionController::RoutingError.new('Not Found') unless current_user&.admin?
+  end
+
+  def current_user
+    # Load the current user
+    User.find(session[:user_id]) # Adjust according to your authentication logic
+  end
+end
+```
+
+## Customizing the View
+
+The OasRails engine provides an easy way to display your OpenAPI Specification (OAS) within your Rails application. By default, it includes an `index` view in the `OasRailsController` that displays [RapiDoc](https://rapidocweb.com/) through a CDN with default configurations. You can easily override this view to replace RapiDoc entirely or configure it differently.
+
+#### Overriding the `index` View
+
+To override the `index` view provided by the OasRails engine, follow these steps:
+
+1. **Create the Override View File**: In your host application, create a new file at the path `app/views/oas_rails/oas_rails/index.html.erb`. If the directories do not exist, you will need to create them.
+
+2. **Customize the View**: Open the newly created `index.html.erb` file and add your custom HTML and ERB code to display the OAS as desired. You can refer to the source code of this project for guidance.
+
+#### Using the Custom View
+
+Once the custom view file is in place, Rails will automatically use it instead of the view provided by the OasRails engine. This allows you to fully customize the presentation of the OAS without modifying the engine's code.
 
 ## Contributing
 
