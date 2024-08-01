@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.3](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.2.2...oas_rails/v0.2.3) (2024-08-01)
+
+
+### Bug Fixes
+
+* **specification:** clear_cache is an instance method, not class method. ([7a30667](https://github.com/a-chacon/oas_rails/commit/7a30667b73ace8fd6692b31d670ccba15b274700))
+* **specification:** Make the reload works. ([be86263](https://github.com/a-chacon/oas_rails/commit/be8626391e24c0ff51fec1abd5dcdab14d1a3335))
+
 ## [0.2.2](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.2.1...oas_rails/v0.2.2) (2024-07-31)
 
 
