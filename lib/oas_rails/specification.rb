@@ -5,7 +5,7 @@ module OasRails
     # Initializes a new Specification object.
     # Clears the cache if running in the development environment.
     def initialize
-      clear_cache if Rails.env.development?
+      clear_cache unless Rails.env.production?
 
       @specification = base_spec
     end
@@ -13,7 +13,7 @@ module OasRails
     # Clears the cache for MethodSource and RouteExtractor.
     #
     # @return [void]
-    def self.clear_cache
+    def clear_cache
       MethodSource.clear_cache
       RouteExtractor.clear_cache
     end
