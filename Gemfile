@@ -12,9 +12,15 @@ gem 'sprockets-rails'
 
 gem 'rack-cors'
 
-gem "bcrypt", "~> 3.1.7"
+group :development, :test do
+  gem "bcrypt", "~> 3.1.7"
 
-gem 'jwt'
+  gem 'factory_bot_rails'
+
+  gem 'jwt'
+
+  gem 'faker'
+end
 
 # Start debugger with binding.b [https://github.com/ruby/debug]
 # gem "debug", ">= 1.0.0"

@@ -4,7 +4,7 @@ module OasRails
   class UtilsTest < ActiveSupport::TestCase
     test "detect_test_framework" do
       result = OasRails::Utils.detect_test_framework
-      assert_equal :fixtures, result
+      assert_equal :factory_bot, result
     end
 
     test "type_to_schema when String is passed" do
