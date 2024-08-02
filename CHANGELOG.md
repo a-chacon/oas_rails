@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.3.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.2.3...oas_rails/v0.3.0) (2024-08-02)
+
+
+### Features
+
+* **media_type:** generate examples with factory bot if it is available and a factory is defined for detected class. ([4c904a8](https://github.com/a-chacon/oas_rails/commit/4c904a878dc3ae168c256821db9e14446fe26c2c))
+
+
+### Bug Fixes
+
+* **media_type:** models and examples identify by default was equal. But in the practice there are some fields that are different ex: created_at is sended in a response but not in a create/update operation. ([56a7b4c](https://github.com/a-chacon/oas_rails/commit/56a7b4c08bb8f7ac6680de607ddf66fc0437219f))
+* **route_extractor:** rubocop offense route_extractor.rb:84:11: C: Style/MultilineBlockChain: Avoid multi-line chains of blocks. ([cd8af2e](https://github.com/a-chacon/oas_rails/commit/cd8af2ebf3c79769beb744639ee2f7a491f881f7))
+
+
+### Documentation
+
+* **readme:** cover from my website ([aa7f4aa](https://github.com/a-chacon/oas_rails/commit/aa7f4aa1f9f5de05ba05abc66734291aa06364e0))
+* **readme:** update example image ([59f43b3](https://github.com/a-chacon/oas_rails/commit/59f43b387448b3ce18b4a1bc507612e69ddd3a4a))
+
+
+### Code Refactoring
+
+* **route_extractor:** move the RouteExtrator class into de Extractors module. ([d06cf8a](https://github.com/a-chacon/oas_rails/commit/d06cf8a482732b58795079f827d3b6f91a5f4e4b))
+
 ## [0.2.3](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.2.2...oas_rails/v0.2.3) (2024-08-01)
 
 
