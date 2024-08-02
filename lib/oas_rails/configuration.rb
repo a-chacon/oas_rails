@@ -34,6 +34,14 @@ module OasRails
     def tags=(value)
       @tags = value.map { |t| Tag.new(name: t[:name], description: t[:description]) }
     end
+
+    def excluded_columns_incoming
+      %i[id created_at updated_at deleted_at]
+    end
+
+    def excluded_columns_outgoing
+      []
+    end
   end
 
   DEFAULT_SECURITY_SCHEMES = {

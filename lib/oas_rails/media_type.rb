@@ -10,19 +10,21 @@ module OasRails
       super()
       @schema = schema
       @example = kwargs[:example] || {}
-      @examples = kwargs[:examples] || []
+      @examples = kwargs[:examples] || {}
     end
 
     class << self
+      @context = :incoming
       # Creates a new MediaType object from a model class.
       #
       # @param klass [Class] the ActiveRecord model class.
       # @param examples [Hash] the examples hash.
       # @return [MediaType, nil] the created MediaType object or nil if the class is not an ActiveRecord model.
-      def from_model_class(klass:, examples: {})
+      def from_model_class(klass:, context: :incoming, examples: {})
+        @context = context
         return unless klass.ancestors.include? ActiveRecord::Base
 
-        model_schema = Esquema::Builder.new(klass).build_schema.as_json
+        model_schema = EsquemaBuilder.send("build_#{@context}_schema", klass:)
         model_schema["required"] = []
         schema = { type: "object", properties: { klass.to_s.downcase => model_schema } }
         examples.merge!(search_for_examples_in_tests(klass:))
@@ -34,12 +36,13 @@ module OasRails
       # @param klass [Class] the class to search examples for.
       # @param utils [Module] a utility module that provides the `detect_test_framework` method. Defaults to `Utils`.
       # @return [Hash] a hash containing examples data or an empty hash if no examples are found.
-      def search_for_examples_in_tests(klass:, utils: Utils)
+      def search_for_examples_in_tests(klass:, context: :incoming, utils: Utils)
+        @context = context
         case utils.detect_test_framework
         when :factory_bot
-          fetch_factory_bot_examples(klass)
+          fetch_factory_bot_examples(klass:)
         when :fixtures
-          fetch_fixture_examples(klass)
+          fetch_fixture_examples(klass:)
         else
           {}
         end
@@ -66,11 +69,11 @@ module OasRails
       #
       # @param klass [Class] the class to fetch examples for.
       # @return [Hash] a hash containing examples data or an empty hash if no examples are found.
-      def fetch_factory_bot_examples(klass)
+      def fetch_factory_bot_examples(klass:)
         klass_sym = klass.to_s.downcase.to_sym
         begin
-          FactoryBot.build_list(klass_sym, 3).each_with_index.to_h do |obj, index|
-            ["#{klass_sym}#{index + 1}", { value: { klass_sym => obj.as_json.compact! } }]
+          FactoryBot.build_stubbed_list(klass_sym, 3).each_with_index.to_h do |obj, index|
+            ["#{klass_sym}#{index + 1}", { value: { klass_sym => clean_example_object(obj: obj.as_json) } }]
           end
         rescue KeyError
           {}
@@ -81,14 +84,18 @@ module OasRails
       #
       # @param klass [Class] the class to fetch examples for.
       # @return [Hash] a hash containing examples data or an empty hash if no examples are found.
-      def fetch_fixture_examples(klass)
+      def fetch_fixture_examples(klass:)
         fixture_file = Rails.root.join('test', 'fixtures', "#{klass.to_s.pluralize.downcase}.yml")
         begin
           fixture_data = YAML.load_file(fixture_file).with_indifferent_access
         rescue Errno::ENOENT
           return {}
         end
-        fixture_data.transform_values { |attributes| { value: { klass.to_s.downcase => attributes } } }
+        fixture_data.transform_values { |attributes| { value: { klass.to_s.downcase => clean_example_object(obj: attributes) } } }
+      end
+
+      def clean_example_object(obj:)
+        obj.reject { |key, _| OasRails.config.send("excluded_columns_#{@context}").include?(key.to_sym) }
       end
     end
   end

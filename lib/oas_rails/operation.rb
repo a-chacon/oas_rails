@@ -104,7 +104,7 @@ module OasRails
         responses = Responses.from_tags(tags: oas_route.docstring.tags(:response))
 
         if OasRails.config.autodiscover_responses
-          new_responses = oas_route.extract_responses_from_source
+          new_responses = Extractors::RenderResponseExtractor.extract_responses_from_source(source: oas_route.source_string)
 
           new_responses.each do |new_response|
             responses.responses << new_response unless responses.responses.any? { |r| r.code == new_response.code }
