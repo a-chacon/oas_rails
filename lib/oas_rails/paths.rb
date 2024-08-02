@@ -8,7 +8,7 @@ module OasRails
 
     def self.from_string_paths(string_paths:)
       new(path_items: string_paths.map do |s|
-                        PathItem.from_oas_routes(path: s, oas_routes: RouteExtractor.host_routes_by_path(s))
+                        PathItem.from_oas_routes(path: s, oas_routes: Extractors::RouteExtractor.host_routes_by_path(s))
                       end)
     end
 

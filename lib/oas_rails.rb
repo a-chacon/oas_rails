@@ -9,7 +9,6 @@ module OasRails
   autoload :OasBase, "oas_rails/oas_base"
   autoload :Configuration, "oas_rails/configuration"
   autoload :Specification, "oas_rails/specification"
-  autoload :RouteExtractor, "oas_rails/route_extractor"
   autoload :OasRoute, "oas_rails/oas_route"
   autoload :Operation, "oas_rails/operation"
   autoload :Info, "oas_rails/info"
@@ -26,15 +25,20 @@ module OasRails
   autoload :Responses, "oas_rails/responses"
 
   autoload :Utils, "oas_rails/utils"
+  autoload :EsquemaBuilder, "oas_rails/esquema_builder"
 
   module YARD
     autoload :OasYARDFactory, 'oas_rails/yard/oas_yard_factory'
   end
 
+  module Extractors
+    autoload :RenderResponseExtractor, 'oas_rails/extractors/render_response_extractor'
+    autoload :RouteExtractor, "oas_rails/extractors/route_extractor"
+  end
+
   class << self
     # Configurations for make the OasRails engine Work.
     def configure
-      OasRails.configure_esquema!
       OasRails.configure_yard!
       yield config
     end
@@ -57,14 +61,6 @@ module OasRails
       }
       yard_tags.each do |tag_name, (method_name, handler)|
         ::YARD::Tags::Library.define_tag(tag_name, method_name, handler)
-      end
-    end
-
-    def configure_esquema!
-      Esquema.configure do |config|
-        config.exclude_associations = true
-        config.exclude_foreign_keys = true
-        config.excluded_columns = %i[id created_at updated_at deleted_at]
       end
     end
   end
