@@ -79,9 +79,13 @@ module OasRails
         private
 
         def extract_host_routes
+          valid_routes.map { |r| OasRoute.new_from_rails_route(rails_route: r) }
+        end
+
+        def valid_routes
           Rails.application.routes.routes.select do |route|
             valid_api_route?(route)
-          end.map { |r| OasRoute.new_from_rails_route(rails_route: r) }
+          end
         end
 
         def valid_api_route?(route)
