@@ -9,7 +9,6 @@ module OasRails
   autoload :OasBase, "oas_rails/oas_base"
   autoload :Configuration, "oas_rails/configuration"
   autoload :Specification, "oas_rails/specification"
-  autoload :RouteExtractor, "oas_rails/route_extractor"
   autoload :OasRoute, "oas_rails/oas_route"
   autoload :Operation, "oas_rails/operation"
   autoload :Info, "oas_rails/info"
@@ -34,6 +33,7 @@ module OasRails
 
   module Extractors
     autoload :RenderResponseExtractor, 'oas_rails/extractors/render_response_extractor'
+    autoload :RouteExtractor, "oas_rails/extractors/route_extractor"
   end
 
   class << self

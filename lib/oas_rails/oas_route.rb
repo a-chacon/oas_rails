@@ -19,7 +19,7 @@ module OasRails
       @controller_path = controller_path_extractor(@rails_route.defaults[:controller])
       @method = @rails_route.defaults[:action]
       @verb = @rails_route.verb
-      @path = RouteExtractor.clean_route(@rails_route.path.spec.to_s)
+      @path = Extractors::RouteExtractor.clean_route(@rails_route.path.spec.to_s)
       @docstring = extract_docstring
       @source_string = extract_source_string
     end

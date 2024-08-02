@@ -15,7 +15,7 @@ module OasRails
     # @return [void]
     def clear_cache
       MethodSource.clear_cache
-      RouteExtractor.clear_cache
+      Extractors::RouteExtractor.clear_cache
     end
 
     def to_json(*_args)
@@ -51,7 +51,7 @@ module OasRails
     # Create the Paths Object For the Root of the OAS.
     # @see https://spec.openapis.org/oas/latest.html#paths-object
     def paths
-      Paths.from_string_paths(string_paths: RouteExtractor.host_paths).to_spec
+      Paths.from_string_paths(string_paths: Extractors::RouteExtractor.host_paths).to_spec
     end
 
     # Created the Components Object For the Root of the OAS.
