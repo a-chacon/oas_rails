@@ -10,7 +10,7 @@ module OasRails
         def extract_responses_from_source(source:)
           render_calls = extract_render_calls(source)
 
-          return [Response.new(code: 204, description: "No Content", content: {})] if render_calls.empty?
+          return [Spec::Response.new(code: 204, description: "No Content", content: {})] if render_calls.empty?
 
           render_calls.map { |render_content, status| process_render_content(render_content.strip, status) }
         end
@@ -33,10 +33,10 @@ module OasRails
         def process_render_content(content, status)
           schema, examples = build_schema_and_examples(content)
           status_int = status_to_integer(status)
-          Response.new(
+          Spec::Response.new(
             code: status_int,
             description: status_code_to_text(status_int),
-            content: { "application/json": MediaType.new(schema:, examples:) }
+            content: { "application/json": Spec::MediaType.new(schema:, examples:) }
           )
         end
 

@@ -4,7 +4,7 @@ module OasRails
     attr_reader :servers, :tags, :security_schema
 
     def initialize
-      @info = Info.new
+      @info = Spec::Info.new
       @servers = default_servers
       @tags = []
       @swagger_version = '3.1.0'
@@ -24,15 +24,15 @@ module OasRails
     end
 
     def default_servers
-      [Server.new(url: "http://localhost:3000", description: "Rails Default Development Server")]
+      [Spec::Server.new(url: "http://localhost:3000", description: "Rails Default Development Server")]
     end
 
     def servers=(value)
-      @servers = value.map { |s| Server.new(url: s[:url], description: s[:description]) }
+      @servers = value.map { |s| Spec::Server.new(url: s[:url], description: s[:description]) }
     end
 
     def tags=(value)
-      @tags = value.map { |t| Tag.new(name: t[:name], description: t[:description]) }
+      @tags = value.map { |t| Spec::Tag.new(name: t[:name], description: t[:description]) }
     end
 
     def excluded_columns_incoming

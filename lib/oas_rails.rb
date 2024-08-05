@@ -6,26 +6,28 @@ module OasRails
   require "oas_rails/version"
   require "oas_rails/engine"
 
-  autoload :OasBase, "oas_rails/oas_base"
   autoload :Configuration, "oas_rails/configuration"
-  autoload :Specification, "oas_rails/specification"
   autoload :OasRoute, "oas_rails/oas_route"
-  autoload :Operation, "oas_rails/operation"
-  autoload :Info, "oas_rails/info"
-  autoload :Contact, "oas_rails/contact"
-  autoload :Paths, "oas_rails/paths"
-  autoload :PathItem, "oas_rails/path_item"
-  autoload :Parameter, "oas_rails/parameter"
-  autoload :Tag, "oas_rails/tag"
-  autoload :License, "oas_rails/license"
-  autoload :Server, "oas_rails/server"
-  autoload :RequestBody, "oas_rails/request_body"
-  autoload :MediaType, "oas_rails/media_type"
-  autoload :Response, "oas_rails/response"
-  autoload :Responses, "oas_rails/responses"
-
   autoload :Utils, "oas_rails/utils"
   autoload :EsquemaBuilder, "oas_rails/esquema_builder"
+
+  module Spec
+    autoload :Base, "oas_rails/spec/base"
+    autoload :Parameter, "oas_rails/spec/parameter"
+    autoload :License, "oas_rails/spec/license"
+    autoload :Response, "oas_rails/spec/response"
+    autoload :PathItem, "oas_rails/spec/path_item"
+    autoload :Operation, "oas_rails/spec/operation"
+    autoload :RequestBody, "oas_rails/spec/request_body"
+    autoload :Responses, "oas_rails/spec/responses"
+    autoload :MediaType, "oas_rails/spec/media_type"
+    autoload :Paths, "oas_rails/spec/paths"
+    autoload :Contact, "oas_rails/spec/contact"
+    autoload :Info, "oas_rails/spec/info"
+    autoload :Server, "oas_rails/spec/server"
+    autoload :Tag, "oas_rails/spec/tag"
+    autoload :Specification, "oas_rails/spec/specification"
+  end
 
   module YARD
     autoload :OasYARDFactory, 'oas_rails/yard/oas_yard_factory'
@@ -37,6 +39,10 @@ module OasRails
   end
 
   class << self
+    def build
+      Spec::Specification.new
+    end
+
     # Configurations for make the OasRails engine Work.
     def configure
       OasRails.configure_yard!
