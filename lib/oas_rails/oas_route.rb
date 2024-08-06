@@ -44,7 +44,7 @@ module OasRails
 
     def detect_request_body
       klass = @controller.singularize.camelize.constantize
-      RequestBody.from_model_class(klass:, required: true)
+      Spec::RequestBody.from_model_class(klass:, required: true)
     end
   end
 end

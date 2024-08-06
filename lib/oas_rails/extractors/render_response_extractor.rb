@@ -10,7 +10,7 @@ module OasRails
         def extract_responses_from_source(source:)
           render_calls = extract_render_calls(source)
 
-          return [Response.new(code: 204, description: "No Content", content: {})] if render_calls.empty?
+          return [Spec::Response.new(code: 204, description: "No Content", content: {})] if render_calls.empty?
 
           render_calls.map { |render_content, status| process_render_content(render_content.strip, status) }
         end
@@ -33,10 +33,10 @@ module OasRails
         def process_render_content(content, status)
           schema, examples = build_schema_and_examples(content)
           status_int = status_to_integer(status)
-          Response.new(
+          Spec::Response.new(
             code: status_int,
             description: status_code_to_text(status_int),
-            content: { "application/json": MediaType.new(schema:, examples:) }
+            content: { "application/json": Spec::MediaType.new(schema:, examples:) }
           )
         end
 
@@ -84,7 +84,7 @@ module OasRails
         # @return [Array<Hash, Hash>] An array where the first element is the schema and the second is the examples.
         def build_singular_model_schema_and_examples(_maybe_a_model, errors, klass, schema)
           if errors.nil?
-            [schema, MediaType.search_for_examples_in_tests(klass:, context: :outgoing)]
+            [schema, Spec::MediaType.search_for_examples_in_tests(klass:, context: :outgoing)]
           else
             [
               {
@@ -112,7 +112,7 @@ module OasRails
         # @param schema [Hash] The schema for the model.
         # @return [Array<Hash, Hash>] An array where the first element is the schema and the second is the examples.
         def build_array_model_schema_and_examples(maybe_a_model, klass, schema)
-          examples = { maybe_a_model => { value: MediaType.search_for_examples_in_tests(klass:, context: :outgoing).values.map { |p| p.dig(:value, maybe_a_model.singularize.to_sym) } } }
+          examples = { maybe_a_model => { value: Spec::MediaType.search_for_examples_in_tests(klass:, context: :outgoing).values.map { |p| p.dig(:value, maybe_a_model.singularize.to_sym) } } }
           [{ type: "array", items: schema }, examples]
         end
 
