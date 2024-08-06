@@ -1,10 +1,10 @@
 module OasRails
   module Spec
-    class Info < Spec::Base
+    class Info
+      include Specable
       attr_accessor :title, :summary, :description, :terms_of_service, :contact, :license, :version
 
       def initialize(**kwargs)
-        super()
         @title = kwargs[:title] || default_title
         @summary = kwargs[:summary] || default_summary
         @description = kwargs[:description] || default_description
@@ -12,6 +12,10 @@ module OasRails
         @contact = Spec::Contact.new
         @license = Spec::License.new
         @version = kwargs[:version] || '0.0.1'
+      end
+
+      def oas_fields
+        [:title, :summary, :description, :terms_of_service, :contact, :license, :version]
       end
 
       def default_title

@@ -11,8 +11,9 @@ module OasRails
   autoload :Utils, "oas_rails/utils"
   autoload :EsquemaBuilder, "oas_rails/esquema_builder"
 
+  # This module contains all the clases that represent a part of the OAS file.
   module Spec
-    autoload :Base, "oas_rails/spec/base"
+    autoload :Specable, "oas_rails/spec/specable"
     autoload :Parameter, "oas_rails/spec/parameter"
     autoload :License, "oas_rails/spec/license"
     autoload :Response, "oas_rails/spec/response"
@@ -40,7 +41,7 @@ module OasRails
 
   class << self
     def build
-      Spec::Specification.new
+      Spec::Specification.new.to_spec
     end
 
     # Configurations for make the OasRails engine Work.

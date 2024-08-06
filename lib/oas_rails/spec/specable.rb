@@ -1,15 +1,30 @@
 module OasRails
   module Spec
-    class Base
+    module Specable
+      def oas_fields
+        []
+      end
+
       def to_spec
         hash = {}
-        instance_variables.each do |var|
-          key = var.to_s.delete('@')
+        oas_fields.each do |var|
+          key = var.to_s
+
           camel_case_key = key.camelize(:lower).to_sym
-          value = instance_variable_get(var)
+          value = send(var)
 
           processed_value = if value.respond_to?(:to_spec)
                               value.to_spec
+                            elsif value.is_a?(Array) && value.all? { |elem| elem.respond_to?(:to_spec) }
+                              value.map(&:to_spec)
+                            # elsif value.is_a?(Hash)
+                            #   p "Here"
+                            #   p value
+                            #   hash = {}
+                            #   value.each do |key, object|
+                            #     hash[key] = object.to_spec
+                            #   end
+                            #   hash
                             else
                               value
                             end
@@ -18,6 +33,10 @@ module OasRails
           hash[camel_case_key] = processed_value
         end
         hash
+      end
+
+      def as_json
+        to_spec
       end
 
       private

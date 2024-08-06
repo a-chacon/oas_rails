@@ -3,12 +3,11 @@ require 'json'
 module OasRails
   module Spec
     class Specification
+      include Specable
       # Initializes a new Specification object.
       # Clears the cache if running in the development environment.
       def initialize
         clear_cache unless Rails.env.production?
-
-        @specification = base_spec
       end
 
       # Clears the cache for MethodSource and RouteExtractor.
@@ -19,26 +18,28 @@ module OasRails
         Extractors::RouteExtractor.clear_cache
       end
 
-      def to_json(*_args)
-        @specification.to_json
-      rescue StandardError => e
-        Rails.logger.error("Error Generating OAS: #{e.message}")
-        {}
+      def oas_fields
+        [:openapi, :info, :servers, :paths, :components, :security, :tags, :external_docs]
       end
 
-      # Create the Base of the OAS hash.
-      # @see https://spec.openapis.org/oas/latest.html#schema
-      def base_spec
-        {
-          openapi: '3.1.0',
-          info: OasRails.config.info.to_spec,
-          servers: OasRails.config.servers.map(&:to_spec),
-          paths:,
-          components:,
-          security:,
-          tags: OasRails.config.tags.map(&:to_spec),
-          externalDocs: {}
-        }
+      def openapi
+        '3.1.0'
+      end
+
+      def info
+        OasRails.config.info
+      end
+
+      def servers
+        OasRails.config.servers
+      end
+
+      def tags
+        OasRails.config.tags
+      end
+
+      def external_docs
+        {}
       end
 
       # Create the Security Requirement Object.
@@ -52,7 +53,7 @@ module OasRails
       # Create the Paths Object For the Root of the OAS.
       # @see https://spec.openapis.org/oas/latest.html#paths-object
       def paths
-        Spec::Paths.from_string_paths(string_paths: Extractors::RouteExtractor.host_paths).to_spec
+        Spec::Paths.from_string_paths(string_paths: Extractors::RouteExtractor.host_paths)
       end
 
       # Created the Components Object For the Root of the OAS.

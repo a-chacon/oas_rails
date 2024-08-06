@@ -1,6 +1,7 @@
 module OasRails
   module Spec
-    class MediaType < Spec::Base
+    class MediaType
+      include Specable
       attr_accessor :schema, :example, :examples, :encoding
 
       # Initializes a new MediaType object.
@@ -8,10 +9,13 @@ module OasRails
       # @param schema [Hash] the schema of the media type.
       # @param kwargs [Hash] additional keyword arguments.
       def initialize(schema:, **kwargs)
-        super()
         @schema = schema
         @example = kwargs[:example] || {}
         @examples = kwargs[:examples] || {}
+      end
+
+      def oas_fields
+        [:schema, :example, :examples, :encoding]
       end
 
       class << self

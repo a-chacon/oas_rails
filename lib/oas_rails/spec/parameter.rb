@@ -1,6 +1,7 @@
 module OasRails
   module Spec
     class Parameter
+      include Specable
       STYLE_DEFAULTS = { query: 'form', path: 'simple', header: 'simple', cookie: 'form' }.freeze
 
       attr_accessor :name, :in, :style, :description, :required, :schema
@@ -34,15 +35,8 @@ module OasRails
         @in == 'path'
       end
 
-      def to_spec
-        {
-          name: @name,
-          in: @in,
-          description: @description,
-          required: @required,
-          schema: @schema,
-          style: @style
-        }
+      def oas_fields
+        [:name, :in, :description, :required, :schema, :style]
       end
     end
   end

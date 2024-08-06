@@ -1,13 +1,17 @@
 module OasRails
   module Spec
-    class RequestBody < Spec::Base
+    class RequestBody
+      include Specable
       attr_accessor :description, :content, :required
 
       def initialize(description:, content:, required: false)
-        super()
         @description = description
         @content = content # Should be an array of media type object
         @required = required
+      end
+
+      def oas_fields
+        [:description, :content, :required]
       end
 
       class << self

@@ -1,6 +1,8 @@
 module OasRails
   module Spec
     class Tag
+      include Specable
+
       attr_accessor :name, :description
 
       def initialize(name:, description:)
@@ -8,11 +10,8 @@ module OasRails
         @description = description
       end
 
-      def to_spec
-        {
-          name: @name,
-          description: @description
-        }
+      def oas_fields
+        [:name, :description]
       end
     end
   end

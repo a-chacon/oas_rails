@@ -1,11 +1,12 @@
 module OasRails
   module Spec
-    class Operation < Spec::Base
-      attr_accessor :tags, :summary, :description, :operation_id, :parameters, :method, :docstring, :request_body, :responses, :security
+    class Operation
+      include Specable
+
+      attr_accessor :tags, :summary, :description, :operation_id, :parameters, :meth, :docstring, :request_body, :responses, :security
 
       def initialize(method:, summary:, operation_id:, **kwargs)
-        super()
-        @method = method
+        @meth = method
         @summary = summary
         @operation_id = operation_id
         @tags = kwargs[:tags] || []
@@ -14,6 +15,10 @@ module OasRails
         @request_body = kwargs[:request_body] || {}
         @responses = kwargs[:responses] || {}
         @security = kwargs[:security] || []
+      end
+
+      def oas_fields
+        [:tags, :summary, :description, :operation_id, :parameters, :request_body, :responses, :security]
       end
 
       class << self
@@ -108,7 +113,7 @@ module OasRails
             new_responses = Extractors::RenderResponseExtractor.extract_responses_from_source(source: oas_route.source_string)
 
             new_responses.each do |new_response|
-              responses.responses << new_response unless responses.responses.any? { |r| r.code == new_response.code }
+              responses.responses[new_response.code] = new_response if responses.responses[new_response.code].blank?
             end
           end
 
