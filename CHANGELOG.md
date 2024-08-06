@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.3.0...oas_rails/v0.3.1) (2024-08-06)
+
+
+### Code Refactoring
+
+* organize OAS models into Spec module. ([#13](https://github.com/a-chacon/oas_rails/issues/13)) ([71a1515](https://github.com/a-chacon/oas_rails/commit/71a15150fb093a6402cfed26f4605cba9facd479))
+
 ## [0.3.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.2.3...oas_rails/v0.3.0) (2024-08-02)
 
 
