@@ -35,7 +35,7 @@ module OasRails
         end
 
         def extract_summary(oas_route:)
-          oas_route.docstring.tags(:summary).first.try(:text) || generate_crud_name(oas_route.method, oas_route.controller.downcase) || (oas_route.verb + " " + oas_route.path)
+          oas_route.docstring.tags(:summary).first.try(:text) || generate_crud_name(oas_route.method, oas_route.controller.downcase) || "#{oas_route.verb} #{oas_route.path}"
         end
 
         def generate_crud_name(method, controller)
