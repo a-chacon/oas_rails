@@ -2,16 +2,18 @@ module OasRails
   module Spec
     class Response
       include Specable
+      include Hashable
+
       attr_accessor :code, :description, :content
 
-      def initialize(code:, description:, content:)
-        @code = code
-        @description = description
-        @content = content # Hash with {content: MediaType}
+      def initialize(specification)
+        @specification = specification
+        @description = ""
+        @content = {} # Hash with {content: MediaType}
       end
 
       def oas_fields
-        [:code, :description, :content]
+        [:description, :content]
       end
     end
   end

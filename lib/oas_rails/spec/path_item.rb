@@ -2,27 +2,31 @@ module OasRails
   module Spec
     class PathItem
       include Specable
-      attr_reader :path, :operations, :parameters
+      attr_reader :get, :post, :put, :patch, :delete
 
-      def initialize(operations:, parameters:)
-        @operations = operations
-        @parameters = parameters
+      def initialize(specification)
+        @specification = specification
+        @get = nil
+        @post = nil
+        @put = nil
+        @patch = nil
+        @delete = nil
       end
 
-      def self.from_oas_routes(oas_routes:)
-        operations = oas_routes.each_with_object({}) do |oas_route, object|
-          object[oas_route.verb.downcase] = Spec::Operation.from_oas_route(oas_route:)
+      def fill_from(path, route_extractor: Extractors::RouteExtractor)
+        route_extractor.host_routes_by_path(path).each do |oas_route|
+          add_operation(oas_route.verb.downcase, Spec::Operation.new(@specification).fill_from(oas_route))
         end
 
-        new(operations:, parameters: [])
+        self
       end
 
-      def to_spec
-        spec = {}
-        @operations.each do |key, value|
-          spec[key] = value.to_spec
-        end
-        spec
+      def add_operation(http_method, operation)
+        instance_variable_set("@#{http_method}", operation)
+      end
+
+      def oas_fields
+        [:get, :post, :put, :patch, :delete]
       end
     end
   end

@@ -31,6 +31,8 @@ class UsersController < ApplicationController
   # @parameter X-Page(header) [String] Header for identify
   def index
     @users = User.all
+
+    render json: @users
   end
 
   # @summary Get a user by id.
