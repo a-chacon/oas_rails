@@ -4,8 +4,13 @@ module OasRails
       include Specable
       attr_accessor :responses
 
-      def initialize(responses:)
-        @responses = responses
+      def initialize(specification)
+        @specification = specification
+        @responses = {}
+      end
+
+      def add_response(response)
+        @responses[response.code] = @specification.components.add_response(response)
       end
 
       def to_spec
@@ -14,20 +19,6 @@ module OasRails
           spec[key] = value.to_spec
         end
         spec
-      end
-
-      class << self
-        def from_tags(tags:)
-          responses = tags.each_with_object({}) do |t, object|
-            object[t.name.to_i] = Spec::Response.new(
-              code: t.name.to_i,
-              description: t.text,
-              content: { "application/json": Spec::MediaType.new(schema: t.schema) }
-            )
-          end
-
-          new(responses:)
-        end
       end
     end
   end

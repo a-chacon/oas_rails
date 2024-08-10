@@ -1,6 +1,15 @@
 module OasRails
   class Configuration
-    attr_accessor :info, :default_tags_from, :autodiscover_request_body, :autodiscover_responses, :api_path, :security_schemas, :authenticate_all_routes_by_default
+    attr_accessor :info,
+                  :default_tags_from,
+                  :autodiscover_request_body,
+                  :autodiscover_responses,
+                  :api_path,
+                  :security_schemas,
+                  :authenticate_all_routes_by_default,
+                  :set_default_responses,
+                  :possible_default_responses,
+                  :response_body_of_default
     attr_reader :servers, :tags, :security_schema
 
     def initialize
@@ -15,6 +24,9 @@ module OasRails
       @authenticate_all_routes_by_default = true
       @security_schema = nil
       @security_schemas = {}
+      @set_default_responses = true
+      @possible_default_responses = [:not_found, :unauthorized, :forbidden]
+      @response_body_of_default = { message: String }
     end
 
     def security_schema=(value)

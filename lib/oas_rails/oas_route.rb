@@ -41,10 +41,5 @@ module OasRails
     def controller_path_extractor(controller)
       Rails.root.join("app/controllers/#{controller}_controller.rb").to_s
     end
-
-    def detect_request_body
-      klass = @controller.singularize.camelize.constantize
-      Spec::RequestBody.from_model_class(klass:, required: true)
-    end
   end
 end

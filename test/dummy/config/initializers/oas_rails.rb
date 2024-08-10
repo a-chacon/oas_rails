@@ -31,4 +31,13 @@ OasRails.configure do |config|
   config.security_schema = :bearer
   # config.security_schemas = {
   # }
+  #
+
+  # Default Errors
+  # The default errors are setted only if the action allow it.
+  # Example, forbidden will be setted to the endpoint requires authentication.
+  # Example: not_found will be setter to the endpoint only if the operation is a show/update/destroy action.
+  config.set_default_responses = true
+  config.possible_default_responses = [:not_found, :unauthorized, :forbidden]
+  config.response_body_of_default = { message: String }
 end

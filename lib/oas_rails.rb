@@ -11,9 +11,22 @@ module OasRails
   autoload :Utils, "oas_rails/utils"
   autoload :EsquemaBuilder, "oas_rails/esquema_builder"
 
+  module Builders
+    autoload :OperationBuilder, "oas_rails/builders/operation_builder"
+    autoload :PathItemBuilder, "oas_rails/builders/path_item_builder"
+    autoload :ResponseBuilder, "oas_rails/builders/response_builder"
+    autoload :ResponsesBuilder, "oas_rails/builders/responses_builder"
+    autoload :ContentBuilder, "oas_rails/builders/content_builder"
+    autoload :ParametersBuilder, "oas_rails/builders/parameters_builder"
+    autoload :ParameterBuilder, "oas_rails/builders/parameter_builder"
+    autoload :RequestBodyBuilder, "oas_rails/builders/request_body_builder"
+  end
+
   # This module contains all the clases that represent a part of the OAS file.
   module Spec
+    autoload :Hashable, "oas_rails/spec/hashable"
     autoload :Specable, "oas_rails/spec/specable"
+    autoload :Components, "oas_rails/spec/components"
     autoload :Parameter, "oas_rails/spec/parameter"
     autoload :License, "oas_rails/spec/license"
     autoload :Response, "oas_rails/spec/response"
@@ -28,6 +41,7 @@ module OasRails
     autoload :Server, "oas_rails/spec/server"
     autoload :Tag, "oas_rails/spec/tag"
     autoload :Specification, "oas_rails/spec/specification"
+    autoload :Reference, "oas_rails/spec/reference"
   end
 
   module YARD
@@ -37,11 +51,15 @@ module OasRails
   module Extractors
     autoload :RenderResponseExtractor, 'oas_rails/extractors/render_response_extractor'
     autoload :RouteExtractor, "oas_rails/extractors/route_extractor"
+    autoload :OasRouteExtractor, "oas_rails/extractors/oas_route_extractor"
   end
 
   class << self
     def build
-      Spec::Specification.new.to_spec
+      oas = Spec::Specification.new
+      oas.build
+
+      oas.to_spec
     end
 
     # Configurations for make the OasRails engine Work.

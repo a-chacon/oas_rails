@@ -7,12 +7,11 @@ module OasRails
         #
         # @param source [String] The source string containing render calls.
         # @return [Array<Response>] An array of Response objects extracted from the source.
-        def extract_responses_from_source(source:)
+        def extract_responses_from_source(specification, source:)
           render_calls = extract_render_calls(source)
+          return [Builders::ResponseBuilder.new(specification).with_description("No content").with_code(204).build] if render_calls.empty?
 
-          return [Spec::Response.new(code: 204, description: "No Content", content: {})] if render_calls.empty?
-
-          render_calls.map { |render_content, status| process_render_content(render_content.strip, status) }
+          render_calls.map { |render_content, status| process_render_content(specification, render_content.strip, status) }
         end
 
         private
@@ -30,14 +29,12 @@ module OasRails
         # @param content [String] The content extracted from the render call.
         # @param status [String] The status code associated with the render call.
         # @return [Response] A Response object based on the processed content and status.
-        def process_render_content(content, status)
+        def process_render_content(specification, content, status)
           schema, examples = build_schema_and_examples(content)
-          status_int = status_to_integer(status)
-          Spec::Response.new(
-            code: status_int,
-            description: status_code_to_text(status_int),
-            content: { "application/json": Spec::MediaType.new(schema:, examples:) }
-          )
+          status_int = Utils.status_to_integer(status)
+          content = Builders::ContentBuilder.new(specification, :outgoing).with_schema(schema).with_examples(examples).build
+
+          Builders::ResponseBuilder.new(specification).with_code(status_int).with_description(Utils.status_code_to_text(status_int)).with_content(content).build
         end
 
         # Builds schema and examples based on the content type.
@@ -84,8 +81,9 @@ module OasRails
         # @return [Array<Hash, Hash>] An array where the first element is the schema and the second is the examples.
         def build_singular_model_schema_and_examples(_maybe_a_model, errors, klass, schema)
           if errors.nil?
-            [schema, Spec::MediaType.search_for_examples_in_tests(klass:, context: :outgoing)]
+            [schema, Spec::MediaType.search_for_examples_in_tests(klass, context: :outgoing)]
           else
+            # TODO: this is not building the real schema.
             [
               {
                 type: "object",
@@ -112,7 +110,7 @@ module OasRails
         # @param schema [Hash] The schema for the model.
         # @return [Array<Hash, Hash>] An array where the first element is the schema and the second is the examples.
         def build_array_model_schema_and_examples(maybe_a_model, klass, schema)
-          examples = { maybe_a_model => { value: Spec::MediaType.search_for_examples_in_tests(klass:, context: :outgoing).values.map { |p| p.dig(:value, maybe_a_model.singularize.to_sym) } } }
+          examples = { maybe_a_model => { value: Spec::MediaType.search_for_examples_in_tests(klass, context: :outgoing).values.map { |p| p.dig(:value, maybe_a_model.singularize.to_sym) } } }
           [{ type: "array", items: schema }, examples]
         end
 
@@ -143,29 +141,6 @@ module OasRails
           end
 
           structure
-        end
-
-        # Converts a status symbol or string to an integer.
-        #
-        # @param status [String, Symbol, nil] The status to convert.
-        # @return [Integer] The status code as an integer.
-        def status_to_integer(status)
-          return 200 if status.nil?
-
-          if status.to_s =~ /^\d+$/
-            status.to_i
-          else
-            status = "unprocessable_content" if status == "unprocessable_entity"
-            Rack::Utils::SYMBOL_TO_STATUS_CODE[status.to_sym]
-          end
-        end
-
-        # Converts a status code to its corresponding text description.
-        #
-        # @param status_code [Integer] The status code.
-        # @return [String] The text description of the status code.
-        def status_code_to_text(status_code)
-          Rack::Utils::HTTP_STATUS_CODES[status_code] || "Unknown Status Code"
         end
       end
     end

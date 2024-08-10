@@ -13,6 +13,14 @@ module OasRails
       'DateTime' => 'string'
     }.freeze
 
+    HTTP_STATUS_DEFINITIONS = {
+      404 => "The requested resource could not be found.",
+      401 => "You are not authorized to access this resource. You need to authenticate yourself first.",
+      403 => "You are not allowed to access this resource. You do not have the necessary permissions.",
+      500 => "An unexpected error occurred on the server. The server was unable to process the request.",
+      422 => "The server could not process the request due to semantic errors. Please check your input and try again."
+    }.freeze
+
     class << self
       # Method for detect test framework of the Rails App
       # It is used for generate examples in operations
@@ -60,6 +68,37 @@ module OasRails
 
       def ruby_type_to_json_type(ruby_type)
         TYPE_MAPPING.fetch(ruby_type, 'string')
+      end
+
+      # Converts a status symbol or string to an integer.
+      #
+      # @param status [String, Symbol, nil] The status to convert.
+      # @return [Integer] The status code as an integer.
+      def status_to_integer(status)
+        return 200 if status.nil?
+
+        if status.to_s =~ /^\d+$/
+          status.to_i
+        else
+          status = "unprocessable_content" if status == "unprocessable_entity"
+          Rack::Utils::SYMBOL_TO_STATUS_CODE[status.to_sym]
+        end
+      end
+
+      # Converts a status code to its corresponding text description.
+      #
+      # @param status_code [Integer] The status code.
+      # @return [String] The text description of the status code.
+      def status_code_to_text(status_code)
+        Rack::Utils::HTTP_STATUS_CODES[status_code] || "Unknown Status Code"
+      end
+
+      def get_definition(status_code)
+        HTTP_STATUS_DEFINITIONS[status_code] || "Definition not found for status code #{status_code}"
+      end
+
+      def class_to_symbol(klass)
+        klass.name.underscore.to_sym
       end
     end
   end
