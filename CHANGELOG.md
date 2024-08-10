@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.4.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.3.0...oas_rails/v0.4.0) (2024-08-10)
+
+
+### Features
+
+* add default responses configuration (errors). ([e4b3666](https://github.com/a-chacon/oas_rails/commit/e4b36665a2902bd73a447f762bb6aa007db925db))
+
+
+### Code Refactoring
+
+* move OAS creation logic to builders and replace common objects ([64d7922](https://github.com/a-chacon/oas_rails/commit/64d792256ef9c7a46e54e901ca3bb74cd2ed1f8a))
+* organize OAS models into Spec module. ([#13](https://github.com/a-chacon/oas_rails/issues/13)) ([71a1515](https://github.com/a-chacon/oas_rails/commit/71a15150fb093a6402cfed26f4605cba9facd479))
+
 ## [0.3.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.2.3...oas_rails/v0.3.0) (2024-08-02)
 
 
