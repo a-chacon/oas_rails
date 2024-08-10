@@ -16,7 +16,10 @@ module OasRails
         @operation.security = extract_security(oas_route:)
         @operation.parameters = ParametersBuilder.new(@specification).from_oas_route(oas_route).build
         @operation.request_body = RequestBodyBuilder.new(@specification).from_oas_route(oas_route).reference
-        @operation.responses = ResponsesBuilder.new(@specification).from_oas_route(oas_route).add_autodiscovered_responses(oas_route).build
+        @operation.responses = ResponsesBuilder.new(@specification)
+                                               .from_oas_route(oas_route)
+                                               .add_autodiscovered_responses(oas_route)
+                                               .add_default_responses(oas_route, !@operation.security.empty?).build
 
         self
       end

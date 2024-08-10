@@ -48,7 +48,7 @@ module OasRails
         # @param klass [Class] the class to fetch examples for.
         # @return [Hash] a hash containing examples data or an empty hash if no examples are found.
         def fetch_factory_bot_examples(klass:)
-          klass_sym = klass.to_s.downcase.to_sym
+          klass_sym = Utils.class_to_symbol(klass)
 
           begin
             @factory_examples[klass_sym] = FactoryBot.build_stubbed_list(klass_sym, 1) if @factory_examples[klass_sym].nil?

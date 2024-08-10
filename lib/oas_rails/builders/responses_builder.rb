@@ -26,6 +26,30 @@ module OasRails
         self
       end
 
+      def add_default_responses(oas_route, security)
+        return unless OasRails.config.set_default_responses
+
+        content = ContentBuilder.new(@specification, :outgoing).with_schema(Utils.hash_to_json_schema(OasRails.config.response_body_of_default)).build
+        common_errors = []
+        common_errors.push(:unauthorized, :forbidden) if security
+
+        case oas_route.method
+        when "show", "update", "destroy"
+          common_errors.push(:not_found)
+        when "create", "index"
+          # possible errors for this methods?
+        end
+
+        (OasRails.config.possible_default_responses & common_errors).each do |e|
+          code = Utils.status_to_integer(e)
+          response = ResponseBuilder.new(@specification).with_code(code).with_description(Utils.get_definition(code)).with_content(content).build
+
+          @responses.add_response(response) if @responses.responses[response.code].blank?
+        end
+
+        self
+      end
+
       def build
         @responses
       end

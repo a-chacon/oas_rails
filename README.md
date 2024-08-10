@@ -39,6 +39,7 @@ The goal is to minimize the effort required to create comprehensive documentatio
   - [Tag Information](#tag-information)
   - [Optional Settings](#optional-settings)
   - [Authentication Settings](#authentication-settings)
+  - [Default Responses (Errors)](#default-responses)
 - [Usage](#usage)
   - [Documenting Your Endpoints](#documenting-your-endpoints)
   - [Example](#example-of-documented-endpoints)
@@ -109,6 +110,14 @@ Then fill it with your data. Below are the available configuration options:
 - `config.authenticate_all_routes_by_default`: Determines whether to authenticate all routes by default. Default is `true`.
 - `config.security_schema`: The default security schema used for authentication. Choose a predefined security schema from `[:api_key_cookie, :api_key_header, :api_key_query, :basic, :bearer, :bearer_jwt, :mutual_tls]`.
 - `config.security_schemas`: Custom security schemas. Follow the [OpenAPI Specification](https://spec.openapis.org/oas/latest.html#security-scheme-object) for defining these schemas.
+
+### Default Errors
+
+- `config.set_default_responses`: Determines whether to add default errors responses to endpoint. Default is `true`.
+
+- `config.possible_default_responses`: Array with possible default errors.(Some will be added depending on the endpoint, example: not_found only works with show/update/delete). Default: [:not_found, :unauthorized, :forbidden]. It should be HTTP status code symbols from the list: `[:not_found, :unauthorized, :forbidden, :internal_server_error, :unprocessable_entity]`
+
+- `config.response_body_of_default`: body for use in default responses. It must be a Hash. Default: { message: String }
 
 ## Usage
 

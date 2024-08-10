@@ -8,7 +8,7 @@ module OasRails
       end
 
       def hash_representation
-        public_instance_variables.sort.map { |var| [var, instance_variable_get(var)] }.to_h
+        public_instance_variables.sort.to_h { |var| [var, instance_variable_get(var)] }
       end
 
       def self.generate_hash(obj)

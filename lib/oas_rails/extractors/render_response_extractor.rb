@@ -31,10 +31,10 @@ module OasRails
         # @return [Response] A Response object based on the processed content and status.
         def process_render_content(specification, content, status)
           schema, examples = build_schema_and_examples(content)
-          status_int = status_to_integer(status)
+          status_int = Utils.status_to_integer(status)
           content = Builders::ContentBuilder.new(specification, :outgoing).with_schema(schema).with_examples(examples).build
 
-          Builders::ResponseBuilder.new(specification).with_code(status_int).with_description(status_code_to_text(status_int)).with_content(content).build
+          Builders::ResponseBuilder.new(specification).with_code(status_int).with_description(Utils.status_code_to_text(status_int)).with_content(content).build
         end
 
         # Builds schema and examples based on the content type.
@@ -141,29 +141,6 @@ module OasRails
           end
 
           structure
-        end
-
-        # Converts a status symbol or string to an integer.
-        #
-        # @param status [String, Symbol, nil] The status to convert.
-        # @return [Integer] The status code as an integer.
-        def status_to_integer(status)
-          return 200 if status.nil?
-
-          if status.to_s =~ /^\d+$/
-            status.to_i
-          else
-            status = "unprocessable_content" if status == "unprocessable_entity"
-            Rack::Utils::SYMBOL_TO_STATUS_CODE[status.to_sym]
-          end
-        end
-
-        # Converts a status code to its corresponding text description.
-        #
-        # @param status_code [Integer] The status code.
-        # @return [String] The text description of the status code.
-        def status_code_to_text(status_code)
-          Rack::Utils::HTTP_STATUS_CODES[status_code] || "Unknown Status Code"
         end
       end
     end
