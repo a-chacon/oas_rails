@@ -52,7 +52,8 @@ module OasRails
       private
 
       def detect_request_body(oas_route)
-        klass = oas_route.controller.singularize.camelize.constantize
+        return unless (klass = Utils.find_model_from_route(oas_route.controller))
+
         from_model_class(klass:, required: true)
       end
     end
