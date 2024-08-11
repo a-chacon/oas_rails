@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.1](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.4.0...oas_rails/v0.4.1) (2024-08-11)
+
+
+### Bug Fixes
+
+* engine mounted path was not working on the index view. ([52e7936](https://github.com/a-chacon/oas_rails/commit/52e793645521ab7b8074092233f69a303d04e0bc))
+* try to detect model class from all the namespaces of the controller ([d029862](https://github.com/a-chacon/oas_rails/commit/d0298622a39e61e12db06129de33235e5bfcb923))
+
 ## [0.4.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.3.0...oas_rails/v0.4.0) (2024-08-10)
 
 
