@@ -2,3 +2,5 @@ inherit_from: .rubocop_todo.yml
 AllCops:
   TargetRubyVersion:
   NewCops: enable
+  Exclude:
+    - "gemfiles/*"
