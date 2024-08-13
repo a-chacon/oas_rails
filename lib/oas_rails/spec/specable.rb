@@ -35,7 +35,7 @@ module OasRails
         hash
       end
 
-      def as_json
+      def as_json(options = nil)
         to_spec
       end
 
