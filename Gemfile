@@ -13,6 +13,8 @@ gem 'sprockets-rails'
 gem 'rack-cors'
 
 group :development, :test do
+  gem "rubocop"
+
   gem "bcrypt", "~> 3.1.7"
 
   gem 'factory_bot_rails'
