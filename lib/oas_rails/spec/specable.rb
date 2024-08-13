@@ -35,9 +35,11 @@ module OasRails
         hash
       end
 
+      # rubocop:disable Lint/UnusedMethodArgument
       def as_json(options = nil)
         to_spec
       end
+      # rubocop:enable Lint/UnusedMethodArgument
 
       private
 
