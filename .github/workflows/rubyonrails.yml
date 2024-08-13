@@ -7,36 +7,27 @@
 name: "Ruby on Rails CI"
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 jobs:
   test:
+    strategy:
+      fail-fast: false
+      matrix:
+        gemfile: [rails-7.0, rails-7.1, rails-7.2]
     runs-on: ubuntu-latest
-    # services:
-    #   postgres:
-    #     image: postgres:11-alpine
-    #     ports:
-    #      - "5432:5432"
-    #    env:
-    #      POSTGRES_DB: rails_test
-    #      POSTGRES_USER: rails
-    #      POSTGRES_PASSWORD: password
     env:
       RAILS_ENV: test
-    # DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
+      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      # Add or replace dependency steps here
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:
+          ruby-version: "3.1"
           bundler-cache: true
-      # Add or replace database setup steps here
-      #- name: Set up database schema
-      #  run: bin/rails db:schema:load
-      # Add or replace test runners here
       - name: Run tests
         run: bin/rails t
 
