@@ -1,6 +1,9 @@
-![Gem Version](https://img.shields.io/gem/v/oas_rails)
-![GitHub License](https://img.shields.io/github/license/a-chacon/oas_rails)
+![Gem Version](https://img.shields.io/gem/v/oas_rails?color=E9573F)
+![GitHub License](https://img.shields.io/github/license/a-chacon/oas_rails?color=blue)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/a-chacon/oas_rails/.github%2Fworkflows%2Frubyonrails.yml)
+![Gem Total Downloads](https://img.shields.io/gem/dt/oas_rails)
+![Static Badge](https://img.shields.io/badge/Rails-%3E%3D7.0.0-%23E9573F)
+![Static Badge](https://img.shields.io/badge/Ruby-%3E%3D3.1.0-%23E9573F)
 
 # Open API Specification For Rails
 
