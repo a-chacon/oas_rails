@@ -100,6 +100,26 @@ module OasRails
       def class_to_symbol(klass)
         klass.name.underscore.to_sym
       end
+
+      def find_model_from_route(path)
+        parts = path.split('/')
+        model_name = parts.last.singularize.camelize
+
+        namespace_combinations = (0..parts.size).map do |i|
+          parts.first(i).map(&:camelize).join('::')
+        end
+
+        namespace_combinations.reverse.each do |namespace|
+          full_class_name = [namespace, model_name].reject(&:empty?).join('::')
+          begin
+            return full_class_name.constantize
+          rescue NameError
+            next
+          end
+        end
+
+        nil # Return nil if no matching constant is found
+      end
     end
   end
 end
