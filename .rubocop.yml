@@ -4,3 +4,4 @@ AllCops:
   NewCops: enable
   Exclude:
     - "gemfiles/*"
+    - "vendor/"
