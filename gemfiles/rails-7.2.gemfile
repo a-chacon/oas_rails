@@ -1,8 +1,13 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-# Specify your gem's dependencies in oas_rails.gemspec.
-gemspec
+gem 'rails', '~> 7.2.0'
+
+gem 'model-to-schema', '~> 0.1.0'
+
+gem 'method_source', '~> 1.0'
+
+gem 'yard', '~> 0.9'
 
 gem 'puma'
 
@@ -13,8 +18,6 @@ gem 'sprockets-rails'
 gem 'rack-cors'
 
 group :development, :test do
-  gem "rubocop"
-
   gem "bcrypt", "~> 3.1.7"
 
   gem 'factory_bot_rails'
@@ -23,6 +26,3 @@ group :development, :test do
 
   gem 'faker'
 end
-
-# Start debugger with binding.b [https://github.com/ruby/debug]
-gem "debug", ">= 1.0.0"
