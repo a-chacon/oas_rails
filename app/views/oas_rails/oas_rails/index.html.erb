@@ -10,7 +10,7 @@
   </head>
   <body>
     <rapi-doc 
-      spec-url = "<%= main_app.oas_rails_path %>.json" 
+      spec-url = "<%= OasRails::Engine.routes.find_script_name({}) %>.json" 
       theme = "dark" 
       bg-color="#0F172A"
       text-color= "#f7f7f7" 
