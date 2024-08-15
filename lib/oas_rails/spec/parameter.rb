@@ -18,8 +18,10 @@ module OasRails
         @schema = { type: 'string' }
       end
 
-      def default_from_in
-        STYLE_DEFAULTS[@in.to_sym]
+      def in=(value)
+        @in = value
+        @style = STYLE_DEFAULTS[@in.to_sym]
+        @required = true if value == "path"
       end
 
       def required?

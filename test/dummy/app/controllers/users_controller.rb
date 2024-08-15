@@ -38,7 +38,7 @@ class UsersController < ApplicationController
   # @summary Get a user by id.
   #
   # This method show a User by ID. The id must exist of other way it will be returning a 404.
-  # @parameter id(path) [Integer] Used for identify the user.
+  # @parameter id(path) [Integer!] Used for identify the user.
   # @response A nice user(200) [Hash] {user: {name: String, email: String, created_at: DateTime }}
   # @response User not found by the provided Id(404) [Hash] {success: Boolean, message: String}
   # @response You dont have the rigth persmissions for access to this reasource(403) [Hash] {success: Boolean, message: String}
