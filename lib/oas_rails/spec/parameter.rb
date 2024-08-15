@@ -6,7 +6,8 @@ module OasRails
 
       STYLE_DEFAULTS = { query: 'form', path: 'simple', header: 'simple', cookie: 'form' }.freeze
 
-      attr_accessor :name, :in, :style, :description, :required, :schema
+      attr_accessor :name, :style, :description, :required, :schema
+      attr_reader :in
 
       def initialize(specification)
         @specification = specification

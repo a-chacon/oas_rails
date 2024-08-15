@@ -18,8 +18,6 @@ module OasRails
                             elsif value.is_a?(Array) && value.all? { |elem| elem.respond_to?(:to_spec) }
                               value.map(&:to_spec)
                             # elsif value.is_a?(Hash)
-                            #   p "Here"
-                            #   p value
                             #   hash = {}
                             #   value.each do |key, object|
                             #     hash[key] = object.to_spec
@@ -29,8 +27,7 @@ module OasRails
                               value
                             end
 
-          hash[camel_case_key] = processed_value unless ((processed_value.is_a?(Hash) || processed_value.is_a?(Array)) && processed_value.empty?) || processed_value.nil?
-          # hash[camel_case_key] = processed_value unless processed_value.nil?
+          hash[camel_case_key] = processed_value unless valid_processed_value?(processed_value)
         end
         hash
       end
@@ -42,6 +39,10 @@ module OasRails
       # rubocop:enable Lint/UnusedMethodArgument
 
       private
+
+      def valid_processed_value?(processed_value)
+        ((processed_value.is_a?(Hash) || processed_value.is_a?(Array)) && processed_value.empty?) || processed_value.nil?
+      end
 
       def snake_to_camel(snake_str)
         words = snake_str.to_s.split('_')
