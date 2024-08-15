@@ -61,7 +61,7 @@ module OasRails
           klass = maybe_a_model.singularize.camelize(:upper).constantize
 
           if klass.ancestors.include?(ActiveRecord::Base)
-            schema = EsquemaBuilder.build_outgoing_schema(klass:)
+            schema = Builders::EsquemaBuilder.build_outgoing_schema(klass:)
             if test_singularity(maybe_a_model)
               build_singular_model_schema_and_examples(maybe_a_model, errors, klass, schema)
             else

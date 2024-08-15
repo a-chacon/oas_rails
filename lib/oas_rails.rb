@@ -9,7 +9,6 @@ module OasRails
   autoload :Configuration, "oas_rails/configuration"
   autoload :OasRoute, "oas_rails/oas_route"
   autoload :Utils, "oas_rails/utils"
-  autoload :EsquemaBuilder, "oas_rails/esquema_builder"
 
   module Builders
     autoload :OperationBuilder, "oas_rails/builders/operation_builder"
@@ -20,6 +19,7 @@ module OasRails
     autoload :ParametersBuilder, "oas_rails/builders/parameters_builder"
     autoload :ParameterBuilder, "oas_rails/builders/parameter_builder"
     autoload :RequestBodyBuilder, "oas_rails/builders/request_body_builder"
+    autoload :EsquemaBuilder, "oas_rails/builders/esquema_builder"
   end
 
   # This module contains all the clases that represent a part of the OAS file.

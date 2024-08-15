@@ -35,7 +35,7 @@ module OasRails
       def from_model_class(klass)
         return self unless klass.ancestors.include? ActiveRecord::Base
 
-        model_schema = EsquemaBuilder.send("build_#{@context}_schema", klass:)
+        model_schema = Builders::EsquemaBuilder.send("build_#{@context}_schema", klass:)
         model_schema["required"] = []
         schema = { type: "object", properties: { klass.to_s.downcase => model_schema } }
         examples = Spec::MediaType.search_for_examples_in_tests(klass, context: @context)
