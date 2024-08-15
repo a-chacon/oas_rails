@@ -80,7 +80,7 @@ module OasRails
         if status.to_s =~ /^\d+$/
           status.to_i
         else
-          status = "unprocessable_content" if status == "unprocessable_entity"
+          # status = "unprocessable_content" if status == "unprocessable_entity"
           Rack::Utils::SYMBOL_TO_STATUS_CODE[status.to_sym]
         end
       end

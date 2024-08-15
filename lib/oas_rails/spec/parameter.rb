@@ -6,7 +6,8 @@ module OasRails
 
       STYLE_DEFAULTS = { query: 'form', path: 'simple', header: 'simple', cookie: 'form' }.freeze
 
-      attr_accessor :name, :in, :style, :description, :required, :schema
+      attr_accessor :name, :style, :description, :required, :schema
+      attr_reader :in
 
       def initialize(specification)
         @specification = specification
@@ -18,8 +19,10 @@ module OasRails
         @schema = { type: 'string' }
       end
 
-      def default_from_in
-        STYLE_DEFAULTS[@in.to_sym]
+      def in=(value)
+        @in = value
+        @style = STYLE_DEFAULTS[@in.to_sym]
+        @required = true if value == "path"
       end
 
       def required?
