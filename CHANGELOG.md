@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.4.2](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.4.1...oas_rails/v0.4.2) (2024-08-15)
+
+
+### Bug Fixes
+
+* openapi document errors.  ([df4fb94](https://github.com/a-chacon/oas_rails/commit/df4fb94ede29dd37d2eaadbe63a49466af6244ee))
+
+
+### Documentation
+
+* **readme:** add badges for rails and ruby version ([9125108](https://github.com/a-chacon/oas_rails/commit/912510888a984b1d8f81c4ef0fe846d1b5f6f78c))
+
+
+### Code Refactoring
+
+* move json schema builder to builders module ([#21](https://github.com/a-chacon/oas_rails/issues/21)) ([8d32054](https://github.com/a-chacon/oas_rails/commit/8d320541cbe8e0fad9d3a1085ac5bf79f473b09f))
+
 ## [0.4.1](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.4.0...oas_rails/v0.4.1) (2024-08-11)
 
 
