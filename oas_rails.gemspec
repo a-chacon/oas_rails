@@ -24,6 +24,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'method_source', '~> 1.0'
   spec.add_dependency 'model-to-schema', '~> 0.1.1' # Esquema
-  spec.add_dependency 'rails', '~> 7.0.0'
+  spec.add_dependency 'rails', '~> 7.0'
   spec.add_dependency 'yard', '~> 0.9'
 end
