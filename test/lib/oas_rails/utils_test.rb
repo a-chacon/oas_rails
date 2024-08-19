@@ -33,7 +33,7 @@ module OasRails
 
     test "status to integer with unprocessable entity/content" do
       assert_equal 422, OasRails::Utils.status_to_integer(:unprocessable_entity)
-      assert_equal 422, OasRails::Utils.status_to_integer(:unprocessable_content)
+      assert_equal 422, OasRails::Utils.status_to_integer(:unprocessable_content) if Gem.loaded_specs['rack'].version > Gem::Version.create('3.1')
     end
   end
 end

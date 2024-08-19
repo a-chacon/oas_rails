@@ -34,7 +34,7 @@ module OasRails
           status_int = Utils.status_to_integer(status)
           content = Builders::ContentBuilder.new(specification, :outgoing).with_schema(schema).with_examples(examples).build
 
-          Builders::ResponseBuilder.new(specification).with_code(status_int).with_description(Utils.status_code_to_text(status_int)).with_content(content).build
+          Builders::ResponseBuilder.new(specification).with_code(status_int).with_description(Utils.get_definition(status_int)).with_content(content).build
         end
 
         # Builds schema and examples based on the content type.
