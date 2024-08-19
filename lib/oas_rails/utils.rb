@@ -80,8 +80,7 @@ module OasRails
         if status.to_s =~ /^\d+$/
           status.to_i
         else
-          # status = "unprocessable_content" if status == "unprocessable_entity"
-          Rack::Utils::SYMBOL_TO_STATUS_CODE[status.to_sym]
+          Rack::Utils.status_code(status.to_sym)
         end
       end
 
@@ -89,10 +88,6 @@ module OasRails
       #
       # @param status_code [Integer] The status code.
       # @return [String] The text description of the status code.
-      def status_code_to_text(status_code)
-        Rack::Utils::HTTP_STATUS_CODES[status_code] || "Unknown Status Code"
-      end
-
       def get_definition(status_code)
         HTTP_STATUS_DEFINITIONS[status_code] || "Definition not found for status code #{status_code}"
       end

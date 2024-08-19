@@ -7,6 +7,7 @@ class UsersController < ApplicationController
 
   # @summary Login
   # @request_body Valid Login Params [Hash!] { email: String, password: String}
+  # @request_body_example Test User [Hash] {email: 'oas@test.com', password: 'Test12345'}
   # @no_auth
   def login
     @user = User.find_by_email(params[:email])
@@ -53,7 +54,7 @@ class UsersController < ApplicationController
   # The value is set per-request as shown in the adjacent code sample. Methods on the returned object reuse the same account ID.ased on the strings
   #
   # @request_body The user to be created. At least include an `email`. [User!]
-  # @request_body_example basic user [Hash] {user: {name: "Luis", email: "luis@gmail.ocom"}}
+  # @request_body_example basic user [Hash] {user: {name: "Oas", email: "oas@test.com", password: "Test12345"}}
   def create
     @user = User.new(user_params)
 
