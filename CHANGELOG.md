@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.3](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.4.2...oas_rails/v0.4.3) (2024-08-19)
+
+
+### Bug Fixes
+
+* rails version was ~&gt;7.0.0 which was not allowing to use 7.2 ([8e9e6e2](https://github.com/a-chacon/oas_rails/commit/8e9e6e2c8f140422e2d55ea581ecb5ed80c70791))
+
 ## [0.4.2](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.4.1...oas_rails/v0.4.2) (2024-08-15)
 
 
