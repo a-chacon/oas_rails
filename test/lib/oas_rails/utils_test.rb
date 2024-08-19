@@ -30,5 +30,10 @@ module OasRails
       assert result.key? :properties
       assert result.key? :type
     end
+
+    test "status to integer with unprocessable entity/content" do
+      assert_equal 422, OasRails::Utils.status_to_integer(:unprocessable_entity)
+      assert_equal 422, OasRails::Utils.status_to_integer(:unprocessable_content)
+    end
   end
 end
