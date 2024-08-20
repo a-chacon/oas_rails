@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   resources :users, shallow: true do
     resources :projects
   end
+  match 'users', to: 'users#index', via: [:get, :post]
   mount OasRails::Engine => '/docs'
 end
