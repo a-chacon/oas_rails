@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.4.4](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.4.3...oas_rails/v0.4.4) (2024-08-20)
+
+
+### Bug Fixes
+
+* make the test works with rake under 3.1 ([7220e26](https://github.com/a-chacon/oas_rails/commit/7220e26ad8579a7f08bd188c88c61fad230c1e20))
+* manage when same route has two or more verbs ([cb99f31](https://github.com/a-chacon/oas_rails/commit/cb99f318cffd308fb4d78d1fc3286c63667a954a))
+* use Rack::Utils.status_code instead of Rack::Utils::SYMBOL_TO_STATUS_CODE ([0c9dccb](https://github.com/a-chacon/oas_rails/commit/0c9dccba9da269580d69c6e5e9601bfbb4ee70f2))
+
 ## [0.4.3](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.4.2...oas_rails/v0.4.3) (2024-08-19)
 
 
