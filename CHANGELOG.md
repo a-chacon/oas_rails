@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.5](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.4.4...oas_rails/v0.4.5) (2024-08-21)
+
+
+### Bug Fixes
+
+* return self when default responses and autodiscover is disabled. ([0d26fcc](https://github.com/a-chacon/oas_rails/commit/0d26fccf2cda3bcc2b0414fdef9dbcaaaccc4dbd))
+
 ## [0.4.4](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.4.3...oas_rails/v0.4.4) (2024-08-20)
 
 
