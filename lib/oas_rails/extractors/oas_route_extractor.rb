@@ -20,11 +20,11 @@ module OasRails
 
       def default_tags(oas_route:)
         tags = []
-        if OasRails.config.default_tags_from == "namespace"
+        if OasRails.config.default_tags_from == :namespace
           tag = oas_route.path.split('/').reject(&:empty?).first.try(:titleize)
           tags << tag unless tag.nil?
         else
-          tags << oas_route.controller.titleize
+          tags << oas_route.controller.gsub("/", " ").titleize
         end
         tags
       end

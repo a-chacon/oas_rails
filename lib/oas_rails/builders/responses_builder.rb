@@ -15,7 +15,7 @@ module OasRails
       end
 
       def add_autodiscovered_responses(oas_route)
-        return unless OasRails.config.autodiscover_responses
+        return self unless OasRails.config.autodiscover_responses
 
         new_responses = Extractors::RenderResponseExtractor.extract_responses_from_source(@specification, source: oas_route.source_string)
 
@@ -27,7 +27,7 @@ module OasRails
       end
 
       def add_default_responses(oas_route, security)
-        return unless OasRails.config.set_default_responses
+        return self unless OasRails.config.set_default_responses
 
         content = ContentBuilder.new(@specification, :outgoing).with_schema(Utils.hash_to_json_schema(OasRails.config.response_body_of_default)).build
         common_errors = []
