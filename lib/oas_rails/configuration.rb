@@ -17,7 +17,7 @@ module OasRails
       @servers = default_servers
       @tags = []
       @swagger_version = '3.1.0'
-      @default_tags_from = "namespace"
+      @default_tags_from = :namespace
       @autodiscover_request_body = true
       @autodiscover_responses = true
       @api_path = "/"
