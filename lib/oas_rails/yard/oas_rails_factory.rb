@@ -1,47 +1,6 @@
 module OasRails
   module YARD
-    class RequestBodyTag < ::YARD::Tags::Tag
-      attr_accessor :klass, :schema, :required
-
-      def initialize(tag_name, text, klass, schema: {}, required: false)
-        # initialize(tag_name, text, types = nil, name = nil)
-        super(tag_name, text, nil, nil)
-        @klass = klass
-        @schema = schema
-        @required = required
-      end
-    end
-
-    class RequestBodyExampleTag < ::YARD::Tags::Tag
-      attr_accessor :content
-
-      def initialize(tag_name, text, content: {})
-        super(tag_name, text, nil, nil)
-        @content = content
-      end
-    end
-
-    class ParameterTag < ::YARD::Tags::Tag
-      attr_accessor :schema, :required, :location
-
-      def initialize(tag_name, name, text, schema, location, required: false)
-        super(tag_name, text, nil, name)
-        @schema = schema
-        @required = required
-        @location = location
-      end
-    end
-
-    class ResponseTag < ::YARD::Tags::Tag
-      attr_accessor :schema
-
-      def initialize(tag_name, name, text, schema)
-        super(tag_name, text, nil, name)
-        @schema = schema
-      end
-    end
-
-    class OasYARDFactory < ::YARD::Tags::DefaultFactory
+    class OasRailsFactory < ::YARD::Tags::DefaultFactory
       ## parse_tag is a prefix used by YARD
 
       def parse_tag_with_request_body(tag_name, text)
