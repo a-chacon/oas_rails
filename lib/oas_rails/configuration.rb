@@ -26,7 +26,7 @@ module OasRails
       @security_schemas = {}
       @set_default_responses = true
       @possible_default_responses = [:not_found, :unauthorized, :forbidden]
-      @response_body_of_default = "{ message: String }"
+      @response_body_of_default = "Hash{ success: !Boolean, message: String }"
     end
 
     def security_schema=(value)
