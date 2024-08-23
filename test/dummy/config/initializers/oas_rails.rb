@@ -39,5 +39,5 @@ OasRails.configure do |config|
   # Example: not_found will be setter to the endpoint only if the operation is a show/update/destroy action.
   config.set_default_responses = true
   config.possible_default_responses = [:not_found, :unauthorized, :forbidden]
-  config.response_body_of_default = { message: String }
+  config.response_body_of_default = "Hash{ message: String, errors: Array<String> }"
 end

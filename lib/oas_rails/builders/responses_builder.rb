@@ -29,7 +29,7 @@ module OasRails
       def add_default_responses(oas_route, security)
         return self unless OasRails.config.set_default_responses
 
-        content = ContentBuilder.new(@specification, :outgoing).with_schema(Utils.hash_to_json_schema(OasRails.config.response_body_of_default)).build
+        content = ContentBuilder.new(@specification, :outgoing).with_schema(JsonSchemaGenerator.process_string(OasRails.config.response_body_of_default)[:json_schema]).build
         common_errors = []
         common_errors.push(:unauthorized, :forbidden) if security
 

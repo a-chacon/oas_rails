@@ -1,118 +1,154 @@
 module OasRails
   module YARD
     class OasRailsFactory < ::YARD::Tags::DefaultFactory
-      ## parse_tag is a prefix used by YARD
-
+      # Parses a tag that represents a request body.
+      # @param tag_name [String] The name of the tag.
+      # @param text [String] The tag text to parse.
+      # @return [RequestBodyTag] The parsed request body tag object.
       def parse_tag_with_request_body(tag_name, text)
-        match = text.match(/^(.*?)\s*\[(.*?)\]\s*(.*)$/)
-        if !match.nil?
-          text = match[1].strip
-          type, required = parse_type(match[2].strip)
-
-          if type.constantize == Hash
-            hash_string = match[3].strip
-
-            begin
-              hash = eval(hash_string)
-              hash = Utils.hash_to_json_schema(hash)
-            rescue StandardError
-              hash = {}
-            end
-          end
-
-          RequestBodyTag.new(tag_name, text, type.constantize, schema: hash, required:)
-        else
-          Rails.logger.debug("Error parsing request_body tag: #{text}")
-        end
+        description, klass, schema, required = extract_description_and_schema(text)
+        RequestBodyTag.new(tag_name, description, klass, schema:, required:)
       end
 
+      # Parses a tag that represents a request body example.
+      # @param tag_name [String] The name of the tag.
+      # @param text [String] The tag text to parse.
+      # @return [RequestBodyExampleTag] The parsed request body example tag object.
       def parse_tag_with_request_body_example(tag_name, text)
-        match = text.match(/^(.*?)\s*\[(.*?)\]\s*(.*)$/)
-        if !match.nil?
-          text = match[1].strip
-          type = match[2]
-
-          if type.constantize == Hash
-            hash_string = match[3].strip
-
-            begin
-              hash = eval(hash_string)
-            rescue StandardError
-              hash = {}
-            end
-          end
-          RequestBodyExampleTag.new(tag_name, text, content: hash)
-        else
-          Rails.logger.debug("Error parsing request body example tag: #{text}")
-        end
+        description, _, hash = extract_description_type_and_content(text, process_content: true)
+        RequestBodyExampleTag.new(tag_name, description, content: hash)
       end
 
+      # Parses a tag that represents a parameter.
+      # @param tag_name [String] The name of the tag.
+      # @param text [String] The tag text to parse.
+      # @return [ParameterTag] The parsed parameter tag object.
       def parse_tag_with_parameter(tag_name, text)
-        match = text.match(/^(.*?)\s*\[(.*?)\]\s*(.*)$/)
-        if !match.nil?
-          text = match[1].strip
-          name, location = parse_position_name(text)
-          type, required = parse_type(match[2].strip)
-          schema = Utils.type_to_schema(type)
-
-          ParameterTag.new(tag_name, name, match[3].strip, schema, location, required:)
-        else
-          Rails.logger.debug("Error parsing request body example tag: #{text}")
-        end
+        name, location, schema, required, description = extract_name_location_schema_and_description(text)
+        ParameterTag.new(tag_name, name, description, schema, location, required:)
       end
 
+      # Parses a tag that represents a response.
+      # @param tag_name [String] The name of the tag.
+      # @param text [String] The tag text to parse.
+      # @return [ResponseTag] The parsed response tag object.
       def parse_tag_with_response(tag_name, text)
+        name, code, schema = extract_name_code_and_schema(text)
+        ResponseTag.new(tag_name, code, name, schema)
+      end
+
+      private
+
+      # Reusable method for extracting description, type, and content with an option to process content.
+      # @param text [String] The text to parse.
+      # @param process_content [Boolean] Whether to evaluate the content as a hash.
+      # @return [Array] An array containing the description, type, and content or remaining text.
+      def extract_description_type_and_content(text, process_content: false)
         match = text.match(/^(.*?)\s*\[(.*?)\]\s*(.*)$/)
-        if !match.nil?
-          name, code = parse_position_name(match[1].strip)
+        raise ArgumentError, "Invalid tag format: #{text}" if match.nil?
 
-          begin
-            hash = parse_str_to_hash(match[3].strip)
-            hash = Utils.hash_to_json_schema(hash)
-          rescue StandardError
-            hash = {}
-          end
+        description = match[1].strip
+        type = match[2].strip
+        content = process_content ? eval_content(match[3].strip) : match[3].strip
 
-          ResponseTag.new(tag_name, code, name, hash)
+        [description, type, content]
+      end
+
+      # Specific method to extract description and schema for request body tags.
+      # @param text [String] The text to parse.
+      # @return [Array] An array containing the description, class, schema, and required flag.
+      def extract_description_and_schema(text)
+        description, type, = extract_description_type_and_content(text)
+        klass, schema, required = type_text_to_schema(type)
+        [description, klass, schema, required]
+      end
+
+      # Specific method to extract name, location, and schema for parameters.
+      # @param text [String] The text to parse.
+      # @return [Array] An array containing the name, location, schema, and required flag.
+      def extract_name_location_schema_and_description(text)
+        match = text.match(/^(.*?)\s*\[(.*?)\]\s*(.*)$/)
+        name, location = extract_text_and_parentheses_content(match[1].strip)
+        schema, required = type_text_to_schema(match[2].strip)[1..]
+        description = match[3].strip
+        [name, location, schema, required, description]
+      end
+
+      # Specific method to extract name, code, and schema for responses.
+      # @param text [String] The text to parse.
+      # @return [Array] An array containing the name, code, and schema.
+      def extract_name_code_and_schema(text)
+        name, code = extract_text_and_parentheses_content(text)
+        _, type, = extract_description_type_and_content(text)
+        schema = type_text_to_schema(type)[1]
+        [name, code, schema]
+      end
+
+      # Evaluates a string as a hash, handling errors gracefully.
+      # @param content [String] The content string to evaluate.
+      # @return [Hash] The evaluated hash, or an empty hash if an error occurs.
+      def eval_content(content)
+        eval(content)
+      rescue StandardError
+        {}
+      end
+
+      # Parses the position name and location from input text.
+      # @param input [String] The input text to parse.
+      # @return [Array] An array containing the name and location.
+      def extract_text_and_parentheses_content(input)
+        return unless input =~ /^(.+?)\(([^)]+)\)/
+
+        text = ::Regexp.last_match(1).strip
+        parenthesis_content = ::Regexp.last_match(2).strip
+        [text, parenthesis_content]
+      end
+
+      # Extracts the text and whether it's required.
+      # @param text [String] The text to parse.
+      # @return [Array] An array containing the text and a required flag.
+      def text_and_required(text)
+        if text.start_with?('!')
+          [text.sub(/^!/, ''), true]
         else
-          Rails.logger.debug("Error parsing request body example tag: #{text}")
+          [text, false]
         end
       end
 
-      def parse_position_name(input)
-        return unless input =~ /^([^(]+)\((.*)\)$/
+      # Matches and validates a description and type from text.
+      # @param text [String] The text to parse.
+      # @return [MatchData] The match data from the regex.
+      def description_and_type(text)
+        match = text.match(/^(.*?)\s*\[(.*?)\]\s*(.*)$/)
+        raise ArgumentError, "The request body tag is not valid: #{text}" if match.nil?
 
-        name = ::Regexp.last_match(1)
-        location = ::Regexp.last_match(2)
-        [name, location]
+        match
       end
 
-      def parse_type(type_string)
-        if type_string.end_with?('!')
-          [type_string.chomp('!'), true]
+      # Checks if a given text refers to an ActiveRecord class.
+      # @param text [String] The text to check.
+      # @return [Boolean] True if the text refers to an ActiveRecord class, false otherwise.
+      def active_record_class?(text)
+        klass = text.constantize
+        klass.ancestors.include? ActiveRecord::Base
+      rescue StandardError
+        false
+      end
+
+      # Converts type text to a schema, checking if it's an ActiveRecord class.
+      # @param text [String] The type text to convert.
+      # @return [Array] An array containing the class, schema, and required flag.
+      def type_text_to_schema(text)
+        type_text, required = text_and_required(text)
+
+        if active_record_class?(type_text)
+          klass = type_text.constantize
+          schema = Builders::EsquemaBuilder.build_outgoing_schema(klass:)
         else
-          [type_string, false]
+          schema = JsonSchemaGenerator.process_string(type_text)[:json_schema]
+          klass = Object
         end
-      end
-
-      def parse_str_to_hash(str)
-        str = str.gsub(/^\{|\}$/, '') # Remove leading { and trailing }
-        pairs = str.split(',').map(&:strip)
-
-        pairs.each_with_object({}) do |pair, hash|
-          key, value = pair.split(':').map(&:strip)
-          key = key.to_sym
-          hash[key] = case value
-                      when 'String' then String
-                      when 'Integer' then Integer
-                      when 'Float' then Float
-                      when 'Boolean' then [TrueClass, FalseClass]
-                      when 'Array' then Array
-                      when 'Hash' then Hash
-                      when 'DateTime' then DateTime
-                      else value
-                      end
-        end
+        [klass, schema, required]
       end
     end
   end

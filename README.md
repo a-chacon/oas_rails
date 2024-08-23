@@ -29,7 +29,7 @@ OasRails is a Rails engine for generating **automatic interactive documentation 
 
 After experiencing the interactive documentation in Python's fast-api framework, I sought similar functionality in Ruby on Rails. Unable to find a suitable solution, I [asked on Stack Overflow](https://stackoverflow.com/questions/71947018/is-there-a-way-to-generate-an-interactive-documentation-for-rails-apis) years ago. Now, with some free time while freelancing as an API developer, I decided to build my own tool.
 
-**Note**: This is not yet a production-ready solution. The code may be rough and behave unexpectedly, but I am actively working on improving it. If you like the idea, please consider contributing to its development.
+**Note: This is not yet a production-ready solution. The code may be rough and behave unexpectedly, but I am actively working on improving it. If you like the idea, please consider contributing to its development.**
 
 The goal is to minimize the effort required to create comprehensive documentation. By following REST principles in Rails, we believe this is achievable. You can enhance the documentation using [Yard](https://yardoc.org/) tags.
 
@@ -120,7 +120,7 @@ Then fill it with your data. Below are the available configuration options:
 
 - `config.possible_default_responses`: Array with possible default errors.(Some will be added depending on the endpoint, example: not_found only works with show/update/delete). Default: [:not_found, :unauthorized, :forbidden]. It should be HTTP status code symbols from the list: `[:not_found, :unauthorized, :forbidden, :internal_server_error, :unprocessable_entity]`
 
-- `config.response_body_of_default`: body for use in default responses. It must be a Hash. Default: { message: String }
+- `config.response_body_of_default`: body for use in default responses. It must be a String hash like the used in request body tags. Default: "{ message: String }"
 
 ## Usage
 
@@ -158,12 +158,19 @@ Represents a parameter for the endpoint. The position can be: `header`, `path`, 
 <details>
 <summary style="font-weight: bold; font-size: 1.2em;">@request_body</summary>
 
-**Structure**: `@request_body text [type] structure`
+**Structure**: `@request_body text [type<structure>]`
 
 Documents the request body needed by the endpoint. The structure is optional if you provide a valid Active Record class. Use `!` to indicate a required request body.
 
 **Example**:
-`# @request_body The user to be created [Hash] {user: {name: String, age: Integer, password: String}}`
+
+`# @request_body The user to be created [!Hash{user: {name: String, age: Integer, password: String}}]`
+
+`# @request_body The user to be created [!User]`
+
+`# @request_body The user to be created [User]`
+
+`# @request_body The user to be created [!Hash{user: {name: String, age: Integer, password: String, surnames: Array<String>, coords: Hash{lat: String, lng: String}}}]`
 
 </details>
 
@@ -182,12 +189,15 @@ Adds examples to the provided request body.
 <details>
 <summary style="font-weight: bold; font-size: 1.2em;">@response</summary>
 
-**Structure**: `@response text(code) [type] structure`
+**Structure**: `@response text(code) [type<structure>]`
 
 Documents the responses of the endpoint and overrides the default responses found by the engine.
 
 **Example**:
-`# @response User not found by the provided Id(404) [Hash] {success: Boolean, message: String}`
+
+`# @response User not found by the provided Id(404) [Hash{success: Boolean, message: String}]`
+
+`# @response Validation errors(422) [Hash{success: Boolean, erros: Array<Hash{field: String, type: String, detail: Array<String>}>}]`
 
 </details>
 
@@ -250,9 +260,9 @@ class UsersController < ApplicationController
   # This method show a User by ID. The id must exist of other way it will be returning a **`404`**.
   #
   # @parameter id(path) [Integer] Used for identify the user.
-  # @response Requested User(200) [Hash] {user: {name: String, email: String, created_at: DateTime }}
-  # @response User not found by the provided Id(404) [Hash] {success: Boolean, message: String}
-  # @response You don't have the right permission for access to this resource(403) [Hash] {success: Boolean, message: String}
+  # @response Requested User(200) [Hash{user: {name: String, email: String, created_at: DateTime }}]
+  # @response User not found by the provided Id(404) [Hash{success: Boolean, message: String}]
+  # @response You don't have the right permission for access to this resource(403) [Hash{success: Boolean, message: String}]
   def show
     render json: @user
   end
@@ -260,7 +270,7 @@ class UsersController < ApplicationController
   # @summary Create a User
   # @no_auth
   #
-  # @request_body The user to be created. At least include an `email`. [User!]
+  # @request_body The user to be created. At least include an `email`. [!User]
   # @request_body_example basic user [Hash] {user: {name: "Luis", email: "luis@gmail.ocom"}}
   def create
     @user = User.new(user_params)
@@ -276,7 +286,7 @@ class UsersController < ApplicationController
   # - There is no option
   # - It must work
   # @tags users, update
-  # @request_body User to be created [Hash] {user: { name: String, email: String, age: Integer}}
+  # @request_body User to be created [!Hash{user: { name: String, email: !String, age: Integer, available_dates: Array<Date>}}]
   # @request_body_example Update user [Hash] {user: {name: "Luis", email: "luis@gmail.com"}}
   # @request_body_example Complete User [Hash] {user: {name: "Luis", email: "luis@gmail.com", age: 21}}
   def update

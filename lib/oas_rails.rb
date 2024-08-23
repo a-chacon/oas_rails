@@ -9,6 +9,7 @@ module OasRails
   autoload :Configuration, "oas_rails/configuration"
   autoload :OasRoute, "oas_rails/oas_route"
   autoload :Utils, "oas_rails/utils"
+  autoload :JsonSchemaGenerator, "oas_rails/json_schema_generator"
 
   module Builders
     autoload :OperationBuilder, "oas_rails/builders/operation_builder"

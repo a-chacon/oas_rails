@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[show update destroy]
 
   # @summary Login
-  # @request_body Valid Login Params [Hash!] { email: String, password: String}
+  # @request_body Valid Login Params [!Hash{email: !String, password: !String}]
   # @request_body_example Test User [Hash] {email: 'oas@test.com', password: 'Test12345'}
   # @no_auth
   def login
@@ -27,7 +27,7 @@ class UsersController < ApplicationController
   #
   #
   # @parameter offset(query) [Integer]  Used for pagination of response data (default: 25 items per response). Specifies the offset of the next block of data to receive.
-  # @parameter status(query) [String!]   Filter by status. (e.g. status=inactive).
+  # @parameter status(query) [!String]   Filter by status. (e.g. status=inactive).
   # @parameter stages(query) [Array<String>]   Filter by stages. (e.g. status=inactive).
   # @parameter X-Page(header) [String] Header for identify
   def index
@@ -39,10 +39,11 @@ class UsersController < ApplicationController
   # @summary Get a user by id.
   #
   # This method show a User by ID. The id must exist of other way it will be returning a 404.
-  # @parameter id(path) [Integer!] Used for identify the user.
-  # @response A nice user(200) [Hash] {user: {name: String, email: String, created_at: DateTime }}
-  # @response User not found by the provided Id(404) [Hash] {success: Boolean, message: String}
-  # @response You dont have the rigth persmissions for access to this reasource(403) [Hash] {success: Boolean, message: String}
+  # @parameter id(path) [!Integer] Used for identify the user.
+  # @response A nice user(200) [Hash{user: Hash{name: String, email: String, created_at: DateTime }}]
+  # @response User not found by the provided Id(404) [Hash{success: Boolean, message: String}]
+  # @response You dont have the rigth persmissions for access to this reasource(403) [Hash{success: Boolean, message: String}]
+  # @response A test response from an Issue(405) [Hash{message: String, data: Hash{availabilities: Array<String>, dates: Array<Date>}}]
   def show
     render json: @user
   end
@@ -53,7 +54,7 @@ class UsersController < ApplicationController
   # To act as connected accounts, clients can issue requests using the Stripe-Account special header. Make sure that this header contains a Stripe account ID, which usually starts with the acct_ prefix.
   # The value is set per-request as shown in the adjacent code sample. Methods on the returned object reuse the same account ID.ased on the strings
   #
-  # @request_body The user to be created. At least include an `email`. [User!]
+  # @request_body The user to be created. At least include an `email`. [!User]
   # @request_body_example basic user [Hash] {user: {name: "Oas", email: "oas@test.com", password: "Test12345"}}
   def create
     @user = User.new(user_params)
@@ -69,7 +70,7 @@ class UsersController < ApplicationController
   # A `user` can be updated with this method
   # - There is no option
   # - It must work
-  # @request_body User to be created [Hash] {user: { name: String, email: String, age: Integer}}
+  # @request_body User to be created [!Hash{user: Hash{ name: String, email: String, age: Integer, cars: Array<Hash{identifier: String}>}}]
   # @request_body_example Update user [Hash] {user: {name: "Luis", email: "luis@gmail.com"}}
   # @request_body_example Complete User [Hash] {user: {name: "Luis", email: "luis@gmail.com", age: 21}}
   def update
