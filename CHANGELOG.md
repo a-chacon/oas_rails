@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.5.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.4.5...oas_rails/v0.5.0) (2024-08-23)
+
+
+### Features
+
+* disable autodiscover responses for endpoints with at least one documented response. ([ecd1318](https://github.com/a-chacon/oas_rails/commit/ecd13187a9f65d7b103095890a24bf7747268ca3))
+
+
+### Code Refactoring
+
+* redefine the way request body and responses are described. BREAKING.  ([ed5eef5](https://github.com/a-chacon/oas_rails/commit/ed5eef53bd10010b2c801a6b30a76084535ee27b))
+
 ## [0.4.5](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.4.4...oas_rails/v0.4.5) (2024-08-21)
 
 
