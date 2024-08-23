@@ -9,6 +9,7 @@ module OasRails
   autoload :Configuration, "oas_rails/configuration"
   autoload :OasRoute, "oas_rails/oas_route"
   autoload :Utils, "oas_rails/utils"
+  autoload :JsonSchemaGenerator, "oas_rails/json_schema_generator"
 
   module Builders
     autoload :OperationBuilder, "oas_rails/builders/operation_builder"
@@ -45,7 +46,11 @@ module OasRails
   end
 
   module YARD
-    autoload :OasYARDFactory, 'oas_rails/yard/oas_yard_factory'
+    autoload :RequestBodyTag, 'oas_rails/yard/request_body_tag'
+    autoload :RequestBodyExampleTag, 'oas_rails/yard/request_body_example_tag'
+    autoload :ParameterTag, 'oas_rails/yard/parameter_tag'
+    autoload :ResponseTag, 'oas_rails/yard/response_tag'
+    autoload :OasRailsFactory, 'oas_rails/yard/oas_rails_factory'
   end
 
   module Extractors
@@ -73,7 +78,7 @@ module OasRails
     end
 
     def configure_yard!
-      ::YARD::Tags::Library.default_factory = YARD::OasYARDFactory
+      ::YARD::Tags::Library.default_factory = YARD::OasRailsFactory
       yard_tags = {
         'Request body' => [:request_body, :with_request_body],
         'Request body Example' => [:request_body_example, :with_request_body_example],
