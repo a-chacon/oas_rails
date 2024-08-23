@@ -15,7 +15,7 @@ module OasRails
       end
 
       def add_autodiscovered_responses(oas_route)
-        return self unless OasRails.config.autodiscover_responses
+        return self if !OasRails.config.autodiscover_responses || oas_route.docstring.tags(:response).any?
 
         new_responses = Extractors::RenderResponseExtractor.extract_responses_from_source(@specification, source: oas_route.source_string)
 
