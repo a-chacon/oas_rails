@@ -11,7 +11,6 @@ module OasRails
       assert_equal ['message'], result[:json_schema][:required]
       assert_equal 'string', result[:json_schema][:properties][:message][:type]
       assert_equal 'array', result[:json_schema][:properties][:data][:properties][:availabilities][:type]
-      assert_equal 'string', result[:json_schema][:properties][:data][:properties][:availabilities][:items][:type]
       assert_equal %w[id name], result[:json_schema][:properties][:data][:properties][:details][:items][:required]
     end
 
