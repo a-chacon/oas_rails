@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.6.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.5.0...oas_rails/v0.6.0) (2024-08-26)
+
+
+### Features
+
+* add [@response](https://github.com/response)_example tag for document examples of responses. ([#43](https://github.com/a-chacon/oas_rails/issues/43)) ([16f37c4](https://github.com/a-chacon/oas_rails/commit/16f37c42a73ce6d3b29b80c9c643fea84253193a))
+
+
+### Bug Fixes
+
+* default body response following the new syntax ([a397555](https://github.com/a-chacon/oas_rails/commit/a3975556d3c4ba20a51636999e65c33944a8d3b7))
+
 ## [0.5.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.4.5...oas_rails/v0.5.0) (2024-08-23)
 
 
