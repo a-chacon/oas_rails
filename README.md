@@ -197,7 +197,22 @@ Documents the responses of the endpoint and overrides the default responses foun
 
 `# @response User not found by the provided Id(404) [Hash{success: Boolean, message: String}]`
 
-`# @response Validation errors(422) [Hash{success: Boolean, erros: Array<Hash{field: String, type: String, detail: Array<String>}>}]`
+`# @response Validation errors(422) [Hash{success: Boolean, errors: Array<Hash{field: String, type: String, detail: Array<String>}>}]`
+
+</details>
+
+<details>
+<summary style="font-weight: bold; font-size: 1.2em;">@response_example</summary>
+
+**Structure**: `@response_example text(code) [String Hash]`
+
+Documents response examples of the endpoint associated to a response code.
+
+**Example**:
+
+`# @response_example Invalida Email(422) [{success: "false", errors: [{field: "email", type: "email", detail: ["Invalid email"]}] }]`
+
+`# @response_example Id not exists (404) [{success: "false", message: "Nothing found with the provided ID." }]`
 
 </details>
 

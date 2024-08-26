@@ -37,6 +37,15 @@ module OasRails
         ResponseTag.new(tag_name, code, name, schema)
       end
 
+      # Parses a tag that represents a response example.
+      # @param tag_name [String] The name of the tag.
+      # @param text [String] The tag text to parse.
+      # @return [ResponseExampleTag] The parsed response example tag object.
+      def parse_tag_with_response_example(tag_name, text)
+        description, code, hash = extract_name_code_and_hash(text)
+        ResponseExampleTag.new(tag_name, description, content: hash, code:)
+      end
+
       private
 
       # Reusable method for extracting description, type, and content with an option to process content.
@@ -44,7 +53,7 @@ module OasRails
       # @param process_content [Boolean] Whether to evaluate the content as a hash.
       # @return [Array] An array containing the description, type, and content or remaining text.
       def extract_description_type_and_content(text, process_content: false)
-        match = text.match(/^(.*?)\s*\[(.*?)\]\s*(.*)$/)
+        match = text.match(/^(.*?)\s*\[(.*)\]\s*(.*)$/)
         raise ArgumentError, "Invalid tag format: #{text}" if match.nil?
 
         description = match[1].strip
@@ -82,6 +91,16 @@ module OasRails
         _, type, = extract_description_type_and_content(text)
         schema = type_text_to_schema(type)[1]
         [name, code, schema]
+      end
+
+      # Specific method to extract name, code, and hash for responses examples.
+      # @param text [String] The text to parse.
+      # @return [Array] An array containing the name, code, and schema.
+      def extract_name_code_and_hash(text)
+        name, code = extract_text_and_parentheses_content(text)
+        _, type, = extract_description_type_and_content(text)
+        hash = eval_content(type)
+        [name, code, hash]
       end
 
       # Evaluates a string as a hash, handling errors gracefully.
