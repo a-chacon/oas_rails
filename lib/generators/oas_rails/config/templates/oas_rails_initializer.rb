@@ -2,6 +2,7 @@
 OasRails.configure do |config|
   # Basic Information about the API
   config.info.title = 'OasRails'
+  config.info.version = '1.0.0'
   config.info.summary = 'OasRails: Automatic Interactive API Documentation for Rails'
   config.info.description = <<~HEREDOC
     # Welcome to OasRails
