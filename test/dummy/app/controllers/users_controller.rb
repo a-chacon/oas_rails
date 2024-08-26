@@ -44,6 +44,8 @@ class UsersController < ApplicationController
   # @response User not found by the provided Id(404) [Hash{success: Boolean, message: String}]
   # @response You dont have the rigth persmissions for access to this reasource(403) [Hash{success: Boolean, message: String}]
   # @response A test response from an Issue(405) [Hash{message: String, data: Hash{availabilities: Array<String>, dates: Array<Date>}}]
+  # @response_example Nice 405 Error(405) [{message: "Hello", data: {availabilities: ["one", "two", "three"], dates: ["10-06-2020"]}}]
+  # @response_example Another 405 Error (405) [{message: "another", data: {availabilities: ["three"], dates: []}}]
   def show
     render json: @user
   end

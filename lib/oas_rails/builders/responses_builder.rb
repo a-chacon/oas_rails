@@ -8,7 +8,10 @@ module OasRails
 
       def from_oas_route(oas_route)
         oas_route.docstring.tags(:response).each do |tag|
-          @responses.add_response(ResponseBuilder.new(@specification).from_tag(tag).build)
+          content = ContentBuilder.new(@specification, :outgoing).with_schema(tag.schema).with_examples_from_tags(oas_route.docstring.tags(:response_example).filter { |re| re.code == tag.name }).build
+          response = ResponseBuilder.new(@specification).with_code(tag.name.to_i).with_description(tag.text).with_content(content).build
+
+          @responses.add_response(response)
         end
 
         self

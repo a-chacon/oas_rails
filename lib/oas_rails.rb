@@ -47,9 +47,11 @@ module OasRails
 
   module YARD
     autoload :RequestBodyTag, 'oas_rails/yard/request_body_tag'
+    autoload :ExampleTag, 'oas_rails/yard/example_tag'
     autoload :RequestBodyExampleTag, 'oas_rails/yard/request_body_example_tag'
     autoload :ParameterTag, 'oas_rails/yard/parameter_tag'
     autoload :ResponseTag, 'oas_rails/yard/response_tag'
+    autoload :ResponseExampleTag, 'oas_rails/yard/response_example_tag'
     autoload :OasRailsFactory, 'oas_rails/yard/oas_rails_factory'
   end
 
@@ -84,6 +86,7 @@ module OasRails
         'Request body Example' => [:request_body_example, :with_request_body_example],
         'Parameter' => [:parameter, :with_parameter],
         'Response' => [:response, :with_response],
+        'Response Example' => [:response_example, :with_response_example],
         'Endpoint Tags' => [:tags],
         'Summary' => [:summary],
         'No Auth' => [:no_auth],
