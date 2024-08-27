@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.7.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.6.0...oas_rails/v0.7.0) (2024-08-27)
+
+
+### Features
+
+* **view:** Adding the title from the config initializer in the views title ([#48](https://github.com/a-chacon/oas_rails/issues/48)) ([61cf843](https://github.com/a-chacon/oas_rails/commit/61cf84330fb66d0f400a9aa51ff3bfdd5cdde957))
+
+
+### Documentation
+
+* **readme:** Fix 'Hash' missing ([#49](https://github.com/a-chacon/oas_rails/issues/49)) ([aed623d](https://github.com/a-chacon/oas_rails/commit/aed623d5c28853ebbc2c021f96b3093b288fa4d2))
+
 ## [0.6.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.5.0...oas_rails/v0.6.0) (2024-08-26)
 
 
