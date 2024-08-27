@@ -164,13 +164,13 @@ Documents the request body needed by the endpoint. The structure is optional if 
 
 **Example**:
 
-`# @request_body The user to be created [!Hash{user: {name: String, age: Integer, password: String}}]`
+`# @request_body The user to be created [!Hash{user: Hash{name: String, age: Integer, password: String}}]`
 
 `# @request_body The user to be created [!User]`
 
 `# @request_body The user to be created [User]`
 
-`# @request_body The user to be created [!Hash{user: {name: String, age: Integer, password: String, surnames: Array<String>, coords: Hash{lat: String, lng: String}}}]`
+`# @request_body The user to be created [!Hash{user: Hash{name: String, age: Integer, password: String, surnames: Array<String>, coords: Hash{lat: String, lng: String}}}]`
 
 </details>
 
