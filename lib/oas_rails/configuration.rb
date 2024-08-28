@@ -1,6 +1,7 @@
 module OasRails
   class Configuration
     attr_accessor :info,
+                  :layout,
                   :default_tags_from,
                   :autodiscover_request_body,
                   :autodiscover_responses,
@@ -14,6 +15,7 @@ module OasRails
 
     def initialize
       @info = Spec::Info.new
+      @layout = false
       @servers = default_servers
       @tags = []
       @swagger_version = '3.1.0'

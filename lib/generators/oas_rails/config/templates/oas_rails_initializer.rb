@@ -63,6 +63,11 @@ OasRails.configure do |config|
   # API path configuration if your API is under a different namespace
   # config.api_path = "/"
 
+  # Apply your custom layout. Should be the name of your layout file
+  # Example: "application" if file named application.html.erb
+  # Default: false
+  # config.layout = "application"
+
   # #######################
   # Authentication Settings
   # #######################
