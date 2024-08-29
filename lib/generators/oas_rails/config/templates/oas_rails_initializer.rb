@@ -69,8 +69,8 @@ OasRails.configure do |config|
   # config.layout = "application"
 
   # Excluding custom controlers or controlers#action
-  # Example: ["devise/passwords", devise/sessions#new]
-  # config.ignored_paths = []
+  # Example: ["projects", "users#new"]
+  # config.ignored_actions = []
 
   # #######################
   # Authentication Settings
