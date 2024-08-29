@@ -6,7 +6,7 @@ module OasRails
                   :autodiscover_request_body,
                   :autodiscover_responses,
                   :api_path,
-                  :ignored_paths,
+                  :ignored_actions,
                   :security_schemas,
                   :authenticate_all_routes_by_default,
                   :set_default_responses,
@@ -24,7 +24,7 @@ module OasRails
       @autodiscover_request_body = true
       @autodiscover_responses = true
       @api_path = "/"
-      @ignored_paths = []
+      @ignored_actions = []
       @authenticate_all_routes_by_default = true
       @security_schema = nil
       @security_schemas = {}
