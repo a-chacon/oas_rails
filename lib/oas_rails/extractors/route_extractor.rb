@@ -93,6 +93,7 @@ module OasRails
           return false if RAILS_DEFAULT_CONTROLLERS.any? { |default| route.defaults[:controller].start_with?(default) }
           return false if RAILS_DEFAULT_PATHS.any? { |path| route.path.spec.to_s.include?(path) }
           return false unless route.path.spec.to_s.start_with?(OasRails.config.api_path)
+          return false if ignore_custom_paths(route)
 
           true
         end
@@ -118,6 +119,25 @@ module OasRails
           else
             controller_class.instance_methods.include?(action_name.to_sym)
           end
+        end
+
+        # Ignore user-specified paths in initializer configuration.
+        # Sanitize api_path by removing the "/" if it starts with that, and adding "/" if it ends without that.
+        # Support controller name only to ignore all controller actions.
+        # Support ignoring "controller#action"
+        def ignore_custom_paths(route)
+          api_path = "#{OasRails.config.api_path.sub(/\A\//, '')}/".sub(/\/+$/, '/')
+          ignored_paths = OasRails.config.ignored_paths.flat_map do |route|
+            if route.start_with?(api_path)
+              [route]
+            else
+              ["#{api_path}#{route}", route]
+            end
+          end
+          return false unless ignored_paths.include?("#{route.defaults[:controller]}##{route.defaults[:action]}") ||
+                              ignored_paths.include?(route.defaults[:controller]) && !ignored_paths.include?("#")
+
+          true
         end
       end
     end
