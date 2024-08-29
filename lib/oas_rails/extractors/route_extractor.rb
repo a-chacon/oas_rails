@@ -127,16 +127,16 @@ module OasRails
         # Support ignoring "controller#action"
         # Ignoring "controller#action" AND "api_path/controller#action"
         def ignore_custom_paths(route)
-          api_path = "#{OasRails.config.api_path.sub(/\A\//, '')}/".sub(/\/+$/, '/')
-          ignored_paths = OasRails.config.ignored_paths.flat_map do |route|
-            if route.start_with?(api_path)
-              [route]
+          api_path = "#{OasRails.config.api_path.sub(%r{\A/}, '')}/".sub(%r{/+$}, '/')
+          ignored_paths = OasRails.config.ignored_paths.flat_map do |custom_route|
+            if custom_route.start_with?(api_path)
+              [custom_route]
             else
-              ["#{api_path}#{route}", route]
+              ["#{api_path}#{custom_route}", custom_route]
             end
           end
-          return false unless ignored_paths.include?("#{route.defaults[:controller]}##{route.defaults[:action]}") ||
-                              ignored_paths.include?(route.defaults[:controller]) && !ignored_paths.include?("#")
+          return false unless (ignored_paths.include?("#{route.defaults[:controller]}##{route.defaults[:action]}") ||
+                              (ignored_paths.include?(route.defaults[:controller]) && !ignored_paths.include?("#")))
 
           true
         end
