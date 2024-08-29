@@ -125,6 +125,7 @@ module OasRails
         # Sanitize api_path by removing the "/" if it starts with that, and adding "/" if it ends without that.
         # Support controller name only to ignore all controller actions.
         # Support ignoring "controller#action"
+        # Ignoring "controller#action" AND "api_path/controller#action"
         def ignore_custom_paths(route)
           api_path = "#{OasRails.config.api_path.sub(/\A\//, '')}/".sub(/\/+$/, '/')
           ignored_paths = OasRails.config.ignored_paths.flat_map do |route|
