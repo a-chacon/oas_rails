@@ -7,12 +7,14 @@ module OasRails
         assert_equal 14, result.count
         Extractors::RouteExtractor.clear_cache
       end
+
       def test_with_custom_controllers_actions
         OasRails.config.ignored_actions = ["projects#index"]
         result = Extractors::RouteExtractor.host_routes
         assert_equal 13, result.count
         Extractors::RouteExtractor.clear_cache
       end
+
       def test_with_custom_controller_only
         OasRails.config.ignored_actions = ["projects"]
         result = Extractors::RouteExtractor.host_routes
