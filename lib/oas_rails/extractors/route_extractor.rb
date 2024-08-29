@@ -135,7 +135,8 @@ module OasRails
               ["#{api_path}#{custom_route}", custom_route]
             end
           end
-          return false unless (ignored_paths.include?("#{route.defaults[:controller]}##{route.defaults[:action]}") ||
+
+          return false unless ignored_paths.include?("#{route.defaults[:controller]}##{route.defaults[:action]}" ||
                               (ignored_paths.include?(route.defaults[:controller]) && !ignored_paths.include?("#")))
 
           true
