@@ -15,7 +15,7 @@ module OasRails
       # @param text [String] The tag text to parse.
       # @return [RequestBodyExampleTag] The parsed request body example tag object.
       def parse_tag_with_request_body_example(tag_name, text)
-        description, _, hash = extract_description_type_and_content(text, process_content: true)
+        description, _, hash = extract_description_type_and_content(text, process_content: true, expresion: /^(.*?)\[([^\]]*)\](.*)$/m)
         RequestBodyExampleTag.new(tag_name, description, content: hash)
       end
 
@@ -52,8 +52,8 @@ module OasRails
       # @param text [String] The text to parse.
       # @param process_content [Boolean] Whether to evaluate the content as a hash.
       # @return [Array] An array containing the description, type, and content or remaining text.
-      def extract_description_type_and_content(text, process_content: false)
-        match = text.match(/^(.*?)\s*\[(.*)\]\s*(.*)$/)
+      def extract_description_type_and_content(text, process_content: false, expresion: /^(.*?)\s*\[(.*)\]\s*(.*)$/)
+        match = text.match(expresion)
         raise ArgumentError, "Invalid tag format: #{text}" if match.nil?
 
         description = match[1].strip
