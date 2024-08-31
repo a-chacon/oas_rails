@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.8.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.7.0...oas_rails/v0.8.0) (2024-08-31)
+
+
+### Features
+
+* **route_extractor:** feature ignore custom route ([#54](https://github.com/a-chacon/oas_rails/issues/54)) ([e34b3ee](https://github.com/a-chacon/oas_rails/commit/e34b3ee4d0de3161f6af2cd890ffafc385701285))
+* **view:** support custom layout ([#52](https://github.com/a-chacon/oas_rails/issues/52)) ([abef8d3](https://github.com/a-chacon/oas_rails/commit/abef8d3abe772514b71c49aaa298ef1fe0c8aa37))
+
+
+### Bug Fixes
+
+* **yard_oas_rails_factory:** set different expresion for request body examples ([ceea6eb](https://github.com/a-chacon/oas_rails/commit/ceea6eb3572006c2a0222f86625fc755d3c856db))
+
+
+### Tests
+
+* feature ignore custom route ([#55](https://github.com/a-chacon/oas_rails/issues/55)) ([aedbe7b](https://github.com/a-chacon/oas_rails/commit/aedbe7b610c3f5db5cadf8e59495351f8e83eddf))
+
 ## [0.7.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.6.0...oas_rails/v0.7.0) (2024-08-27)
 
 
