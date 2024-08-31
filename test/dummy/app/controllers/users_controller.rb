@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   # @summary Login
   # @request_body Valid Login Params [!Hash{email: !String, password: !String}]
   # @request_body_example Test User [Hash] {email: 'oas@test.com', password: 'Test12345'}
+  # @request_body_example The Appointment to be created [Hash] {appointment: {start_date: '14/07/2024 10:00',end_date: '14/07/2024 10:30', comment: 'For my son.'}, appointment_services: [1, 2]}
   # @no_auth
   def login
     @user = User.find_by_email(params[:email])
