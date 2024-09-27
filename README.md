@@ -9,6 +9,10 @@
 
 OasRails is a Rails engine for generating **automatic interactive documentation for your Rails APIs**. It generates an **OAS 3.1** document and displays it using **[RapiDoc](https://rapidocweb.com)**.
 
+🎬 A Demo Video Here:
+https://vimeo.com/1013687332
+🎬
+
 ![Screenshot](https://a-chacon.com/assets/images/oas_rails_ui.png)
 
 ## Related Projects
