@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.8.1](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.8.0...oas_rails/v0.8.1) (2024-10-01)
+
+
+### Documentation
+
+* **readme:** add demo video link ([48732e0](https://github.com/a-chacon/oas_rails/commit/48732e0d70789471d09596981e99c7bbfdc08eb5))
+* **readme:** add some emojis and fix the indication for a required param ([2f0fca1](https://github.com/a-chacon/oas_rails/commit/2f0fca17f9668b0c77c8ff9bdc33911b0cc6ed0c))
+
 ## [0.8.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.7.0...oas_rails/v0.8.0) (2024-08-31)
 
 
