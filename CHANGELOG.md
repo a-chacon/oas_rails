@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.2](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.8.1...oas_rails/v0.8.2) (2024-10-11)
+
+
+### Bug Fixes
+
+* remove dependency of Rails 7 so it could run in Rails 8 too. ([#61](https://github.com/a-chacon/oas_rails/issues/61)) ([a57fd16](https://github.com/a-chacon/oas_rails/commit/a57fd1644406b63263538a38a503bc05e10bbe4f))
+
 ## [0.8.1](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.8.0...oas_rails/v0.8.1) (2024-10-01)
 
 
