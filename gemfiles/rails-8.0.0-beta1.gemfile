@@ -11,7 +11,7 @@ gem 'yard', '~> 0.9'
 
 gem 'puma'
 
-gem 'sqlite3', "~> 1.4"
+gem 'sqlite3', ">= 2.1"
 
 gem 'sprockets-rails'
 
