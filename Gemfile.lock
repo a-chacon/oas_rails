@@ -3,8 +3,7 @@ PATH
   specs:
     oas_rails (0.8.1)
       method_source (~> 1.0)
-      model-to-schema (~> 0.1.1)
-      rails (~> 7.0)
+      model-to-schema (~> 0.1.2)
       yard (~> 0.9)
 
 GEM
@@ -110,7 +109,7 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     json (2.7.2)
-    jwt (2.9.1)
+    jwt (2.9.3)
       base64
     language_server-protocol (3.17.0.3)
     logger (1.6.1)
@@ -126,8 +125,7 @@ GEM
     method_source (1.1.0)
     mini_mime (1.1.5)
     minitest (5.25.1)
-    model-to-schema (0.1.1)
-      activerecord (~> 7.0)
+    model-to-schema (0.1.2)
     net-imap (0.4.16)
       date
       net-protocol
@@ -244,7 +242,7 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     yard (0.9.37)
-    zeitwerk (2.6.18)
+    zeitwerk (2.7.0)
 
 PLATFORMS
   aarch64-linux
@@ -263,6 +261,7 @@ DEPENDENCIES
   oas_rails!
   puma
   rack-cors
+  rails (~> 7.0)
   rubocop
   sprockets-rails
   sqlite3 (~> 1.4)

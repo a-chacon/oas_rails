@@ -12,6 +12,8 @@ gem 'sprockets-rails'
 
 gem 'rack-cors'
 
+gem 'rails', '~> 7.0'
+
 group :development, :test do
   gem "rubocop"
 
