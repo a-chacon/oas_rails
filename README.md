@@ -112,6 +112,7 @@ Then fill it with your data. Below are the available configuration options:
 - `config.autodiscover_responses`: Automatically detects responses from controller renders. Default is `true`.
 - `config.api_path`: Sets the API path if your API is under a different namespace.
 - `config.ignored_actions`: Sets an array with the controller or controller#action. No necessary to add api_path before.
+- `config.http_verbs`: Defaults to `[:get, :post, :put, :patch, :delete]`
 
 ### Authentication Settings
 
