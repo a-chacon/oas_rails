@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    oas_rails (0.8.2)
+    oas_rails (0.8.3)
       method_source (~> 1.0)
       model-to-schema (~> 0.1.2)
       yard (~> 0.9)
