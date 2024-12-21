@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.3](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.8.2...oas_rails/v0.8.3) (2024-12-21)
+
+
+### Bug Fixes
+
+* update dependencies and release changes not following conventional commits ([e97ea5b](https://github.com/a-chacon/oas_rails/commit/e97ea5b05716bd1d21956ad834a06af03246f105))
+
 ## [0.8.2](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.8.1...oas_rails/v0.8.2) (2024-10-11)
 
 
