@@ -12,7 +12,8 @@ module OasRails
                   :set_default_responses,
                   :possible_default_responses,
                   :response_body_of_default,
-                  :http_verbs
+                  :http_verbs,
+                  :use_model_names
     attr_reader :servers, :tags, :security_schema
 
     def initialize
@@ -33,6 +34,7 @@ module OasRails
       @possible_default_responses = [:not_found, :unauthorized, :forbidden]
       @http_verbs = [:get, :post, :put, :patch, :delete]
       @response_body_of_default = "Hash{ success: !Boolean, message: String }"
+      @use_model_names = false
     end
 
     def security_schema=(value)

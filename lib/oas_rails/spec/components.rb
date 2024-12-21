@@ -44,9 +44,20 @@ module OasRails
       end
 
       def add_schema(schema)
-        key = Hashable.generate_hash(schema)
-        @schemas[key] = schema if @schemas[key].nil?
+        key = nil
+        if OasRails.config.use_model_names
+          if schema[:type] == 'array'
+            arr_schema = schema[:items]
+            arr_key = arr_schema['title']
+            key = "#{arr_key}List" unless arr_key.nil?
+          else
+            key = schema['title']
+          end
+        end
 
+        key = Hashable.generate_hash(schema) if key.nil?
+
+        @schemas[key] = schema if @schemas[key].nil?
         schema_reference(key)
       end
 
