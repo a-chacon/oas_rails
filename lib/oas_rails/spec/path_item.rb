@@ -26,7 +26,7 @@ module OasRails
       end
 
       def oas_fields
-        [:get, :post, :put, :patch, :delete]
+        OasRails.config.http_verbs
       end
     end
   end
