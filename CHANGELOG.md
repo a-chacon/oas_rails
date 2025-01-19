@@ -6,6 +6,7 @@
 ### Bug Fixes
 
 * block concurrent-ruby for rails 7 ([4a42e3c](https://github.com/a-chacon/oas_rails/commit/4a42e3c14ea2fe24d7f9d3f89b7502425492d7e2))
+* Update with style tag to fix rapidoc button styling ([19e9ba1](https://github.com/a-chacon/oas_rails/commit/19e9ba137dd6063713233193d89ff655496b0ff1))
 
 ## [0.8.3](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.8.2...oas_rails/v0.8.3) (2024-12-21)
 
