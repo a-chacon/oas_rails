@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.4](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.8.3...oas_rails/v0.8.4) (2025-01-19)
+
+
+### Bug Fixes
+
+* block concurrent-ruby for rails 7 ([4a42e3c](https://github.com/a-chacon/oas_rails/commit/4a42e3c14ea2fe24d7f9d3f89b7502425492d7e2))
+
 ## [0.8.3](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.8.2...oas_rails/v0.8.3) (2024-12-21)
 
 
