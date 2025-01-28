@@ -151,7 +151,7 @@ module OasRails
       # @return [Boolean] True if the text refers to an ActiveRecord class, false otherwise.
       def active_record_class?(text)
         klass = text.constantize
-        klass.ancestors.include? ActiveRecord::Base
+        klass.ancestors.map(&:to_s).include? 'ActiveRecord::Base'
       rescue StandardError
         false
       end
