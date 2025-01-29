@@ -33,7 +33,7 @@ module OasRails
       end
 
       def from_model_class(klass)
-        return self unless klass.ancestors.include? ActiveRecord::Base
+        return self unless klass.ancestors.map(&:to_s).include? 'ActiveRecord::Base'
 
         model_schema = Builders::EsquemaBuilder.send("build_#{@context}_schema", klass:)
         model_schema["required"] = []
