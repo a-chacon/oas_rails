@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.8.4...oas_rails/v0.9.0) (2025-01-29)
+
+
+### Features
+
+* Allow it to be used without ActiveRecord being present ([#72](https://github.com/a-chacon/oas_rails/issues/72)) ([340157d](https://github.com/a-chacon/oas_rails/commit/340157db4e3742a47d1c254dc218d0c4c93252cb))
+
 ## [0.8.4](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.8.3...oas_rails/v0.8.4) (2025-01-19)
 
 
