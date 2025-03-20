@@ -22,7 +22,12 @@ module OasRails
           from_model_class(klass: tag.klass, description: tag.text, required: tag.required, examples_tags:)
         else
           @request_body.description = tag.text
-          @request_body.content = ContentBuilder.new(@specification, :incoming).with_schema(tag.schema).with_examples_from_tags(examples_tags).build
+
+          # Build content with examples
+          content_builder = ContentBuilder.new(@specification, :incoming)
+          content_builder.with_schema(tag.schema)
+          content_builder.with_examples_from_tags(examples_tags)
+          @request_body.content = content_builder.build
           @request_body.required = tag.required
         end
 
@@ -44,7 +49,7 @@ module OasRails
       end
 
       def reference
-        return {} if @request_body.content == {}
+        return Spec::Reference.new('#/components/requestBodies/empty') if @request_body.content == {}
 
         @specification.components.add_request_body(@request_body)
       end

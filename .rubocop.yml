@@ -1,7 +1,26 @@
 inherit_from: .rubocop_todo.yml
 AllCops:
+  SuggestExtensions: false
   TargetRubyVersion:
   NewCops: enable
   Exclude:
     - "gemfiles/*"
     - "vendor/**/*"
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Security/Eval:
+  Enabled: false

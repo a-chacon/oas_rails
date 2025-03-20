@@ -20,14 +20,34 @@ module OasRails
       end
 
       def with_examples_from_tags(tags)
-        @media_type.examples = @media_type.examples.merge(tags.each_with_object({}).with_index(1) do |(example, result), _index|
+        # Don't process if there are no tags
+        return self if tags.nil? || tags.empty?
+
+        # Create the examples hash based on the tags
+        example_hash = tags.each_with_object({}) do |example, result|
+          # Generate a key from the example text
           key = example.text.downcase.gsub(' ', '_')
+
+          # Create the example object with summary and value
           value = {
             "summary" => example.text,
             "value" => example.content
           }
-          result[key] = @specification.components.add_example(value)
-        end)
+
+          # Add to the result hash
+          result[key] = value
+        end
+
+        # If we have examples, add them to the media type
+        unless example_hash.empty?
+          # Add the examples to the components
+          examples_refs = example_hash.transform_values do |example|
+            @specification.components.add_example(example)
+          end
+
+          # Merge with any existing examples
+          @media_type.examples = @media_type.examples.merge(examples_refs)
+        end
 
         self
       end

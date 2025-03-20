@@ -29,6 +29,7 @@ module OasRails
 
           hash[camel_case_key] = processed_value unless valid_processed_value?(processed_value)
         end
+
         hash
       end
 
@@ -41,6 +42,10 @@ module OasRails
       private
 
       def valid_processed_value?(processed_value)
+        # Reference objects are never considered empty/invalid
+        return false if defined?(OasRails::Spec::Reference) && processed_value.is_a?(OasRails::Spec::Reference)
+
+        # For other objects, apply the standard checks
         ((processed_value.is_a?(Hash) || processed_value.is_a?(Array)) && processed_value.empty?) || processed_value.nil?
       end
 

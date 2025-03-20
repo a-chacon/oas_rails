@@ -45,8 +45,31 @@ class UsersController < ApplicationController
   # @response User not found by the provided Id(404) [Hash{success: Boolean, message: String}]
   # @response You dont have the rigth persmissions for access to this reasource(403) [Hash{success: Boolean, message: String}]
   # @response A test response from an Issue(405) [Hash{message: String, data: Hash{availabilities: Array<String>, dates: Array<Date>}}]
-  # @response_example Nice 405 Error(405) [{message: "Hello", data: {availabilities: ["one", "two", "three"], dates: ["10-06-2020"]}}]
-  # @response_example Another 405 Error (405) [{message: "another", data: {availabilities: ["three"], dates: []}}]
+  # @response_example Nice 405 Error(405) [Hash] {message: "Hello", data: {availabilities: ["one", "two", "three"], dates: ["10-06-2020"]}}
+  # @response_example Another 405 Error (405) [Hash] {message: "another", data: {availabilities: ["three"], dates: []}}
+  # @response_example Multi-line successful response(200) [Hash] {
+  #   user: {
+  #     id: 123,
+  #     name: "John Doe",
+  #     email: "john@example.com",
+  #     created_at: "2023-05-17T14:23:45Z",
+  #     updated_at: "2023-06-21T09:15:22Z",
+  #     profile: {
+  #       bio: "Software engineer with 5+ years of experience",
+  #       avatar_url: "https://example.com/avatars/john.jpg",
+  #       social_links: {
+  #         github: "johndoe",
+  #         twitter: "john_doe_dev",
+  #         linkedin: "johndoe-dev"
+  #       }
+  #     },
+  #     permissions: ["read", "write", "admin"],
+  #     settings: {
+  #       theme: "dark",
+  #       notifications: true
+  #     }
+  #   }
+  # }
   def show
     render json: @user
   end
@@ -59,6 +82,37 @@ class UsersController < ApplicationController
   #
   # @request_body The user to be created. At least include an `email`. [!User]
   # @request_body_example basic user [Hash] {user: {name: "Oas", email: "oas@test.com", password: "Test12345"}}
+  # @request_body_example complex user with multiple addresses [Hash] {
+  #   user: {
+  #     name: "John Doe",
+  #     email: "john@example.com",
+  #     password: "SecurePass123",
+  #     age: 28,
+  #     addresses: [
+  #       {
+  #         street: "123 Main St",
+  #         city: "San Francisco",
+  #         state: "CA",
+  #         postal_code: "94105",
+  #         country: "USA",
+  #         primary: true
+  #       },
+  #       {
+  #         street: "456 Market St",
+  #         city: "San Francisco",
+  #         state: "CA",
+  #         postal_code: "94103",
+  #         country: "USA",
+  #         primary: false
+  #       }
+  #     ],
+  #     preferences: {
+  #       theme: "dark",
+  #       notifications: true,
+  #       language: "en"
+  #     }
+  #   }
+  # }
   def create
     @user = User.new(user_params)
 

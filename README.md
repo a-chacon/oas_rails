@@ -186,10 +186,26 @@ Documents the request body needed by the endpoint. The structure is optional if 
 
 **Structure**: `@request_body_example text [type] structure`
 
-Adds examples to the provided request body.
+Adds examples to the provided request body. Supports both single-line and multiline structures for complex examples.
 
-**Example**:
+**Single-line Example**:
 `# @request_body_example A complete User. [Hash] {user: {name: 'Luis', age: 30, password: 'MyWeakPassword123'}}`
+
+**Multiline Example**:
+```ruby
+# @request_body_example A complex User with nested data [Hash] {
+#   user: {
+#     name: "John Doe",
+#     email: "john@example.com",
+#     addresses: [
+#       {
+#         street: "123 Main St",
+#         city: "San Francisco"
+#       }
+#     ]
+#   }
+# }
+```
 
 </details>
 
@@ -213,13 +229,30 @@ Documents the responses of the endpoint and overrides the default responses foun
 
 **Structure**: `@response_example text(code) [String Hash]`
 
-Documents response examples of the endpoint associated to a response code.
+Documents response examples of the endpoint associated to a response code. Also supports multiline examples for complex responses.
 
-**Example**:
+**Single-line Example**:
 
-`# @response_example Invalida Email(422) [{success: "false", errors: [{field: "email", type: "email", detail: ["Invalid email"]}] }]`
+`# @response_example Invalida Email(422) [Hash] {success: "false", errors: [{field: "email", type: "email", detail: ["Invalid email"]}]}`
 
-`# @response_example Id not exists (404) [{success: "false", message: "Nothing found with the provided ID." }]`
+**Multiline Example**:
+```ruby
+# @response_example Complex validation errors(422) [Hash] {
+#   success: false,
+#   errors: [
+#     {
+#       field: "email",
+#       type: "email",
+#       detail: ["Invalid email format", "Email already taken"]
+#     },
+#     {
+#       field: "password",
+#       type: "password",
+#       detail: ["Must contain at least 8 characters"]
+#     }
+#   ]
+# }
+```
 
 </details>
 

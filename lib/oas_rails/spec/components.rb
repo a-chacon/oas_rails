@@ -16,6 +16,9 @@ module OasRails
         @examples = {}
         @links = {}
         @callbacks = {}
+
+        # Initialize with an empty request body
+        @request_bodies['empty'] = Spec::RequestBody.new(specification)
       end
 
       def oas_fields
@@ -62,9 +65,26 @@ module OasRails
       end
 
       def add_example(example)
-        key = Hashable.generate_hash(example)
+        # If the example is nil or empty, return a blank reference
+        return example_reference("empty_example") if example.nil? || (example.is_a?(Hash) && example.empty?)
+
+        # Generate a consistent key for the example
+        # If the example has a summary, use that to create a more readable key
+        if example.is_a?(Hash) && example["summary"].is_a?(String) && !example["summary"].empty?
+          base_key = example["summary"].downcase.gsub(/[^a-z0-9_]/, '_').gsub(/_+/, '_')
+          key = base_key[0..63] # Limit key length
+        else
+          # Fall back to hash-based key if no suitable summary
+          key = Hashable.generate_hash(example)
+        end
+
+        # Add an empty example if needed
+        @examples["empty_example"] ||= { "summary" => "Empty Example", "value" => {} }
+
+        # Only add the example if it doesn't exist yet
         @examples[key] = example if @examples[key].nil?
 
+        # Get a reference to the example
         example_reference(key)
       end
 
