@@ -51,14 +51,25 @@ module OasRails
         description_lines = []
 
         raw_text.each_line do |line|
+          line_stripped = line.strip
+
           # Stop processing when we hit a line starting with @
-          next if line.strip.start_with?('@')
-          # Skip lines that look like part of a JSON example
-          next if line.strip.match?(/^["'].*["']\s*:/)
-          next if line.strip.match?(/^\{|\}$/)
+          next if line_stripped.start_with?('@')
+
+          # Skip any line that is just a closing bracket or brace with optional comma
+          next if line_stripped.match?(/^\s*[\}\]\)][,]?\s*$/)
+
+          # Skip Ruby hash key patterns
+          next if line_stripped.match?(/^[a-z_]+:/)
+
+          # Skip JSON property definitions
+          next if line_stripped.match?(/".*":\s*/)
+
+          # Skip very short lines that are likely part of structure (less than 5 chars)
+          next if line_stripped.length < 5 && line_stripped.match?(/[\{\}\[\],"]/)
 
           # Add this line to our description
-          description_lines << line.strip
+          description_lines << line_stripped
         end
 
         # Join the lines into a single string
