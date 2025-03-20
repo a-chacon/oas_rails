@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.10.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.9.0...oas_rails/v0.10.0) (2025-03-20)
+
+
+### Features
+
+* set brackets to query params when they are defined as array. ([#79](https://github.com/a-chacon/oas_rails/issues/79)) ([6367528](https://github.com/a-chacon/oas_rails/commit/63675284d3359d3ef78d5678318e93c87bbc41f9))
+
+
+### Bug Fixes
+
+* error when fixture has erb ([#81](https://github.com/a-chacon/oas_rails/issues/81)) ([b42a637](https://github.com/a-chacon/oas_rails/commit/b42a63712c74e52d74fed67db7278447311a6ea8))
+
 ## [0.9.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.8.4...oas_rails/v0.9.0) (2025-01-29)
 
 
