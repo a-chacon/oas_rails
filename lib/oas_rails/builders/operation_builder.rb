@@ -42,7 +42,6 @@ module OasRails
       # making sure to exclude any tag content or example JSON
       def extract_clean_description(docstring)
         # Extract the text content before any @ tags
-        description = ""
 
         # Get the first description part, before any tags
         raw_text = docstring.all.to_s

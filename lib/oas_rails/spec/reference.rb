@@ -12,7 +12,7 @@ module OasRails
         { '$ref' => @ref }
       end
 
-      def as_json(options = nil)
+      def as_json(_options = nil)
         to_spec
       end
 

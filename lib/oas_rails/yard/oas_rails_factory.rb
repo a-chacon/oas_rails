@@ -46,7 +46,7 @@ module OasRails
           end
 
           description = match[1].strip
-          type = match[2].strip
+          match[2].strip
           content_text = match[3]
 
           # Check if content is just an opening brace (multiline content)
@@ -253,7 +253,7 @@ module OasRails
         # If content is just '{' or starts with '{' but is incomplete,
         # don't log a warning here - we'll handle this in the calling method
         # with the multiline extraction approach
-        return [name, code, {}] if content_text.strip == '{' || content_text.strip == '{ '
+        return [name, code, {}] if ['{', '{ '].include?(content_text.strip)
 
         hash = eval_content(content_text)
         [name, code, hash]
@@ -262,7 +262,6 @@ module OasRails
       # Evaluates a string as a hash, handling errors gracefully.
       # @param content [String] The content string to evaluate.
       # @return [Hash] The evaluated hash, or an empty hash if an error occurs.
-      # rubocop:disable Security/Eval
       def eval_content(content)
         # Handle nil or empty content
         return {} if content.nil? || content.strip.empty?
@@ -379,7 +378,7 @@ module OasRails
         # First try to extract from the YARD Registry
         if defined?(::YARD::Registry) && ::YARD::Registry.respond_to?(:current)
           current_object = ::YARD::Registry.current
-          if current_object && current_object.docstring
+          if current_object&.docstring
             # Find the tag in the docstring
             content = extract_multiline_hash_from_docstring(current_object.docstring.all, description, tag_type)
             return content if content && !content.empty?
@@ -398,7 +397,7 @@ module OasRails
         # Finally, try to extract from the source file
         if defined?(::YARD::Parser::SourceParser) && ::YARD::Parser::SourceParser.respond_to?(:parser)
           parser = ::YARD::Parser::SourceParser.parser
-          if parser && parser.respond_to?(:file) && parser.file
+          if parser.respond_to?(:file) && parser.file
             begin
               file = parser.file
               lines = File.readlines(file)
@@ -525,7 +524,7 @@ module OasRails
             in_hash = true
             # Extract just the part from the opening brace
             brace_idx = line.index('{')
-            line = line[brace_idx..-1]
+            line = line[brace_idx..]
 
           end
 
@@ -543,7 +542,7 @@ module OasRails
           brace_count -= clean_line.count('}')
 
           # If braces are balanced, we found the complete hash
-          break if brace_count == 0 && clean_line.include?('}')
+          break if brace_count.zero? && clean_line.include?('}')
         end
 
         # If we didn't find a complete hash, log and return empty
@@ -556,10 +555,10 @@ module OasRails
         content_text = content_lines.join(' ')
 
         # Extract the hash from the combined text
-        if match = content_text.match(/(\{.*\})/m)
+        if (match = content_text.match(/(\{.*\})/m))
           hash_text = match[1]
           begin
-            result = eval(hash_text)
+            result = eval(hash_text) # rubocop:disable Security/Eval
             return result.is_a?(Hash) ? result : {}
           rescue StandardError => e
             Rails.logger.error("Failed to evaluate hash from multiline content: #{e.message}") if defined?(Rails) && Rails.respond_to?(:logger)
