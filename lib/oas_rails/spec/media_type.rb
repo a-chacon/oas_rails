@@ -41,6 +41,20 @@ module OasRails
           end
         end
 
+        # Converts a list of tags to a hash of examples.
+        #
+        # @param tags [Array<RequestBodyExampleTag>] the list of request body example tags.
+        # @return [Hash] a hash containing the examples data.
+        def tags_to_examples(tags:)
+          tags.each_with_object({}) do |tag, result|
+            key = tag.text.downcase.gsub(' ', '_')
+            result[key] = {
+              "summary" => tag.text,
+              "value" => tag.content
+            }
+          end
+        end
+
         private
 
         # Fetches examples from FactoryBot for the provided class.
@@ -78,6 +92,38 @@ module OasRails
         def clean_example_object(obj:)
           obj.reject { |key, _| OasRails.config.send("excluded_columns_#{@context}").include?(key.to_sym) }
         end
+      end
+
+      def to_spec
+        hash = {}
+
+        # Handle schema
+        hash[:schema] = schema.respond_to?(:to_spec) ? schema.to_spec : schema unless schema.nil? || (schema.respond_to?(:empty?) && schema.empty?)
+
+        # Handle examples - this is key for our issue
+        unless examples.nil? || examples.empty?
+          if examples.is_a?(Reference)
+            hash[:examples] = examples.to_spec
+          else
+            examples_hash = {}
+            examples.each do |key, example|
+              examples_hash[key] = if example.respond_to?(:to_spec)
+                                     example.to_spec
+                                   else
+                                     example
+                                   end
+            end
+            hash[:examples] = examples_hash
+          end
+        end
+
+        # Handle example
+        hash[:example] = example unless example.nil? || (example.respond_to?(:empty?) && example.empty?)
+
+        # Handle encoding
+        hash[:encoding] = encoding unless encoding.nil? || (encoding.respond_to?(:empty?) && encoding.empty?)
+
+        hash
       end
     end
   end
