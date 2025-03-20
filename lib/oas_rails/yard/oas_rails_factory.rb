@@ -25,6 +25,7 @@ module OasRails
       # @return [ParameterTag] The parsed parameter tag object.
       def parse_tag_with_parameter(tag_name, text)
         name, location, schema, required, description = extract_name_location_schema_and_description(text)
+        name = "#{name}[]" if location == "query" && schema[:type] == "array"
         ParameterTag.new(tag_name, name, description, schema, location, required:)
       end
 
