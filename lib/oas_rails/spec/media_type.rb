@@ -82,7 +82,11 @@ module OasRails
         def fetch_fixture_examples(klass:)
           fixture_file = Rails.root.join('test', 'fixtures', "#{klass.to_s.pluralize.downcase}.yml")
           begin
-            fixture_data = YAML.load_file(fixture_file).with_indifferent_access
+            erb_result = ERB.new(File.read(fixture_file)).result
+            fixture_data = YAML.safe_load(
+              erb_result,
+              permitted_classes: [Symbol, ActiveSupport::HashWithIndifferentAccess]
+            ).with_indifferent_access
           rescue Errno::ENOENT
             return {}
           end
