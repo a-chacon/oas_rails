@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'rails', '~> 8.0.0.beta1'
 
-gem 'model-to-schema', '~> 0.1.2'
+gem 'easy_talk', '~> 1.0'
 
 gem 'method_source', '~> 1.0'
 
