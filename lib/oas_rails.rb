@@ -1,6 +1,6 @@
 require "yard"
 require "method_source"
-require "esquema"
+require "easy_talk"
 
 module OasRails
   require "oas_rails/version"
