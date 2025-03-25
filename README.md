@@ -10,7 +10,7 @@
 OasRails is a Rails engine for generating **automatic interactive documentation for your Rails APIs**. It generates an **OAS 3.1** document and displays it using **[RapiDoc](https://rapidocweb.com)**.
 
 🎬 A Demo Video Here:
-https://vimeo.com/1013687332
+<https://vimeo.com/1013687332>
 🎬
 
 ![Screenshot](https://a-chacon.com/assets/images/oas_rails_ui.png)
@@ -80,7 +80,7 @@ You'll now have **basic documentation** based on your routes and automatically g
 
 ## ⚙️ Configuration
 
-To configure OasRails, you MUST create an initializer file including all your settings. The first step is to create your initializer file, which you can easily do with:
+To configure OasRails, **you MUST create an initializer file** including all your settings. The first step is to create your initializer file, which you can easily do with:
 
 ```bash
 rails generate oas_rails:config
@@ -135,7 +135,20 @@ In addition to the information provided in the initializer file and the data tha
 
 ### Documenting Your Endpoints
 
-Almost every description in an OAS file supports simple markdown. The following tags are available for documenting your endpoints:
+Almost every tag description in an OAS file supports **markdown formatting** (e.g., bold, italics, lists, links) for better readability in the generated documentation. Additionally, **multi-line descriptions** are supported. When using multi-line descriptions, ensure the content is indented at least one space more than the tag itself to maintain proper formatting.
+
+For example:
+
+```ruby
+  # @request_body_example Simple User [Hash]
+  #   {
+  #     user: {
+  #       name: "Oas",
+  #       email: "oas@test.com",
+  #       password: "Test12345"
+  #     }
+  #   }
+```
 
 <details>
 <summary style="font-weight: bold; font-size: 1.2em;">@summary</summary>
@@ -145,7 +158,13 @@ Almost every description in an OAS file supports simple markdown. The following 
 Used to add a summary to the endpoint. It replaces the default summary/title of the endpoint.
 
 **Example**:
+
 `# @summary This endpoint creates a User`
+
+```
+# @summary This endpoint
+#   creates a User
+```
 
 </details>
 
@@ -169,15 +188,31 @@ Represents a parameter for the endpoint. The position can be: `header`, `path`, 
 
 Documents the request body needed by the endpoint. The structure is optional if you provide a valid Active Record class. Use `!` to indicate a required request body.
 
-**Example**:
-
-`# @request_body The user to be created [!Hash{user: Hash{name: String, age: Integer, password: String}}]`
+**One line example**:
 
 `# @request_body The user to be created [!User]`
 
 `# @request_body The user to be created [User]`
 
-`# @request_body The user to be created [!Hash{user: Hash{name: String, age: Integer, password: String, surnames: Array<String>, coords: Hash{lat: String, lng: String}}}]`
+**Multi-line example**:
+
+```ruby
+  # @request_body User to be created
+  #   [
+  #     !Hash{
+  #       user: Hash{
+  #         name: String,
+  #         email: String,
+  #         age: Integer,
+  #         cars: Array<
+  #           Hash{
+  #             identifier: String
+  #           }
+  #         >
+  #       }
+  #     }
+  #   ]
+```
 
 </details>
 
@@ -188,8 +223,22 @@ Documents the request body needed by the endpoint. The structure is optional if 
 
 Adds examples to the provided request body.
 
-**Example**:
+**One line example**:
+
 `# @request_body_example A complete User. [Hash] {user: {name: 'Luis', age: 30, password: 'MyWeakPassword123'}}`
+
+**Multi-line example**:
+
+```ruby
+  # @request_body_example basic user [Hash]
+  #   {
+  #     user: {
+  #       name: "Oas",
+  #       email: "oas@test.com",
+  #       password: "Test12345"
+  #     }
+  #   }
+```
 
 </details>
 
@@ -200,11 +249,26 @@ Adds examples to the provided request body.
 
 Documents the responses of the endpoint and overrides the default responses found by the engine.
 
-**Example**:
+**One line example**:
 
 `# @response User not found by the provided Id(404) [Hash{success: Boolean, message: String}]`
 
 `# @response Validation errors(422) [Hash{success: Boolean, errors: Array<Hash{field: String, type: String, detail: Array<String>}>}]`
+
+**Multi-line example**:
+
+```ruby
+  # @response A test response from an Issue(405)
+  #   [
+  #     Hash{
+  #       message: String,
+  #       data: Hash{
+  #         availabilities: Array<String>,
+  #         dates: Array<Date>
+  #       }
+  #     }
+  #   ]
+```
 
 </details>
 
@@ -215,11 +279,26 @@ Documents the responses of the endpoint and overrides the default responses foun
 
 Documents response examples of the endpoint associated to a response code.
 
-**Example**:
+**One line example**:
 
 `# @response_example Invalida Email(422) [{success: "false", errors: [{field: "email", type: "email", detail: ["Invalid email"]}] }]`
 
 `# @response_example Id not exists (404) [{success: "false", message: "Nothing found with the provided ID." }]`
+
+**Multi-line example**:
+
+```ruby
+  # @response_example Another 405 Error (405) [Hash]
+  #   {
+  #     message: "another",
+  #     data: {
+  #       availabilities: [
+  #         "three"
+  #       ],
+  #       dates: []
+  #     }
+  #   }
+```
 
 </details>
 
@@ -282,9 +361,9 @@ class UsersController < ApplicationController
   # This method show a User by ID. The id must exist of other way it will be returning a **`404`**.
   #
   # @parameter id(path) [Integer] Used for identify the user.
-  # @response Requested User(200) [Hash{user: {name: String, email: String, created_at: DateTime }}]
-  # @response User not found by the provided Id(404) [Hash{success: Boolean, message: String}]
-  # @response You don't have the right permission for access to this resource(403) [Hash{success: Boolean, message: String}]
+  # @response Requested User(200) [Hash] {user: {name: String, email: String, created_at: DateTime }}
+  # @response User not found by the provided Id(404) [Hash] {success: Boolean, message: String}
+  # @response You don't have the right permission for access to this resource(403) [Hash] {success: Boolean, message: String}
   def show
     render json: @user
   end
@@ -409,6 +488,8 @@ Once the custom view file is in place, Rails will automatically use it instead o
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**. If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement". Don't forget to give the project a star⭐! Thanks again!
 
+If you plan a big feature, first open an issue to discuss it before any development.
+
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
@@ -417,14 +498,14 @@ Contributions are what make the open source community such an amazing place to l
 
 ### Roadmap and Ideas for Improvement
 
-- Clean, document and structure the code
+- [ ] Clean, document and structure the code
 - [x] Support documentation of authentication methods
-- Define Global Tags/Configuration (e.g., common responses like 404 errors)
-- Post-process the JSON and replace common objects with references to components
-- Create a temporary file with the JSON in production mode to avoid rebuilding it on every request
-- Create tags for popular gems used in APIs (e.g., a `@pagy` tag for common pagination parameters)
+- [ ] Define Global Tags/Configuration (e.g., common responses like 404 errors)
+- [ ] Post-process the JSON and replace common objects with references to components
+- [ ] Create a temporary file with the JSON in production mode to avoid rebuilding it on every request
+- [ ] Create tags for popular gems used in APIs (e.g., a `@pagy` tag for common pagination parameters)
 - [x] Add basic authentication to OAS and UI for security reasons (Solution documented, not need to be managed by the engine)
-- Implement ability to define OAS by namespaces (e.g., generate OAS for specific routes like `/api` or separate versions V1 and V2)
+- [ ] Implement ability to define OAS by namespaces (e.g., generate OAS for specific routes like `/api` or separate versions V1 and V2)
 
 ## License
 

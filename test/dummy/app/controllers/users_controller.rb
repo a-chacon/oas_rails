@@ -44,9 +44,28 @@ class UsersController < ApplicationController
   # @response A nice user(200) [Hash{user: Hash{name: String, email: String, created_at: DateTime }}]
   # @response User not found by the provided Id(404) [Hash{success: Boolean, message: String}]
   # @response You dont have the rigth persmissions for access to this reasource(403) [Hash{success: Boolean, message: String}]
-  # @response A test response from an Issue(405) [Hash{message: String, data: Hash{availabilities: Array<String>, dates: Array<Date>}}]
-  # @response_example Nice 405 Error(405) [{message: "Hello", data: {availabilities: ["one", "two", "three"], dates: ["10-06-2020"]}}]
-  # @response_example Another 405 Error (405) [{message: "another", data: {availabilities: ["three"], dates: []}}]
+  # @response A test response from an Issue(405)
+  #   [
+  #     Hash{
+  #       message: String,
+  #       data: Hash{
+  #         availabilities: Array<String>,
+  #         dates: Array<Date>
+  #       }
+  #     }
+  #   ]
+  # @response_example Nice 405 Error(405) [Hash]
+  #   {message: "Hello", data: {availabilities: ["one", "two", "three"], dates: ["10-06-2020"]}}
+  # @response_example Another 405 Error (405) [Hash]
+  #   {
+  #     message: "another",
+  #     data: {
+  #       availabilities: [
+  #         "three"
+  #       ],
+  #       dates: []
+  #     }
+  #   }
   def show
     render json: @user
   end
@@ -58,7 +77,14 @@ class UsersController < ApplicationController
   # The value is set per-request as shown in the adjacent code sample. Methods on the returned object reuse the same account ID.ased on the strings
   #
   # @request_body The user to be created. At least include an `email`. [!User]
-  # @request_body_example basic user [Hash] {user: {name: "Oas", email: "oas@test.com", password: "Test12345"}}
+  # @request_body_example basic user [Hash]
+  #   {
+  #     user: {
+  #       name: "Oas",
+  #       email: "oas@test.com",
+  #       password: "Test12345"
+  #     }
+  #   }
   def create
     @user = User.new(user_params)
 
@@ -73,7 +99,21 @@ class UsersController < ApplicationController
   # A `user` can be updated with this method
   # - There is no option
   # - It must work
-  # @request_body User to be created [!Hash{user: Hash{ name: String, email: String, age: Integer, cars: Array<Hash{identifier: String}>}}]
+  # @request_body User to be created
+  #   [
+  #     !Hash{
+  #       user: Hash{
+  #         name: String,
+  #         email: String,
+  #         age: Integer,
+  #         cars: Array<
+  #           Hash{
+  #             identifier: String
+  #           }
+  #         >
+  #       }
+  #     }
+  #   ]
   # @request_body_example Update user [Hash] {user: {name: "Luis", email: "luis@gmail.com"}}
   # @request_body_example Complete User [Hash] {user: {name: "Luis", email: "luis@gmail.com", age: 21}}
   def update
