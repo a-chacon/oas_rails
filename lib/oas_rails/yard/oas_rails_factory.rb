@@ -6,7 +6,7 @@ module OasRails
       # @param text [String] The tag text to parse.
       # @return [RequestBodyTag] The parsed request body tag object.
       def parse_tag_with_request_body(tag_name, text)
-        description, klass, schema, required = extract_description_and_schema(text)
+        description, klass, schema, required = extract_description_and_schema(text.squish)
         RequestBodyTag.new(tag_name, description, klass, schema:, required:)
       end
 
@@ -15,7 +15,7 @@ module OasRails
       # @param text [String] The tag text to parse.
       # @return [RequestBodyExampleTag] The parsed request body example tag object.
       def parse_tag_with_request_body_example(tag_name, text)
-        description, _, hash = extract_description_type_and_content(text, process_content: true, expresion: /^(.*?)\[([^\]]*)\](.*)$/m)
+        description, _, hash = extract_description_type_and_content(text.squish, process_content: true, expresion: /^(.*?)\[([^\]]*)\](.*)$/m)
         RequestBodyExampleTag.new(tag_name, description, content: hash)
       end
 
@@ -24,7 +24,7 @@ module OasRails
       # @param text [String] The tag text to parse.
       # @return [ParameterTag] The parsed parameter tag object.
       def parse_tag_with_parameter(tag_name, text)
-        name, location, schema, required, description = extract_name_location_schema_and_description(text)
+        name, location, schema, required, description = extract_name_location_schema_and_description(text.squish)
         name = "#{name}[]" if location == "query" && schema[:type] == "array"
         ParameterTag.new(tag_name, name, description, schema, location, required:)
       end
@@ -34,7 +34,7 @@ module OasRails
       # @param text [String] The tag text to parse.
       # @return [ResponseTag] The parsed response tag object.
       def parse_tag_with_response(tag_name, text)
-        name, code, schema = extract_name_code_and_schema(text)
+        name, code, schema = extract_name_code_and_schema(text.squish)
         ResponseTag.new(tag_name, code, name, schema)
       end
 
@@ -43,7 +43,7 @@ module OasRails
       # @param text [String] The tag text to parse.
       # @return [ResponseExampleTag] The parsed response example tag object.
       def parse_tag_with_response_example(tag_name, text)
-        description, code, hash = extract_name_code_and_hash(text)
+        description, code, hash = extract_name_code_and_hash(text.squish)
         ResponseExampleTag.new(tag_name, description, content: hash, code:)
       end
 
@@ -99,8 +99,8 @@ module OasRails
       # @return [Array] An array containing the name, code, and schema.
       def extract_name_code_and_hash(text)
         name, code = extract_text_and_parentheses_content(text)
-        _, type, = extract_description_type_and_content(text)
-        hash = eval_content(type)
+        _, _, content = extract_description_type_and_content(text, expresion: /^(.*?)\[([^\]]*)\](.*)$/m)
+        hash = eval_content(content)
         [name, code, hash]
       end
 

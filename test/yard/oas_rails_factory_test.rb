@@ -51,7 +51,7 @@ module OasRails
       end
 
       test 'parse_tag_with_response_example returns ResponseExampleTag' do
-        text = 'Invalid Email(422) [{success: "false", errors: [{field: "email", type: "email", detail: ["Invalid email"]}] }]'
+        text = 'Invalid Email(422) [Hash] {success: "false", errors: [{field: "email", type: "email", detail: ["Invalid email"]}] }'
         tag = @factory.parse_tag_with_response_example('response_example', text)
         assert_instance_of ResponseExampleTag, tag
         assert_equal 'Invalid Email', tag.text
