@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.10.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.9.0...oas_rails/v0.10.0) (2025-03-26)
+
+
+### Features
+
+* add support for multiline tag definition ([#83](https://github.com/a-chacon/oas_rails/issues/83)) ([4a7b3cf](https://github.com/a-chacon/oas_rails/commit/4a7b3cf3d29b6278843a4acaa79da418eddf6a72))
+* set brackets to query params when they are defined as array. ([#79](https://github.com/a-chacon/oas_rails/issues/79)) ([6367528](https://github.com/a-chacon/oas_rails/commit/63675284d3359d3ef78d5678318e93c87bbc41f9))
+
+
+### Bug Fixes
+
+* error when fixture has erb ([#81](https://github.com/a-chacon/oas_rails/issues/81)) ([b42a637](https://github.com/a-chacon/oas_rails/commit/b42a63712c74e52d74fed67db7278447311a6ea8))
+
+
+### Code Refactoring
+
+* replace squema with easy_talk gem for convert active record classes to json squema ([#82](https://github.com/a-chacon/oas_rails/issues/82)) ([ced2f4f](https://github.com/a-chacon/oas_rails/commit/ced2f4f8adca791f0bce2cdf39cf6cb9ce8e0f72))
+
 ## [0.9.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.8.4...oas_rails/v0.9.0) (2025-01-29)
 
 
