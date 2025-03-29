@@ -15,9 +15,9 @@ module OasRails
       end
 
       def extract_word_before(string, param)
-        regex = %r{/(\w+)/\{#{param}\}}
+        regex = %r{/([\w-]+)/\{#{param}\}}
         match = string.match(regex)
-        match ? match[1] : nil
+        match ? match[1] : ""
       end
 
       def build

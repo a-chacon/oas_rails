@@ -71,7 +71,8 @@ module OasRails
             erb_result = ERB.new(File.read(fixture_file)).result
             fixture_data = YAML.safe_load(
               erb_result,
-              permitted_classes: [Symbol, ActiveSupport::HashWithIndifferentAccess]
+              aliases: true,
+              permitted_classes: [Symbol, ActiveSupport::HashWithIndifferentAccess, Time]
             ).with_indifferent_access
           rescue Errno::ENOENT
             return {}
