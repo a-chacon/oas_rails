@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.10.1](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.10.0...oas_rails/v0.10.1) (2025-03-29)
+
+
+### Bug Fixes
+
+* include full web page structure in index views becouse the layout was not in use. ([2eec88a](https://github.com/a-chacon/oas_rails/commit/2eec88a88d67caa3680aae67b209644b7e347aea))
+* **parameter builder:** return empty string when trying to extract word before path param ([c5fcb00](https://github.com/a-chacon/oas_rails/commit/c5fcb00cc85d5bacb234c612c7289f8acb747f9a))
+
 ## [0.10.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.9.0...oas_rails/v0.10.0) (2025-03-26)
 
 
