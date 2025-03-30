@@ -46,7 +46,8 @@ The goal is to minimize the effort required to create comprehensive documentatio
   - [Tag Information](#tag-information)
   - [Optional Settings](#optional-settings)
   - [Authentication Settings](#authentication-settings)
-  - [Default Responses (Errors)](#default-responses)
+  - [Default Responses (Errors)](#default-errors)
+  - [Project License](#project-license)
 - [Usage](#usage)
   - [Documenting Your Endpoints](#documenting-your-endpoints)
   - [Example](#example-of-documented-endpoints)
@@ -78,7 +79,7 @@ The goal is to minimize the effort required to create comprehensive documentatio
 
 You'll now have **basic documentation** based on your routes and automatically gathered information at `localhost:3000/docs`. To enhance it, create an initializer file and add [Yard](https://yardoc.org/) tags to your controller methods.
 
-## ⚙️ Configuration
+## Configuration
 
 To configure OasRails, **you MUST create an initializer file** including all your settings. The first step is to create your initializer file, which you can easily do with:
 
@@ -129,7 +130,12 @@ Then fill it with your data. Below are the available configuration options:
 
 - `config.response_body_of_default`: body for use in default responses. It must be a String hash like the used in request body tags. Default: "{ message: String }"
 
-## 📓 Usage
+### Project License
+
+- `config.info.license.name`: The title name of your project's license. Default: GPL 3.0
+- `config.info.license.url`: The URL to the full license text. Default: <https://www.gnu.org/licenses/gpl-3.0.html#license-text>
+
+## Usage
 
 In addition to the information provided in the initializer file and the data that can be extracted from the routes and methods automatically, it is essential to document your API in the following way. The documentation is created **with the help of YARD**, so the methods are documented with **comment tags**.
 
@@ -419,7 +425,7 @@ class UsersController < ApplicationController
 end
 ```
 
-## 🔒Securing the OasRails Engine
+## Securing the OasRails Engine
 
 To secure the OasRails engine, which exposes an endpoint for showing the OAS definition, you can configure authentication to ensure that only authorized users have access. Here are a few methods to achieve this:
 
@@ -468,7 +474,7 @@ ActiveSupport.on_load(:oas_rails_application_controller) do
 end
 ```
 
-## ⛏️ Customizing the View
+## Customizing the View
 
 The OasRails engine provides an easy way to display your OpenAPI Specification (OAS) within your Rails application. By default, it includes an `index` view in the `OasRailsController` that displays [RapiDoc](https://rapidocweb.com/) through a CDN with default configurations. You can easily override this view to replace RapiDoc entirely or configure it differently.
 
