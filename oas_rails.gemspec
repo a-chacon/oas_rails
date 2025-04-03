@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   # spec.metadata['changelog_uri'] = 'https://github.com/a-chacon/oas_rails'
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
-    Dir['{app,config,db,lib}/**/*', 'LICENSE', 'Rakefile', 'README.md']
+    Dir['{app,config,db,lib,public}/**/*', 'LICENSE', 'Rakefile', 'README.md']
   end
 
   spec.required_ruby_version = ">= 3.1"
