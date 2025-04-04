@@ -13,7 +13,8 @@ module OasRails
                   :possible_default_responses,
                   :response_body_of_default,
                   :http_verbs,
-                  :use_model_names
+                  :use_model_names,
+                  :rapidoc_theme
     attr_reader :servers, :tags, :security_schema
 
     def initialize
@@ -35,6 +36,7 @@ module OasRails
       @http_verbs = [:get, :post, :put, :patch, :delete]
       @response_body_of_default = "Hash{ success: !Boolean, message: String }"
       @use_model_names = false
+      @rapidoc_theme = :rails
     end
 
     def security_schema=(value)
