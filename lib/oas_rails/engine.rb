@@ -6,5 +6,11 @@ module OasRails
         inflect.acronym 'YARD'
       end
     end
+
+    config.app_middleware.use(
+      Rack::Static,
+      urls: ["/oas-rails-assets"],
+      root: OasRails::Engine.root.join("public")
+    )
   end
 end
