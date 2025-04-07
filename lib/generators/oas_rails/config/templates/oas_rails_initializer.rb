@@ -77,7 +77,7 @@ OasRails.configure do |config|
   # #######################
 
   # Whether to authenticate all routes by default
-  # Default is true; set to false if you don't want all routes to include secutrity schemas by default
+  # Default is true; set to false if you don't want all routes to include security schemas by default
   # config.authenticate_all_routes_by_default = true
 
   # Default security schema used for authentication
@@ -101,7 +101,7 @@ OasRails.configure do |config|
   # Default Responses (Errors)
   # ###########################
 
-  # The default responses errors are setted only if the action allow it.
+  # The default responses errors are set only if the action allow it.
   # Example, if you add forbidden then it will be added only if the endpoint requires authentication.
   # Example: not_found will be setted to the endpoint only if the operation is a show/update/destroy action.
   # config.set_default_responses = true
