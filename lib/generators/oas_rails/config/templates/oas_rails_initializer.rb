@@ -68,7 +68,7 @@ OasRails.configure do |config|
   # Default: false
   # config.layout = "application"
 
-  # Excluding custom controlers or controlers#action
+  # Excluding custom controllers or controllers#action
   # Example: ["projects", "users#new"]
   # config.ignored_actions = []
 
