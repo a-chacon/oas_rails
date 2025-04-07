@@ -1,0 +1,47 @@
+name: github pages
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup mdBook
+        uses: peaceiris/actions-mdbook@v2
+        with:
+          mdbook-version: 'latest'
+
+      - name: Install mdbook-llms-txt-tools from crates.io
+        uses: baptiste0928/cargo-install@v3
+        with:
+          crate: mdbook-llms-txt-tools
+
+      - name: "Build book"
+        run: mdbook build
+        working-directory: ./docs
+
+      - name: Copy llm files to root
+        run: cp ./docs/book/llms-txt/llms.txt ./docs/book/
+
+      - name: Copy llm full files to root
+        run: cp ./docs/book/llms-txt-full/llms-full.txt ./docs/book/
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/book/html
