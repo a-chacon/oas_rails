@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.11.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.10.1...oas_rails/v0.11.0) (2025-04-07)
+
+
+### Features
+
+* add rapidoc assets to the gem. So will load locally without need CDN ([#94](https://github.com/a-chacon/oas_rails/issues/94)) ([ab0c684](https://github.com/a-chacon/oas_rails/commit/ab0c684e9b91cd5c2cf78b63fd13d8d29edda317))
+* Ebook ([#98](https://github.com/a-chacon/oas_rails/issues/98)) ([e680d6b](https://github.com/a-chacon/oas_rails/commit/e680d6b8d9231162d6d9fbfbec600742bb89b27e))
+* pre defined themes for rapidoc ([#96](https://github.com/a-chacon/oas_rails/issues/96)) ([6c5b75b](https://github.com/a-chacon/oas_rails/commit/6c5b75bbc40379242210f7bf59f6ec922b2706da))
+
+
+### Bug Fixes
+
+* finish to process a json schema from a active record class with easy talk ([#95](https://github.com/a-chacon/oas_rails/issues/95)) ([f3b4401](https://github.com/a-chacon/oas_rails/commit/f3b440195198b667db865435fb0701d9467a193e))
+* small text fix in initializer template file ([#97](https://github.com/a-chacon/oas_rails/issues/97)) ([a31bfa0](https://github.com/a-chacon/oas_rails/commit/a31bfa063c285b98a35f33f173acf984e99e30cc))
+
+
+### Documentation
+
+* **readme:** add documentation for configure project's license ([#89](https://github.com/a-chacon/oas_rails/issues/89)) ([19fdb97](https://github.com/a-chacon/oas_rails/commit/19fdb972265099872cbb5e23f55b52947b2a5864))
+
 ## [0.10.1](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.10.0...oas_rails/v0.10.1) (2025-03-29)
 
 
