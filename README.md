@@ -39,7 +39,7 @@ The goal is to minimize the effort required to create comprehensive documentatio
 
 ## Documentation
 
-For see how to install, configure and use OasRails please refere to the [OasRailsBook](http://a-chacon.com/oas_rails/book)
+For see how to install, configure and use OasRails please refere to the [OasRailsBook](http://a-chacon.com/oas_rails)
 
 ## Contributing
 

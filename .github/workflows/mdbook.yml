@@ -30,14 +30,13 @@ jobs:
           crate: mdbook-llms-txt-tools
 
       - name: "Build book"
-        run: mdbook build
-        working-directory: ./docs
+        run: mdbook build docs
 
       - name: Copy llm files to root
-        run: cp ./docs/book/llms-txt/llms.txt ./docs/book/
+        run: cp ./docs/book/llms-txt/llms.txt ./docs/book/html/
 
       - name: Copy llm full files to root
-        run: cp ./docs/book/llms-txt-full/llms-full.txt ./docs/book/
+        run: cp ./docs/book/llms-txt-full/llms-full.txt ./docs/book/html/
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

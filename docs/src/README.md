@@ -10,4 +10,4 @@ OasRails is a Rails engine that automatically generates OpenAPI 3.1 documentatio
 
 - 🎨 **Interactive API Explorer**: Visualize and test your APIs in real-time with a polished UI powered by RapiDoc. If you prefer another UI, you can easily replace RapiDoc with alternatives like Swagger UI or ReDoc.
 
-![Screenshot](assets/rails_theme.png)
+![Screenshot of OasRails](assets/rails_theme.png)
