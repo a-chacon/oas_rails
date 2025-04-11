@@ -45,41 +45,14 @@ module OasRails
           route.gsub('(.:format)', '').gsub(/:\w+/) { |match| "{#{match[1..]}}" }
         end
 
-        # THIS CODE IS NOT IN USE BUT CAN BE USEFULL WITH GLOBAL TAGS OR AUTH TAGS
-        # def get_controller_comments(controller_path)
-        #   YARD.parse_string(File.read(controller_path))
-        #   controller_class = YARD::Registry.all(:class).first
-        #   if controller_class
-        #     class_comment = controller_class.docstring.all
-        #     method_comments = controller_class.meths.map do |method|
-        #       {
-        #         name: method.name,
-        #         comment: method.docstring.all
-        #       }
-        #     end
-        #     YARD::Registry.clear
-        #     {
-        #       class_comment: class_comment,
-        #       method_comments: method_comments
-        #     }
-        #   else
-        #     YARD::Registry.clear
-        #     nil
-        #   end
-        # rescue StandardError
-        #   nil
-        # end
-        #
-        # def get_controller_comment(controller_path)
-        #   get_controller_comments(controller_path)&.dig(:class_comment) || ''
-        # rescue StandardError
-        #   ''
-        # end
-
         private
 
         def extract_host_routes
-          valid_routes.map { |r| OasRoute.new_from_rails_route(rails_route: r) }
+          routes = valid_routes.map { |r| OasRoute.new_from_rails_route(rails_route: r) }
+
+          routes.select! { |route| route.docstring.tags.any? } if OasRails.config.include_mode == :with_tags
+          routes.select! { |route| route.docstring.tags.any? { |t| t.tag_name == "oas_include" } } if OasRails.config.include_mode == :explicit
+          routes
         end
 
         def valid_routes

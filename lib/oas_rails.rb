@@ -90,7 +90,8 @@ module OasRails
         'Endpoint Tags' => [:tags],
         'Summary' => [:summary],
         'No Auth' => [:no_auth],
-        'Auth methods' => [:auth, :with_types]
+        'Auth methods' => [:auth, :with_types],
+        'OAS Include' => [:oas_include]
       }
       yard_tags.each do |tag_name, (method_name, handler)|
         ::YARD::Tags::Library.define_tag(tag_name, method_name, handler)

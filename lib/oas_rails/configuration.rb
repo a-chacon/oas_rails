@@ -15,7 +15,8 @@ module OasRails
                   :http_verbs,
                   :use_model_names,
                   :rapidoc_theme
-    attr_reader :servers, :tags, :security_schema
+
+    attr_reader :servers, :tags, :security_schema, :include_mode
 
     def initialize
       @info = Spec::Info.new
@@ -37,6 +38,7 @@ module OasRails
       @response_body_of_default = "Hash{ success: !Boolean, message: String }"
       @use_model_names = false
       @rapidoc_theme = :rails
+      @include_mode = :all
     end
 
     def security_schema=(value)
@@ -63,6 +65,13 @@ module OasRails
 
     def excluded_columns_outgoing
       []
+    end
+
+    def include_mode=(value)
+      valid_modes = [:all, :with_tags, :explicit]
+      raise ArgumentError, "include_mode must be one of #{valid_modes}" unless valid_modes.include?(value)
+
+      @include_mode = value
     end
   end
 
