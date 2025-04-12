@@ -22,4 +22,11 @@
   - [@tag](tags/tag.md)
   - [@no_auth](tags/no_auth.md)
   - [@auth](tags/auth.md)
+  - [@oas_include](tags/oas_include.md)
 - [Examples](examples.md)
+
+---
+
+# Others
+
+- [Friendly LLMs Docs (llmstxt)](llmstxt.md)
