@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Configuration - OasRails Documentation</title>
+        <title>@oas_include - OasRails Documentation</title>
 
 
         <!-- Custom HTML head -->
@@ -155,147 +155,29 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="configuration"><a class="header" href="#configuration">Configuration</a></h1>
-<p>To configure OasRails, <strong>you MUST create an initializer file</strong> including all your settings. The first step is to create your initializer file, which you can easily do with:</p>
-<pre><code class="language-bash">rails generate oas_rails:config
-</code></pre>
-<p>Then fill it with your data. Below are the available configuration options:</p>
-<h3 id="basic-information-about-the-api"><a class="header" href="#basic-information-about-the-api">Basic Information about the API</a></h3>
-<ul>
-<li>
-<p><code>config.info.title</code>: The title of your API documentation.</p>
-</li>
-<li>
-<p><code>config.info.summary</code>: A brief summary of your API.</p>
-</li>
-<li>
-<p><code>config.info.description</code>: A detailed description of your API. This can include markdown formatting and will be displayed prominently in your documentation.</p>
-</li>
-<li>
-<p><code>config.info.contact.name</code>: The name of the contact person or organization.</p>
-</li>
-<li>
-<p><code>config.info.contact.email</code>: The contact email address.</p>
-</li>
-<li>
-<p><code>config.info.contact.url</code>: The URL for more information or support.</p>
-</li>
-</ul>
-<h3 id="servers-information"><a class="header" href="#servers-information">Servers Information</a></h3>
-<ul>
-<li><code>config.servers</code>: An array of server objects, each containing <code>url</code> and <code>description</code> keys. For more details, refer to the <a href="https://spec.openapis.org/oas/latest.html#server-object">OpenAPI Specification</a>.</li>
-</ul>
-<h3 id="tag-information"><a class="header" href="#tag-information">Tag Information</a></h3>
-<ul>
-<li><code>config.tags</code>: An array of tag objects, each containing <code>name</code> and <code>description</code> keys. For more details, refer to the <a href="https://spec.openapis.org/oas/latest.html#tag-object">OpenAPI Specification</a>.</li>
-</ul>
-<h3 id="optional-settings"><a class="header" href="#optional-settings">Optional Settings</a></h3>
-<ul>
-<li>
-<p><code>config.include_mode</code>: Determines the mode for including operations. The default value is <code>all</code>, which means it will include all route operations under the <code>api_path</code>, whether documented or not. Other possible values:</p>
-<ul>
-<li>
-<p><code>:with_tags</code>: Includes in your OAS only the operations with at least one tag. Example:</p>
-<p>Not included:</p>
+                        <h1 id="oas_include"><a class="header" href="#oas_include">@oas_include</a></h1>
+<p>Use this tag to explicitly include endpoints in the final OpenAPI Specification (OAS) file <strong>when <code>include_mode</code> is set to <code>:explicit</code></strong>. Only endpoints annotated with <code>@oas_include</code> will be included.</p>
+<h2 id="usage"><a class="header" href="#usage">Usage</a></h2>
+<p>Add the <code>@oas_include</code> tag as a comment above the endpoint you want to document. For example:</p>
+<h3 id="endpoint-not-included-default-behavior"><a class="header" href="#endpoint-not-included-default-behavior">Endpoint Not Included (Default Behavior)</a></h3>
 <pre><code class="language-ruby">def update
 end
 </code></pre>
-<p>Included:</p>
-<pre><code class="language-ruby"># @summary Return all Books
-def index
-end
-</code></pre>
-</li>
-<li>
-<p><code>:explicit</code>: Includes in your OAS only the operations tagged with <code>@oas_include</code>. Example:</p>
-<p>Not included:</p>
-<pre><code class="language-ruby">def update
-end
-</code></pre>
-<p>Included:</p>
+<h3 id="endpoint-included-with-oas_include"><a class="header" href="#endpoint-included-with-oas_include">Endpoint Included (With <code>@oas_include</code>)</a></h3>
 <pre><code class="language-ruby"># @oas_include
 def index
 end
 </code></pre>
-</li>
-</ul>
-</li>
-<li>
-<p><code>config.api_path</code>: Sets the API path if your API is under a different namespace than the root. This is important to configure if you have the <code>include_mode</code> set to <code>all</code> because it will include all routes of your app in the final OAS. For example, if your app has additional routes and your API is under the namespace <code>/api</code>, set this configuration as follows:</p>
-<pre><code class="language-ruby">config.api_path = "/api"
-</code></pre>
-</li>
-<li>
-<p><code>config.ignored_actions</code>: Defines an array of controller or controller#action pairs. You do not need to prepend the <code>api_path</code>. This is useful when you want to include all routes except a few specific actions or when an external engine (e.g., Devise) adds routes to your API.</p>
-</li>
-<li>
-<p><code>config.default_tags_from</code>: Determines the source of default tags for operations. Can be set to <code>:namespace</code> or <code>:controller</code>. The first option means that if your endpoint is in the route <code>/users/:id</code>, it will be tagged with <code>Users</code>. If set to <code>controller</code>, the tag will be <code>UsersController</code>.</p>
-</li>
-<li>
-<p><code>config.autodiscover_request_body</code>: Automatically detects request bodies for create/update methods. Default is <code>true</code>.</p>
-</li>
-<li>
-<p><code>config.autodiscover_responses</code>: Automatically detects responses from controller renders. Default is <code>true</code>.</p>
-</li>
-<li>
-<p><code>config.http_verbs</code>: Defaults to <code>[:get, :post, :put, :patch, :delete]</code></p>
-</li>
-<li>
-<p><code>config.use_model_names</code>: Use model names when possible, defaults to <code>false</code></p>
-</li>
-</ul>
-<h3 id="authentication-settings"><a class="header" href="#authentication-settings">Authentication Settings</a></h3>
-<ul>
-<li>
-<p><code>config.authenticate_all_routes_by_default</code>: Determines whether to authenticate all routes by default. Default is <code>true</code>.</p>
-</li>
-<li>
-<p><code>config.security_schema</code>: The default security schema used for authentication. Choose from the following predefined options:</p>
-<ul>
-<li><code>:api_key_cookie</code>: API key passed via HTTP cookie.</li>
-<li><code>:api_key_header</code>: API key passed via HTTP header.</li>
-<li><code>:api_key_query</code>: API key passed via URL query parameter.</li>
-<li><code>:basic</code>: HTTP Basic Authentication.</li>
-<li><code>:bearer</code>: Bearer token (generic).</li>
-<li><code>:bearer_jwt</code>: Bearer token formatted as a JWT (JSON Web Token).</li>
-<li><code>:mutual_tls</code>: Mutual TLS authentication (mTLS).</li>
-</ul>
-</li>
-<li>
-<p><code>config.security_schemas</code>: Custom security schemas. Follow the <a href="https://spec.openapis.org/oas/latest.html#security-scheme-object">OpenAPI Specification</a> for defining these schemas.</p>
-</li>
-</ul>
-<h3 id="default-errors"><a class="header" href="#default-errors">Default Errors</a></h3>
-<ul>
-<li>
-<p><code>config.set_default_responses</code>: Determines whether to add default errors responses to endpoint. Default is <code>true</code>.</p>
-</li>
-<li>
-<p><code>config.possible_default_responses</code>: Array with possible default errors.(Some will be added depending on the endpoint, example: not_found only works with show/update/delete). Default: [:not_found, :unauthorized, :forbidden]. It should be HTTP status code symbols from the list: <code>[:not_found, :unauthorized, :forbidden, :internal_server_error, :unprocessable_entity]</code></p>
-</li>
-<li>
-<p><code>config.response_body_of_default</code>: body for use in default responses. It must be a String hash like the used in request body tags. Default: "{ message: String }"</p>
-</li>
-</ul>
-<h3 id="project-license"><a class="header" href="#project-license">Project License</a></h3>
-<ul>
-<li>
-<p><code>config.info.license.name</code>: The title name of your project's license. Default: GPL 3.0</p>
-</li>
-<li>
-<p><code>config.info.license.url</code>: The URL to the full license text. Default: <a href="https://www.gnu.org/licenses/gpl-3.0.html#license-text">https://www.gnu.org/licenses/gpl-3.0.html#license-text</a></p>
-</li>
-</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../installation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../tags/auth.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../configuration/cors.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../examples.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -305,11 +187,11 @@ end
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../installation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../tags/auth.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../configuration/cors.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../examples.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

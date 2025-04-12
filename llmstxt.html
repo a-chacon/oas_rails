@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Examples - OasRails Documentation</title>
+        <title>Friendly LLMs Docs (llmstxt) - OasRails Documentation</title>
 
 
         <!-- Custom HTML head -->
@@ -155,94 +155,37 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="examples"><a class="header" href="#examples">Examples</a></h1>
-<pre><code class="language-ruby">class UsersController &lt; ApplicationController
-  before_action :set_user, only: %i[show update destroy]
-
-  # @summary Returns a list of Users.
-  #
-  # @parameter offset(query) [Integer]  Used for pagination of response data (default: 25 items per response). Specifies the offset of the next block of data to receive.
-  # @parameter status(query) [Array&lt;String&gt;]   Filter by status. (e.g. status[]=inactive&amp;status[]=deleted).
-  # @parameter X-front(header) [String] Header for identify the front.
-  def index
-    @users = User.all
-  end
-
-  # @summary Get a user by id.
-  # @auth [bearer]
-  #
-  # This method show a User by ID. The id must exist of other way it will be returning a **`404`**.
-  #
-  # @parameter id(path) [Integer] Used for identify the user.
-  # @response Requested User(200) [Hash] {user: {name: String, email: String, created_at: DateTime }}
-  # @response User not found by the provided Id(404) [Hash] {success: Boolean, message: String}
-  # @response You don't have the right permission for access to this resource(403) [Hash] {success: Boolean, message: String}
-  def show
-    render json: @user
-  end
-
-  # @summary Create a User
-  # @no_auth
-  #
-  # @request_body The user to be created. At least include an `email`. [!User]
-  # @request_body_example basic user [Hash] {user: {name: "Luis", email: "luis@gmail.ocom"}}
-  def create
-    @user = User.new(user_params)
-
-    if @user.save
-      render json: @user, status: :created
-    else
-      render json: { success: false, errors: @user.errors }, status: :unprocessable_entity
-    end
-  end
-
-  # A `user` can be updated with this method
-  # - There is no option
-  # - It must work
-  # @tags users, update
-  # @request_body User to be created [!Hash{user: { name: String, email: !String, age: Integer, available_dates: Array&lt;Date&gt;}}]
-  # @request_body_example Update user [Hash] {user: {name: "Luis", email: "luis@gmail.com"}}
-  # @request_body_example Complete User [Hash] {user: {name: "Luis", email: "luis@gmail.com", age: 21}}
-  def update
-    if @user.update(user_params)
-      render json: @user
-    else
-      render json: @user.errors, status: :unprocessable_entity
-    end
-  end
-
-  # @summary Delete a User
-  # Delete a user and his associated data.
-  def destroy
-    @user.destroy!
-    redirect_to users_url, notice: 'User was successfully destroyed.', status: :see_other
-  end
-
-  private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_user
-    @user = User.find(params[:id])
-  end
-
-  # Only allow a list of trusted parameters through.
-  def user_params
-    params.require(:user).permit(:name, :email)
-  end
-end
-</code></pre>
+                        <h1 id="llms-documentation-llmstxt"><a class="header" href="#llms-documentation-llmstxt">LLMs Documentation (llms.txt)</a></h1>
+<p>OasRails generates <code>.txt</code> files optimized for AI integration:</p>
+<ul>
+<li><a href="/llms.txt">llms.txt</a>: Provides the basics to understand the structure and functionality of OasRails. (Work in progress)</li>
+<li><a href="/llms-full.txt">llms-full.txt</a>: Offers a full description of how to use OasRails and document endpoints. (<strong>Currently recommended</strong>)</li>
+</ul>
+<h2 id="how-it-works-in-3-steps"><a class="header" href="#how-it-works-in-3-steps">How It Works (in 3 Steps)</a></h2>
+<h3 id="1-choose-the-file"><a class="header" href="#1-choose-the-file">1. Choose the File</a></h3>
+<p>OasRails generates <code>.txt</code> files optimized for AI tools.</p>
+<h3 id="2-load-it-into-your-tool"><a class="header" href="#2-load-it-into-your-tool">2. Load It Into Your Tool</a></h3>
+<p>You can load these files into any AI tool or editor that supports external context. For this example, I used Cursor. <strong>This is not a tool I recommend</strong> because it is closed-source, but it worked for the example.</p>
+<video controls>
+  <source src="https://a-chacon.com/assets/images/cursor+oasrails.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+<h3 id="3-ask-questions-naturally"><a class="header" href="#3-ask-questions-naturally">3. Ask Questions Naturally</a></h3>
+<p>Examples of questions you can ask:</p>
+<ul>
+<li><em>"How to document JWT authentication in OasRails?"</em></li>
+<li><em>"Document the endpoint..."</em></li>
+<li><em>"Add examples of possible request bodies for the create method."</em></li>
+</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="tags/oas_include.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="examples.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="llmstxt.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -250,13 +193,10 @@ end
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="tags/oas_include.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="examples.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="llmstxt.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
             </nav>
 
         </div>
