@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.12.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.11.0...oas_rails/v0.12.0) (2025-04-12)
+
+
+### Features
+
+* add include_mode for handle what include in final oas ([#106](https://github.com/a-chacon/oas_rails/issues/106)) ([988b5d0](https://github.com/a-chacon/oas_rails/commit/988b5d04ce55639709481ea12f5c07c2fb127aea))
+* order endpoints by tags in rapidoc. ([#105](https://github.com/a-chacon/oas_rails/issues/105)) ([f2bd784](https://github.com/a-chacon/oas_rails/commit/f2bd784aec4aa9252179e2b72ea00d7d0330ec55))
+
+
+### Documentation
+
+* make the book works in the root of the site ([312a0ca](https://github.com/a-chacon/oas_rails/commit/312a0ca7044679d118b17f39b5ea5bd6fa981470))
+
 ## [0.11.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.10.1...oas_rails/v0.11.0) (2025-04-07)
 
 
