@@ -32,29 +32,49 @@ module OasRails
       def add_default_responses(oas_route, security)
         return self unless OasRails.config.set_default_responses
 
-        content = ContentBuilder.new(@specification, :outgoing).with_schema(JsonSchemaGenerator.process_string(OasRails.config.response_body_of_default)[:json_schema]).build
-        common_errors = []
-        common_errors.push(:unauthorized, :forbidden) if security
-
-        case oas_route.method
-        when "show", "update", "destroy"
-          common_errors.push(:not_found)
-        when "create", "index"
-          # possible errors for this methods?
-        end
-
-        (OasRails.config.possible_default_responses & common_errors).each do |e|
-          code = Utils.status_to_integer(e)
-          response = ResponseBuilder.new(@specification).with_code(code).with_description(Utils.get_definition(code)).with_content(content).build
-
-          @responses.add_response(response) if @responses.responses[response.code].blank?
-        end
+        common_errors = determine_common_errors(oas_route, security)
+        add_responses_for_errors(common_errors)
 
         self
       end
 
       def build
         @responses
+      end
+
+      private
+
+      def determine_common_errors(oas_route, security)
+        common_errors = []
+        common_errors.push(:unauthorized, :forbidden, :internal_server_error) if security
+
+        case oas_route.method
+        when "show", "destroy"
+          common_errors.push(:not_found)
+        when "create"
+          common_errors.push(:unprocessable_entity)
+        when "update"
+          common_errors.push(:not_found, :unprocessable_entity)
+        end
+
+        OasRails.config.possible_default_responses & common_errors
+      end
+
+      def add_responses_for_errors(errors)
+        errors.each do |error|
+          response_body = resolve_response_body(error)
+          content = ContentBuilder.new(@specification, :outgoing).with_schema(JsonSchemaGenerator.process_string(response_body)[:json_schema]).build
+          code = Utils.status_to_integer(error)
+          response = ResponseBuilder.new(@specification).with_code(code).with_description(Utils.get_definition(code)).with_content(content).build
+
+          @responses.add_response(response) if @responses.responses[response.code].blank?
+        end
+      end
+
+      def resolve_response_body(error)
+        OasRails.config.public_send("response_body_of_#{error}")
+      rescue StandardError
+        OasRails.config.response_body_of_default
       end
     end
   end

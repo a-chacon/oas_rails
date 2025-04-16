@@ -34,19 +34,6 @@ module OasRails
         end
       end
 
-      # TODO: check if it is in use
-      def type_to_schema(type_string)
-        if type_string.start_with?('Array<')
-          inner_type = type_string[/Array<(.+)>$/, 1]
-          {
-            "type" => "array",
-            "items" => type_to_schema(inner_type)
-          }
-        else
-          { "type" => TYPE_MAPPING.fetch(type_string, 'string') }
-        end
-      end
-
       def hash_to_json_schema(hash)
         {
           type: 'object',
