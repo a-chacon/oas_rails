@@ -141,11 +141,27 @@ Then fill it with your data. Below are the available configuration options:
 
 ### Default Errors
 
-- `config.set_default_responses`: Determines whether to add default errors responses to endpoint. Default is `true`.
+- **`config.set_default_responses`**: Determines whether to add default error responses to endpoints. Default is `true`.
 
-- `config.possible_default_responses`: Array with possible default errors.(Some will be added depending on the endpoint, example: not_found only works with show/update/delete). Default: [:not_found, :unauthorized, :forbidden]. It should be HTTP status code symbols from the list: `[:not_found, :unauthorized, :forbidden, :internal_server_error, :unprocessable_entity]`
+- **`config.possible_default_responses`**: An array of possible default error responses. Some responses are added conditionally based on the endpoint (e.g., `:not_found` only applies to `show`, `update`, or `delete` actions).  
+  **Default**: `[:not_found, :unauthorized, :forbidden, :internal_server_error, :unprocessable_entity]`  
+  **Allowed Values**: Symbols representing HTTP status codes from the list:  
+  `[:not_found, :unauthorized, :forbidden, :internal_server_error, :unprocessable_entity]`
 
-- `config.response_body_of_default`: body for use in default responses. It must be a String hash like the used in request body tags. Default: "{ message: String }"
+- **`config.response_body_of_default`**: The response body template for default error responses. Must be a string representing a hash, similar to those used in request body tags.  
+  **Default**: `"Hash{ message: String }"`
+
+- **`config.response_body_of_{code symbol}`**: Customizes the response body for specific error responses. Must be a string representing a hash, similar to `response_body_of_default`. If not specified, it defaults to the value of `response_body_of_default`.  
+
+  **Examples**:
+
+  ```ruby
+  # Customize the response body for "unprocessable_entity" errors
+  config.response_body_of_unprocessable_entity = "Hash{ errors: Array<String> }"
+
+  # Customize the response body for "forbidden" errors
+  config.response_body_of_forbidden = "Hash{ code: Integer, message: String }"
+  ```
 
 ### Project License
 

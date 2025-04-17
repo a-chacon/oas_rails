@@ -268,13 +268,27 @@ end
 <h3 id="default-errors"><a class="header" href="#default-errors">Default Errors</a></h3>
 <ul>
 <li>
-<p><code>config.set_default_responses</code>: Determines whether to add default errors responses to endpoint. Default is <code>true</code>.</p>
+<p><strong><code>config.set_default_responses</code></strong>: Determines whether to add default error responses to endpoints. Default is <code>true</code>.</p>
 </li>
 <li>
-<p><code>config.possible_default_responses</code>: Array with possible default errors.(Some will be added depending on the endpoint, example: not_found only works with show/update/delete). Default: [:not_found, :unauthorized, :forbidden]. It should be HTTP status code symbols from the list: <code>[:not_found, :unauthorized, :forbidden, :internal_server_error, :unprocessable_entity]</code></p>
+<p><strong><code>config.possible_default_responses</code></strong>: An array of possible default error responses. Some responses are added conditionally based on the endpoint (e.g., <code>:not_found</code> only applies to <code>show</code>, <code>update</code>, or <code>delete</code> actions).<br />
+<strong>Default</strong>: <code>[:not_found, :unauthorized, :forbidden, :internal_server_error, :unprocessable_entity]</code><br />
+<strong>Allowed Values</strong>: Symbols representing HTTP status codes from the list:<br />
+<code>[:not_found, :unauthorized, :forbidden, :internal_server_error, :unprocessable_entity]</code></p>
 </li>
 <li>
-<p><code>config.response_body_of_default</code>: body for use in default responses. It must be a String hash like the used in request body tags. Default: "{ message: String }"</p>
+<p><strong><code>config.response_body_of_default</code></strong>: The response body template for default error responses. Must be a string representing a hash, similar to those used in request body tags.<br />
+<strong>Default</strong>: <code>"Hash{ message: String }"</code></p>
+</li>
+<li>
+<p><strong><code>config.response_body_of_{code symbol}</code></strong>: Customizes the response body for specific error responses. Must be a string representing a hash, similar to <code>response_body_of_default</code>. If not specified, it defaults to the value of <code>response_body_of_default</code>.</p>
+<p><strong>Examples</strong>:</p>
+<pre><code class="language-ruby"># Customize the response body for "unprocessable_entity" errors
+config.response_body_of_unprocessable_entity = "Hash{ errors: Array&lt;String&gt; }"
+
+# Customize the response body for "forbidden" errors
+config.response_body_of_forbidden = "Hash{ code: Integer, message: String }"
+</code></pre>
 </li>
 </ul>
 <h3 id="project-license"><a class="header" href="#project-license">Project License</a></h3>
