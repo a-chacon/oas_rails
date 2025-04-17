@@ -12,6 +12,8 @@ OasRails.configure do |config|
 
     ## Etenim habebat sinistra
 
+    Docs: <https://a-chacon.com/oas_rails/>
+
     Teneri celebrant prius! Dedit non culmine, est duorum apertum dicione edere, ibi
     cetera Olenos quae: solita.
 
@@ -38,6 +40,8 @@ OasRails.configure do |config|
   # Example, forbidden will be setted to the endpoint requires authentication.
   # Example: not_found will be setter to the endpoint only if the operation is a show/update/destroy action.
   config.set_default_responses = true
-  config.possible_default_responses = [:not_found, :unauthorized, :forbidden]
-  config.response_body_of_default = "Hash{ message: String, errors: Array<String> }"
+  # config.possible_default_responses = [:not_found, :unauthorized, :forbidden]
+  # config.response_body_of_default = "Hash{ message: String, errors: Array<String> }"
+  config.response_body_of_unauthorized = "Hash{ error: Array<String> }"
+  config.response_body_of_internal_server_error = "Hash{ error: String, traceback: String }"
 end

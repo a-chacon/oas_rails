@@ -11,12 +11,11 @@ module OasRails
                   :authenticate_all_routes_by_default,
                   :set_default_responses,
                   :possible_default_responses,
-                  :response_body_of_default,
                   :http_verbs,
                   :use_model_names,
                   :rapidoc_theme
 
-    attr_reader :servers, :tags, :security_schema, :include_mode
+    attr_reader :servers, :tags, :security_schema, :include_mode, :response_body_of_default
 
     def initialize
       @info = Spec::Info.new
@@ -33,12 +32,28 @@ module OasRails
       @security_schema = nil
       @security_schemas = {}
       @set_default_responses = true
-      @possible_default_responses = [:not_found, :unauthorized, :forbidden]
+      @possible_default_responses = [:not_found, :unauthorized, :forbidden, :internal_server_error, :unprocessable_entity]
       @http_verbs = [:get, :post, :put, :patch, :delete]
-      @response_body_of_default = "Hash{ success: !Boolean, message: String }"
+      @response_body_of_default = "Hash{ status: !Integer, error: String }"
       @use_model_names = false
       @rapidoc_theme = :rails
       @include_mode = :all
+
+      @possible_default_responses.each do |response|
+        method_name = "response_body_of_#{response}="
+        variable_name = "@response_body_of_#{response}"
+
+        define_singleton_method(method_name) do |value|
+          raise ArgumentError, "#{method_name} must be a String With a valid object" unless value.is_a?(String)
+
+          OasRails::JsonSchemaGenerator.parse_type(value)
+          instance_variable_set(variable_name, value)
+        end
+
+        define_singleton_method("response_body_of_#{response}") do
+          instance_variable_get(variable_name) || @response_body_of_default
+        end
+      end
     end
 
     def security_schema=(value)
@@ -72,6 +87,13 @@ module OasRails
       raise ArgumentError, "include_mode must be one of #{valid_modes}" unless valid_modes.include?(value)
 
       @include_mode = value
+    end
+
+    def response_body_of_default=(value)
+      raise ArgumentError, "response_body_of_default must be a String With a valid object" unless value.is_a?(String)
+
+      OasRails::JsonSchemaGenerator.parse_type(value)
+      @response_body_of_default = value
     end
   end
 
