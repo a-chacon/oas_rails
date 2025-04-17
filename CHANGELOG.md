@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.1](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.12.0...oas_rails/v0.12.1) (2025-04-17)
+
+
+### Bug Fixes
+
+* add validation to configuration default response body ([#108](https://github.com/a-chacon/oas_rails/issues/108)) ([7cd3cc4](https://github.com/a-chacon/oas_rails/commit/7cd3cc4bd9fac0406d41fd28f352c7a865a1eb50))
+
 ## [0.12.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.11.0...oas_rails/v0.12.0) (2025-04-12)
 
 
