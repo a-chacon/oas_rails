@@ -31,6 +31,7 @@ class UsersController < ApplicationController
   # @parameter status(query) [!String]   Filter by status. (e.g. status=inactive).
   # @parameter stages(query) [Array<String>]   Filter by stages. (e.g. status=inactive).
   # @parameter X-Page(header) [String] Header for identify
+  # @response Users list(200) [Array<User>]
   def index
     @users = User.all
 

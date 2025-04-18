@@ -147,23 +147,13 @@ module OasRails
         match
       end
 
-      # Checks if a given text refers to an ActiveRecord class.
-      # @param text [String] The text to check.
-      # @return [Boolean] True if the text refers to an ActiveRecord class, false otherwise.
-      def active_record_class?(text)
-        klass = text.constantize
-        klass.ancestors.map(&:to_s).include? 'ActiveRecord::Base'
-      rescue StandardError
-        false
-      end
-
       # Converts type text to a schema, checking if it's an ActiveRecord class.
       # @param text [String] The type text to convert.
       # @return [Array] An array containing the class, schema, and required flag.
       def type_text_to_schema(text)
         type_text, required = text_and_required(text)
 
-        if active_record_class?(type_text)
+        if Utils.active_record_class?(type_text)
           klass = type_text.constantize
           schema = Builders::EsquemaBuilder.build_outgoing_schema(klass:)
         else

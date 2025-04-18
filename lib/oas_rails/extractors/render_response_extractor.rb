@@ -60,7 +60,7 @@ module OasRails
           maybe_a_model, errors = content.gsub('@', "").split(".")
           klass = maybe_a_model.singularize.camelize(:upper).constantize
 
-          if klass.ancestors.map(&:to_s).include? 'ActiveRecord::Base'
+          if Utils.active_record_class?(klass)
             schema = Builders::EsquemaBuilder.build_outgoing_schema(klass:)
             if test_singularity(maybe_a_model)
               build_singular_model_schema_and_examples(maybe_a_model, errors, klass, schema)

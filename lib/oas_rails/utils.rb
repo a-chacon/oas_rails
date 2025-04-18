@@ -14,6 +14,8 @@ module OasRails
     }.freeze
 
     HTTP_STATUS_DEFINITIONS = {
+      200 => "The request has succeeded.",
+      201 => "The request has been fulfilled and resulted in a new resource being created.",
       404 => "The requested resource could not be found.",
       401 => "You are not authorized to access this resource. You need to authenticate yourself first.",
       403 => "You are not allowed to access this resource. You do not have the necessary permissions.",
@@ -102,6 +104,16 @@ module OasRails
         end
 
         nil # Return nil if no matching constant is found
+      end
+
+      # Checks if a given text refers to an ActiveRecord class.
+      # @param text [String] The text to check.
+      # @return [Boolean] True if the text refers to an ActiveRecord class, false otherwise.
+      def active_record_class?(klass_or_string)
+        klass = klass_or_string.is_a?(Class) ? klass_or_string : klass_or_string.constantize
+        klass.ancestors.map(&:to_s).include? 'ActiveRecord::Base'
+      rescue StandardError
+        false
       end
     end
   end
