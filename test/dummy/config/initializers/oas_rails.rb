@@ -42,6 +42,6 @@ OasRails.configure do |config|
   config.set_default_responses = true
   # config.possible_default_responses = [:not_found, :unauthorized, :forbidden]
   # config.response_body_of_default = "Hash{ message: String, errors: Array<String> }"
-  config.response_body_of_unauthorized = "Hash{ error: Array<String> }"
+  config.response_body_of_unauthorized = "Hash{ message: String, error: Array<String> }"
   config.response_body_of_internal_server_error = "Hash{ error: String, traceback: String }"
 end
