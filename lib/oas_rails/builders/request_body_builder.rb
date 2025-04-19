@@ -18,7 +18,7 @@ module OasRails
       end
 
       def from_tags(tag:, examples_tags: [])
-        if tag.klass.ancestors.map(&:to_s).include? 'ActiveRecord::Base'
+        if Utils.active_record_class?(tag.klass)
           from_model_class(klass: tag.klass, description: tag.text, required: tag.required, examples_tags:)
         else
           @request_body.description = tag.text
