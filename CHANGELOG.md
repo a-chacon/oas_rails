@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.13.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.12.0...oas_rails/v0.13.0) (2025-04-19)
+
+
+### Features
+
+* add support to active record classes in compound string structures ([#112](https://github.com/a-chacon/oas_rails/issues/112)) ([da0bba6](https://github.com/a-chacon/oas_rails/commit/da0bba6c8c2d822c1fff57968410c35752301831))
+
+
+### Bug Fixes
+
+* add validation to configuration default response body ([#108](https://github.com/a-chacon/oas_rails/issues/108)) ([7cd3cc4](https://github.com/a-chacon/oas_rails/commit/7cd3cc4bd9fac0406d41fd28f352c7a865a1eb50))
+* update easy_tal to easy_talk_two fixing conversions of boolean and decimal fields ([#113](https://github.com/a-chacon/oas_rails/issues/113)) ([36cb39b](https://github.com/a-chacon/oas_rails/commit/36cb39bca1d377782da39439f92468d1d78fae04))
+
 ## [0.12.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.11.0...oas_rails/v0.12.0) (2025-04-12)
 
 
