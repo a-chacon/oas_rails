@@ -7,8 +7,8 @@ module OasRails
       end
 
       def from_oas_route(oas_route)
-        oas_route.docstring.tags(:response).each do |tag|
-          content = ContentBuilder.new(@specification, :outgoing).with_schema(tag.schema).with_examples_from_tags(oas_route.docstring.tags(:response_example).filter { |re| re.code == tag.name }).build
+        oas_route.tags(:response).each do |tag|
+          content = ContentBuilder.new(@specification, :outgoing).with_schema(tag.schema).with_examples_from_tags(oas_route.tags(:response_example).filter { |re| re.code == tag.name }).build
           response = ResponseBuilder.new(@specification).with_code(tag.name.to_i).with_description(tag.text).with_content(content).build
 
           @responses.add_response(response)
@@ -18,7 +18,7 @@ module OasRails
       end
 
       def add_autodiscovered_responses(oas_route)
-        return self if !OasRails.config.autodiscover_responses || oas_route.docstring.tags(:response).any?
+        return self if !OasRails.config.autodiscover_responses || oas_route.tags(:response).any?
 
         new_responses = Extractors::RenderResponseExtractor.extract_responses_from_source(@specification, source: oas_route.source_string)
 

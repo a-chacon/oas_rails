@@ -2,7 +2,7 @@ module OasRails
   module Extractors
     module OasRouteExtractor
       def extract_summary(oas_route:)
-        oas_route.docstring.tags(:summary).first.try(:text) || generate_crud_name(oas_route.method, oas_route.controller.downcase) || "#{oas_route.verb} #{oas_route.path}"
+        oas_route.tags(:summary).first.try(:text) || generate_crud_name(oas_route.method, oas_route.controller.downcase) || "#{oas_route.verb} #{oas_route.path}"
       end
 
       def extract_operation_id(oas_route:)
@@ -10,7 +10,7 @@ module OasRails
       end
 
       def extract_tags(oas_route:)
-        tags = oas_route.docstring.tags(:tags).first
+        tags = oas_route.tags(:tags).first
         if tags.nil?
           default_tags(oas_route:)
         else
@@ -30,9 +30,9 @@ module OasRails
       end
 
       def extract_security(oas_route:)
-        return [] if oas_route.docstring.tags(:no_auth).any?
+        return [] if oas_route.tags(:no_auth).any?
 
-        if (methods = oas_route.docstring.tags(:auth).first)
+        if (methods = oas_route.tags(:auth).first)
           OasRails.config.security_schemas.keys.map { |key| { key => [] } }.select do |schema|
             methods.types.include?(schema.keys.first.to_s)
           end

@@ -1,6 +1,17 @@
 # frozen_string_literal: true
 
 # Manage Users Here
+#
+# @response_example Another 405 Error (405) [Hash]
+#   {
+#     message: "another",
+#     data: {
+#       availabilities: [
+#         "three"
+#       ],
+#       dates: []
+#     }
+#   }
 class UsersController < ApplicationController
   before_action :authorize!, except: [:create, :login]
   before_action :set_user, only: %i[show update destroy]
@@ -55,18 +66,9 @@ class UsersController < ApplicationController
   #       }
   #     }
   #   ]
+  #
   # @response_example Nice 405 Error(405) [Hash]
   #   {message: "Hello", data: {availabilities: ["one", "two", "three"], dates: ["10-06-2020"]}}
-  # @response_example Another 405 Error (405) [Hash]
-  #   {
-  #     message: "another",
-  #     data: {
-  #       availabilities: [
-  #         "three"
-  #       ],
-  #       dates: []
-  #     }
-  #   }
   def show
     render json: @user
   end
