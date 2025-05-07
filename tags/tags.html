@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>@tag - OasRails Documentation</title>
+        <title>@tags - OasRails Documentation</title>
 
 
         <!-- Custom HTML head -->
@@ -155,11 +155,15 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="tag"><a class="header" href="#tag">@tag</a></h1>
-<p><strong>Structure</strong>: <code>@tag text</code></p>
-<p>Tags your endpoints. You can complete the tag documentation in the initializer file by defining these tags beforehand. It's not necessary for the tag to exist in your initializer file before use.</p>
-<p><strong>Example</strong>:
-<code># @tag Users</code></p>
+                        <h1 id="tags"><a class="header" href="#tags">@tags</a></h1>
+<p><strong>Structure</strong>: <code>@tags Tag1,Tag2,Tag3</code></p>
+<p>Tags your endpoints. You can define these tags in the initializer file for documentation purposes, but it is not required to predefine them before use.</p>
+<p>This tag accepts a string where tags are separated by commas (<code>,</code>). Each value becomes a tag for the documented endpoint.</p>
+<p><strong>Examples</strong>:</p>
+<pre><code class="language-ruby"># @tags Users
+</code></pre>
+<pre><code class="language-ruby"># @tags Project, Admin
+</code></pre>
 
                     </main>
 

@@ -479,14 +479,23 @@ Documents response examples of the endpoint associated to a response code.
 ```
 
 
-# @tag
+# @tags
 
-**Structure**: `@tag text`
+**Structure**: `@tags Tag1,Tag2,Tag3`
 
-Tags your endpoints. You can complete the tag documentation in the initializer file by defining these tags beforehand. It's not necessary for the tag to exist in your initializer file before use.
+Tags your endpoints. You can define these tags in the initializer file for documentation purposes, but it is not required to predefine them before use.
 
-**Example**:
-`# @tag Users`
+This tag accepts a string where tags are separated by commas (`,`). Each value becomes a tag for the documented endpoint.
+
+**Examples**:
+
+```ruby
+# @tags Users
+```
+
+```ruby
+# @tags Project, Admin
+```
 
 
 # @no_auth
