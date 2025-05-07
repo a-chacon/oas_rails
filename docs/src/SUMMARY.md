@@ -19,7 +19,7 @@
   - [@request_body_example](tags/request_body_example.md)
   - [@response](tags/response.md)
   - [@response_example](tags/response_example.md)
-  - [@tag](tags/tag.md)
+  - [@tags](tags/tags.md)
   - [@no_auth](tags/no_auth.md)
   - [@auth](tags/auth.md)
   - [@oas_include](tags/oas_include.md)
