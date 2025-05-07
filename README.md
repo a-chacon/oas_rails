@@ -64,3 +64,7 @@ If you plan a big feature, first open an issue to discuss it before any developm
 ## License
 
 The gem is available as open source under the terms of the [GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.en.html#license-text).
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=a-chacon/oas_rails&type=Date)](https://www.star-history.com/#a-chacon/oas_rails&Date)
