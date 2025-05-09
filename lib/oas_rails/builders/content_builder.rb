@@ -38,7 +38,7 @@ module OasRails
         model_schema = Builders::EsquemaBuilder.send("build_#{@context}_schema", klass:)
         model_schema["required"] = []
         schema = { type: "object", properties: { klass.to_s.downcase => model_schema } }
-        examples = Spec::MediaType.search_for_examples_in_tests(klass, context: @context)
+        examples = ActiveRecordExampleFinder.new(context: @context).search(klass)
         @media_type.schema = @specification.components.add_schema(schema)
         @media_type.examples = @media_type.examples.merge(examples)
 
