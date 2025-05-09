@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.14.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.13.0...oas_rails/v0.14.0) (2025-05-09)
+
+
+### Features
+
+* implement support for class level tags and refactors ([#121](https://github.com/a-chacon/oas_rails/issues/121)) ([6e19ef1](https://github.com/a-chacon/oas_rails/commit/6e19ef1a90e7b34522a1a0bdebff6baa9f7f2c36))
+
+
+### Documentation
+
+* add demo app ([#118](https://github.com/a-chacon/oas_rails/issues/118)) ([101d233](https://github.com/a-chacon/oas_rails/commit/101d233b913b3c4fd3378d3f20bbf1e3e3a30e62))
+* add star history ([4ac26ed](https://github.com/a-chacon/oas_rails/commit/4ac26ede932e9b2930c83af91ea1b65fb9e269b1))
+* fix tags, it was just tag and that dont works with oas_rails ([#123](https://github.com/a-chacon/oas_rails/issues/123)) ([9c39510](https://github.com/a-chacon/oas_rails/commit/9c39510431a6f5f42d71d621c6ecffb15108da8b))
+
 ## [0.13.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.12.0...oas_rails/v0.13.0) (2025-04-19)
 
 
