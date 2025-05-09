@@ -48,10 +48,10 @@ module OasRails
         private
 
         def extract_host_routes
-          routes = valid_routes.map { |r| OasRoute.new_from_rails_route(rails_route: r) }
+          routes = valid_routes.map { |r| Builders::OasRouteBuilder.build_from_rails_route(r) }
 
-          routes.select! { |route| route.docstring.tags.any? } if OasRails.config.include_mode == :with_tags
-          routes.select! { |route| route.docstring.tags.any? { |t| t.tag_name == "oas_include" } } if OasRails.config.include_mode == :explicit
+          routes.select! { |route| route.tags.any? } if OasRails.config.include_mode == :with_tags
+          routes.select! { |route| route.tags.any? { |t| t.tag_name == "oas_include" } } if OasRails.config.include_mode == :explicit
           routes
         end
 

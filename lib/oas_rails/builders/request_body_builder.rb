@@ -7,11 +7,11 @@ module OasRails
       end
 
       def from_oas_route(oas_route)
-        tag_request_body = oas_route.docstring.tags(:request_body).first
+        tag_request_body = oas_route.tags(:request_body).first
         if tag_request_body.nil? && OasRails.config.autodiscover_request_body
           detect_request_body(oas_route) if %w[create update].include? oas_route.method
         elsif !tag_request_body.nil?
-          from_tags(tag: tag_request_body, examples_tags: oas_route.docstring.tags(:request_body_example))
+          from_tags(tag: tag_request_body, examples_tags: oas_route.tags(:request_body_example))
         end
 
         self

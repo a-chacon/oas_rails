@@ -1,47 +1,21 @@
 module OasRails
   class OasRoute
-    attr_accessor(:controller_class, :controller_action, :controller, :controller_path, :method, :verb, :path,
-                  :rails_route, :docstring, :source_string)
+    attr_accessor :controller_class, :controller_action, :controller, :controller_path, :method, :verb, :path,
+                  :rails_route, :docstring, :source_string
+    attr_writer :tags
 
-    def initialize; end
-
-    def self.new_from_rails_route(rails_route: ActionDispatch::Journey::Route)
-      instance = new
-      instance.rails_route = rails_route
-      instance.extract_rails_route_data
-      instance
-    end
-
-    def extract_rails_route_data
-      @controller_action = "#{@rails_route.defaults[:controller].camelize}Controller##{@rails_route.defaults[:action]}"
-      @controller_class = "#{@rails_route.defaults[:controller].camelize}Controller"
-      @controller = @rails_route.defaults[:controller]
-      @controller_path = controller_path_extractor(@rails_route.defaults[:controller])
-      @method = @rails_route.defaults[:action]
-      @verb = @rails_route.verb
-      @path = Extractors::RouteExtractor.clean_route(@rails_route.path.spec.to_s)
-      @docstring = extract_docstring
-      @source_string = extract_source_string
-    end
-
-    def extract_docstring
-      comment_lines = controller_class.constantize.instance_method(method).comment.lines
-      processed_lines = comment_lines.map do |line|
-        line.sub(/^# /, '')
-      end
-      ::YARD::Docstring.parser.parse(processed_lines.join).to_docstring
-    end
-
-    def extract_source_string
-      @controller_class.constantize.instance_method(method).source
+    def initialize(attributes = {})
+      attributes.each { |key, value| send("#{key}=", value) }
     end
 
     def path_params
       @rails_route.path.spec.to_s.scan(/:(\w+)/).flatten.reject! { |e| e == 'format' }
     end
 
-    def controller_path_extractor(controller)
-      Rails.root.join("app/controllers/#{controller}_controller.rb").to_s
+    def tags(name = nil)
+      return @tags if name.nil?
+
+      @tags.select { |tag| tag.tag_name.to_s == name.to_s }
     end
   end
 end

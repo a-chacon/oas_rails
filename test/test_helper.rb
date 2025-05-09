@@ -24,5 +24,5 @@ def find_route(controller_name, action_name)
 end
 
 def find_oas_route(controller_name, action_name)
-  OasRails::OasRoute.new_from_rails_route(rails_route: find_route(controller_name, action_name))
+  OasRails::Builders::OasRouteBuilder.build_from_rails_route(find_route(controller_name, action_name))
 end
