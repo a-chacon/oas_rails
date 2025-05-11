@@ -1,6 +1,6 @@
 module OasRails
-  module Builders
-    class OasRouteBuilder
+  module Parsers
+    class OasRouteParser
       def self.build_from_rails_route(rails_route)
         new(rails_route).build
       end
@@ -51,8 +51,9 @@ module OasRails
         @rails_route.verb
       end
 
+      # TODO: Route extractor
       def path
-        Extractors::RouteExtractor.clean_route(@rails_route.path.spec.to_s)
+        Extractors::RailsRouteExtractor.clean_route(@rails_route.path.spec.to_s)
       end
 
       def source_string

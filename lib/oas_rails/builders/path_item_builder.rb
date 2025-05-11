@@ -6,8 +6,8 @@ module OasRails
         @path_item = Spec::PathItem.new(specification)
       end
 
-      def from_path(path, route_extractor: Extractors::RouteExtractor)
-        route_extractor.host_routes_by_path(path).each do |oas_route|
+      def from_path(path)
+        @specification.route_extractor.host_routes_by_path(path).each do |oas_route|
           oas_route.verb.downcase.split("|").each do |v|
             @path_item.add_operation(v, OperationBuilder.new(@specification).from_oas_route(oas_route).build)
           end

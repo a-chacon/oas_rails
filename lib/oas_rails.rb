@@ -4,7 +4,6 @@ require "easy_talk"
 
 module OasRails
   require "oas_rails/version"
-  require "oas_rails/engine"
 
   autoload :Configuration, "oas_rails/configuration"
   autoload :OasRoute, "oas_rails/oas_route"
@@ -23,6 +22,7 @@ module OasRails
     autoload :RequestBodyBuilder, "oas_rails/builders/request_body_builder"
     autoload :EsquemaBuilder, "oas_rails/builders/esquema_builder"
     autoload :OasRouteBuilder, "oas_rails/builders/oas_route_builder"
+    autoload :SpecificationBuilder, "oas_rails/builders/specification_builder"
   end
 
   # This module contains all the clases that represent a part of the OAS file.
@@ -59,21 +59,27 @@ module OasRails
 
   module Extractors
     autoload :RenderResponseExtractor, 'oas_rails/extractors/render_response_extractor'
-    autoload :RouteExtractor, "oas_rails/extractors/route_extractor"
+    autoload :RailsRouteExtractor, "oas_rails/extractors/rails_route_extractor"
     autoload :OasRouteExtractor, "oas_rails/extractors/oas_route_extractor"
   end
 
   class << self
     def build
-      oas = Spec::Specification.new
-      oas.build
+      extractor = case config.framework
+                  when :rails
+                    Extractors::RailsRouteExtractor.new
+                  when :sinatra
+                    Extractors::SinatraRouteExtractor.new
+                  else
+                    raise "Unsupported framework: #{config.framework}"
+                  end
+
+      oas = Builders::SpecificationBuilder.new(extractor).fill_paths.build
 
       oas.to_spec
     end
 
-    # Configurations for make the OasRails engine Work.
     def configure
-      OasRails.configure_yard!
       yield config
     end
 
@@ -100,4 +106,6 @@ module OasRails
       end
     end
   end
+
+  configure_yard!
 end
