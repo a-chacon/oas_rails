@@ -15,9 +15,10 @@ module OasRails
                   :use_model_names,
                   :rapidoc_theme
 
-    attr_reader :servers, :tags, :security_schema, :include_mode, :response_body_of_default
+    attr_reader :servers, :tags, :security_schema, :include_mode, :response_body_of_default, :framework
 
     def initialize
+      @framework = detect_framework
       @info = Spec::Info.new
       @layout = false
       @servers = default_servers
@@ -94,6 +95,25 @@ module OasRails
 
       OasRails::JsonSchemaGenerator.parse_type(value)
       @response_body_of_default = value
+    end
+
+    def framework=(value)
+      valid_frameworks = [:rails, :rage, :sinatra]
+      raise ArgumentError, "framework must be one of #{valid_frameworks}" unless valid_frameworks.include?(value)
+
+      @framework = value
+    end
+
+    private
+
+    def detect_framework
+      if defined?(Rails)
+        :rails
+      elsif defined?(Rage)
+        :rage
+      elsif defined?(Sinatra)
+        :sinatra
+      end
     end
   end
 
