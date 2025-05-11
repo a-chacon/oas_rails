@@ -21,6 +21,7 @@ module OasRails
     autoload :ParameterBuilder, "oas_rails/builders/parameter_builder"
     autoload :RequestBodyBuilder, "oas_rails/builders/request_body_builder"
     autoload :EsquemaBuilder, "oas_rails/builders/esquema_builder"
+    autoload :OasRouteBuilder, "oas_rails/builders/oas_route_builder"
     autoload :SpecificationBuilder, "oas_rails/builders/specification_builder"
   end
 
