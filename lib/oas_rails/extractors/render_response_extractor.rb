@@ -81,7 +81,7 @@ module OasRails
         # @return [Array<Hash, Hash>] An array where the first element is the schema and the second is the examples.
         def build_singular_model_schema_and_examples(_maybe_a_model, errors, klass, schema)
           if errors.nil?
-            [schema, Spec::MediaType.search_for_examples_in_tests(klass, context: :outgoing)]
+            [schema, ActiveRecordExampleFinder.new(context: :outgoing).search(klass)]
           else
             # TODO: this is not building the real schema.
             [
@@ -110,7 +110,7 @@ module OasRails
         # @param schema [Hash] The schema for the model.
         # @return [Array<Hash, Hash>] An array where the first element is the schema and the second is the examples.
         def build_array_model_schema_and_examples(maybe_a_model, klass, schema)
-          examples = { maybe_a_model => { value: Spec::MediaType.search_for_examples_in_tests(klass, context: :outgoing).values.map { |p| p.dig(:value, maybe_a_model.singularize.to_sym) } } }
+          examples = { maybe_a_model => { value: ActiveRecordExampleFinder.new(context: :outgoing).search(klass).values.map { |p| p.dig(:value, maybe_a_model.singularize.to_sym) } } }
           [{ type: "array", items: schema }, examples]
         end
 
