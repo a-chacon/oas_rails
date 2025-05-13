@@ -6,12 +6,12 @@ module OasRails
       end
 
       def call(env)
-        request = Rack::Request.new(env)
+        @request = Rack::Request.new(env)
         oas = OasRails.build.to_json
 
-        if request.path.end_with?('.json')
+        if @request.path.end_with?('.json')
           [200, { "Content-Type" => "application/json" }, [oas]]
-        elsif request.path.end_with?('.js')
+        elsif @request.path.end_with?('.js')
           [200, { "Content-Type" => "application/javascript" }, [render_js]]
         else
           [200, { "Content-Type" => "text/html" }, [render_view]]
