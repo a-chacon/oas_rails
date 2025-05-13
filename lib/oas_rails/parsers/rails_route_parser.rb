@@ -1,6 +1,6 @@
 module OasRails
   module Parsers
-    class OasRouteParser
+    class RailsRouteParser
       def self.build_from_rails_route(rails_route)
         new(rails_route).build
       end
@@ -51,9 +51,8 @@ module OasRails
         @rails_route.verb
       end
 
-      # TODO: Route extractor
       def path
-        Extractors::RailsRouteExtractor.clean_route(@rails_route.path.spec.to_s)
+        @rails_route.path.spec.to_s.gsub('(.:format)', '').gsub(/:\w+/) { |match| "{#{match[1..]}}" }
       end
 
       def source_string
