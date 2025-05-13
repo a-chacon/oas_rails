@@ -59,11 +59,13 @@ module OasRails
     autoload :RenderResponseExtractor, 'oas_rails/extractors/render_response_extractor'
     autoload :OasRouteExtractor, "oas_rails/extractors/oas_route_extractor"
     autoload :RailsRouteExtractor, "oas_rails/extractors/rails_route_extractor" if defined?(Rails)
+    autoload :RageRouteExtractor, "oas_rails/extractors/rage_route_extractor" if defined?(Rage)
     # autoload :SinatraRouteExtractor, "oas_rails/extractors/rails_route_extractor"
   end
 
   module Parsers
     autoload :RailsRouteParser, "oas_rails/parsers/rails_route_parser" if defined?(Rails)
+    autoload :RageRouteParser, "oas_rails/parsers/rage_route_parser" if defined?(Rage)
     # autoload :SinatraRouteParser, "oas_rails/parsers/rails_route_parser"
   end
 
@@ -76,8 +78,8 @@ module OasRails
       extractor = case config.framework
                   when :rails
                     Extractors::RailsRouteExtractor.new
-                  when :sinatra
-                    Extractors::SinatraRouteExtractor.new
+                  when :rage
+                    Extractors::RageRouteExtractor.new
                   else
                     raise "Unsupported framework: #{config.framework}"
                   end
