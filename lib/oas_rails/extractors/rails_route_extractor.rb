@@ -45,14 +45,10 @@ module OasRails
         @host_paths ||= host_routes.map(&:path).uniq.sort
       end
 
-      def clean_route(route)
-        route.gsub('(.:format)', '').gsub(/:\w+/) { |match| "{#{match[1..]}}" }
-      end
-
       private
 
       def extract_host_routes
-        routes = valid_routes.map { |r| Builders::OasRouteBuilder.build_from_rails_route(r) }
+        routes = valid_routes.map { |r| Parsers::RailsRouteParser.build_from_rails_route(r) }
 
         routes.select! { |route| route.tags.any? } if OasRails.config.include_mode == :with_tags
         routes.select! { |route| route.tags.any? { |t| t.tag_name == "oas_include" } } if OasRails.config.include_mode == :explicit

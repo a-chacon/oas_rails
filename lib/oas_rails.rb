@@ -21,11 +21,9 @@ module OasRails
     autoload :ParameterBuilder, "oas_rails/builders/parameter_builder"
     autoload :RequestBodyBuilder, "oas_rails/builders/request_body_builder"
     autoload :EsquemaBuilder, "oas_rails/builders/esquema_builder"
-    autoload :OasRouteBuilder, "oas_rails/builders/oas_route_builder"
     autoload :SpecificationBuilder, "oas_rails/builders/specification_builder"
   end
 
-  # This module contains all the clases that represent a part of the OAS file.
   module Spec
     autoload :Hashable, "oas_rails/spec/hashable"
     autoload :Specable, "oas_rails/spec/specable"
@@ -59,8 +57,18 @@ module OasRails
 
   module Extractors
     autoload :RenderResponseExtractor, 'oas_rails/extractors/render_response_extractor'
-    autoload :RailsRouteExtractor, "oas_rails/extractors/rails_route_extractor"
     autoload :OasRouteExtractor, "oas_rails/extractors/oas_route_extractor"
+    autoload :RailsRouteExtractor, "oas_rails/extractors/rails_route_extractor" if defined?(Rails)
+    # autoload :SinatraRouteExtractor, "oas_rails/extractors/rails_route_extractor"
+  end
+
+  module Parsers
+    autoload :RailsRouteParser, "oas_rails/parsers/rails_route_parser" if defined?(Rails)
+    # autoload :SinatraRouteParser, "oas_rails/parsers/rails_route_parser"
+  end
+
+  module Web
+    autoload :View, "oas_rails/web/view"
   end
 
   class << self
