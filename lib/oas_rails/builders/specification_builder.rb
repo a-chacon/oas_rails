@@ -14,15 +14,6 @@ module OasRails
         self
       end
 
-      # Clears the cache for MethodSource and RouteExtractor.
-      # TODO: This should be on a better place
-      #
-      # @return [void]
-      # def clear_cache
-      #   MethodSource.clear_cache
-      #   Extractors::RailsRouteExtractor.clear_cache
-      # end
-
       def build
         @specification
       end
