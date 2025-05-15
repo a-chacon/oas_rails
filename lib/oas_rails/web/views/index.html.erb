@@ -2,11 +2,9 @@
 <html>
   <head>
     <title><%= OasRails.config.info.title %></title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
     <meta charset="utf-8">
     <!-- Important: rapi-doc uses utf8 characters -->
-    <script type="module" src="/oas-rails-assets/rapidoc-min.js"></script>
+    <script type="module" src="<%= @request.env['SCRIPT_NAME'] %>/rapidoc-min.js"></script>
     <script>
       function applyTheme() {
         const theme = "<%= OasRails.config.rapidoc_theme %>";
@@ -126,7 +124,7 @@
   </head>
   <body>
     <rapi-doc
-      spec-url="<%= OasRails::Engine.routes.find_script_name({}) %>.json"
+      spec-url="<%= @request.env['SCRIPT_NAME'] %>/.json"
       show-header="false"
       font-size="largest"
       show-method-in-nav-bar="as-colored-text"

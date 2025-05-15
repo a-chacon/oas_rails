@@ -1,12 +1,12 @@
 module OasRails
-  module Builders
-    class OasRouteBuilder
-      def self.build_from_rails_route(rails_route)
-        new(rails_route).build
+  module Parsers
+    class RageRouteParser
+      def self.build_from_rage_route(rage_route)
+        new(rage_route).build
       end
 
-      def initialize(rails_route)
-        @rails_route = rails_route
+      def initialize(rage_route)
+        @rage_route = rage_route
       end
 
       def build
@@ -18,7 +18,7 @@ module OasRails
           method: method,
           verb: verb,
           path: path,
-          rails_route: @rails_route,
+          rails_route: @rage_route,
           docstring: docstring,
           source_string: source_string,
           tags: tags
@@ -28,31 +28,32 @@ module OasRails
       private
 
       def controller_class
-        "#{@rails_route.defaults[:controller].camelize}Controller"
+        "#{@rage_route[:meta][:controller].camelize}Controller"
       end
 
       def controller_action
-        "#{controller_class}##{@rails_route.defaults[:action]}"
+        "#{controller_class}##{@rage_route[:meta][:action]}"
       end
 
       def controller
-        @rails_route.defaults[:controller]
+        @rage_route[:meta][:controller]
       end
 
+      # TODO: remove. aparently is not in use.
       def controller_path
-        Rails.root.join("app/controllers/#{controller}_controller.rb").to_s
+        ""
       end
 
       def method
-        @rails_route.defaults[:action]
+        @rage_route[:meta][:action]
       end
 
       def verb
-        @rails_route.verb
+        @rage_route[:method]
       end
 
       def path
-        Extractors::RouteExtractor.clean_route(@rails_route.path.spec.to_s)
+        @rage_route[:path].to_s.gsub('(.:format)', '').gsub(/:\w+/) { |match| "{#{match[1..]}}" }
       end
 
       def source_string
@@ -60,7 +61,6 @@ module OasRails
       end
 
       def docstring
-        # TODO: this should be optimized. There is no need to save entire docstring now. Tags are in another variable.
         comment_lines = controller_class.constantize.instance_method(method).comment.lines
         processed_lines = comment_lines.map { |line| line.sub(/^# /, '') }
         ::YARD::Docstring.parser.parse(processed_lines.join).to_docstring
