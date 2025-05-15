@@ -27,6 +27,9 @@ module OasRails
       # Method for detect test framework of the Rails App
       # It is used for generate examples in operations
       def detect_test_framework
+        # TODO: See for other frameowkrs
+        return :unknown unless defined?(Rails)
+
         if defined?(FactoryBot)
           :factory_bot
         elsif ActiveRecord::Base.connection.table_exists?('ar_internal_metadata')

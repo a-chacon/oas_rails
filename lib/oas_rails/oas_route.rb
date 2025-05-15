@@ -9,7 +9,7 @@ module OasRails
     end
 
     def path_params
-      @rails_route.path.spec.to_s.scan(/:(\w+)/).flatten.reject! { |e| e == 'format' }
+      @path.scan(/:(\w+)/).flatten.reject! { |e| e == 'format' }
     end
 
     def tags(name = nil)

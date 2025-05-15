@@ -1,24 +1,6 @@
 module OasRails
   module Extractors
     class RageRouteExtractor
-      RAILS_DEFAULT_CONTROLLERS = %w[
-        rails/info
-        rails/mailers
-        active_storage/blobs
-        active_storage/disk
-        active_storage/direct_uploads
-        active_storage/representations
-        rails/conductor/continuous_integration
-        rails/conductor/multiple_databases
-        rails/conductor/action_mailbox
-        rails/conductor/action_text
-        action_cable
-      ].freeze
-
-      RAILS_DEFAULT_PATHS = %w[
-        /rails/action_mailbox/
-      ].freeze
-
       def initialize
         @host_routes = nil
         @host_paths = nil
@@ -49,9 +31,6 @@ module OasRails
 
       def extract_host_routes
         routes = valid_routes.map { |r| Parsers::RageRouteParser.build_from_rage_route(r) }
-        require "debug"
-        debugger
-
         routes.select! { |route| route.tags.any? } if OasRails.config.include_mode == :with_tags
         routes.select! { |route| route.tags.any? { |t| t.tag_name == "oas_include" } } if OasRails.config.include_mode == :explicit
         routes
@@ -65,8 +44,6 @@ module OasRails
 
       def valid_api_route?(route)
         return false unless valid_route_implementation?(route)
-        # return false if RAILS_DEFAULT_CONTROLLERS.any? { |default| route.defaults[:controller].start_with?(default) }
-        # return false if RAILS_DEFAULT_PATHS.any? { |path| route.path.spec.to_s.include?(path) }
         # return false unless route.path.spec.to_s.start_with?(OasRails.config.api_path)
         return false if ignore_custom_actions(route)
 

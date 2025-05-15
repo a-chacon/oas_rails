@@ -60,13 +60,11 @@ module OasRails
     autoload :OasRouteExtractor, "oas_rails/extractors/oas_route_extractor"
     autoload :RailsRouteExtractor, "oas_rails/extractors/rails_route_extractor" if defined?(Rails)
     autoload :RageRouteExtractor, "oas_rails/extractors/rage_route_extractor" if defined?(Rage)
-    # autoload :SinatraRouteExtractor, "oas_rails/extractors/rails_route_extractor"
   end
 
   module Parsers
     autoload :RailsRouteParser, "oas_rails/parsers/rails_route_parser" if defined?(Rails)
     autoload :RageRouteParser, "oas_rails/parsers/rage_route_parser" if defined?(Rage)
-    # autoload :SinatraRouteParser, "oas_rails/parsers/rails_route_parser"
   end
 
   module Web
@@ -75,18 +73,26 @@ module OasRails
 
   class << self
     def build
-      extractor = case config.framework
-                  when :rails
-                    Extractors::RailsRouteExtractor.new
-                  when :rage
-                    Extractors::RageRouteExtractor.new
-                  else
-                    raise "Unsupported framework: #{config.framework}"
-                  end
-
-      oas = Builders::SpecificationBuilder.new(extractor).fill_paths.build
+      set_extractor
+      clear_cache
+      oas = Builders::SpecificationBuilder.new(@extractor).fill_paths.build
 
       oas.to_spec
+    end
+
+    def set_extractor
+      framework_name = config.framework.to_s.capitalize
+      extractor_class_name = "#{framework_name}RouteExtractor"
+      begin
+        @extractor = Extractors.const_get(extractor_class_name).new
+      rescue NameError
+        raise "Unsupported framework: #{config.framework}"
+      end
+    end
+
+    def clear_cache
+      MethodSource.clear_cache
+      @extractor.clear_cache
     end
 
     def configure
