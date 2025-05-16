@@ -2,8 +2,8 @@
 
 OasRails generates `.txt` files optimized for AI integration:
 
-- [llms.txt](/llms.txt): Provides the basics to understand the structure and functionality of OasRails. (Work in progress)
-- [llms-full.txt](/llms-full.txt): Offers a full description of how to use OasRails and document endpoints. (**Currently recommended**)
+- [llms.txt](/oas_rails/llms.txt): Provides the basics to understand the structure and functionality of OasRails. (Work in progress)
+- [llms-full.txt](/oas_rails/llms-full.txt): Offers a full description of how to use OasRails and document endpoints. (**Currently recommended**)
 
 ## How It Works (in 3 Steps)
 
