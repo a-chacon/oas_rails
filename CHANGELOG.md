@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.14.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.13.0...oas_rails/v0.14.0) (2025-05-18)
+
+
+### Features
+
+* implement support for class level tags and refactors ([#121](https://github.com/a-chacon/oas_rails/issues/121)) ([6e19ef1](https://github.com/a-chacon/oas_rails/commit/6e19ef1a90e7b34522a1a0bdebff6baa9f7f2c36))
+
+
+### Bug Fixes
+
+* filter out rubocop and todo annotations ([#127](https://github.com/a-chacon/oas_rails/issues/127)) ([f46101c](https://github.com/a-chacon/oas_rails/commit/f46101c00429ffe0313e83901918dcb491f525b5))
+
+
+### Documentation
+
+* add demo app ([#118](https://github.com/a-chacon/oas_rails/issues/118)) ([101d233](https://github.com/a-chacon/oas_rails/commit/101d233b913b3c4fd3378d3f20bbf1e3e3a30e62))
+* add star history ([4ac26ed](https://github.com/a-chacon/oas_rails/commit/4ac26ede932e9b2930c83af91ea1b65fb9e269b1))
+* fix tags, it was just tag and that dont works with oas_rails ([#123](https://github.com/a-chacon/oas_rails/issues/123)) ([9c39510](https://github.com/a-chacon/oas_rails/commit/9c39510431a6f5f42d71d621c6ecffb15108da8b))
+* update llms urls ([975a1ff](https://github.com/a-chacon/oas_rails/commit/975a1ffdf3e4eef84dd3c5d9de48d5530c23e590))
+
+
+### Code Refactoring
+
+* move logic from media type to example finder ([#114](https://github.com/a-chacon/oas_rails/issues/114)) ([8334b04](https://github.com/a-chacon/oas_rails/commit/8334b0431c16b40e42b9f817f5d0d1221f06f428))
+
 ## [0.13.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.12.0...oas_rails/v0.13.0) (2025-04-19)
 
 
