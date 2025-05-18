@@ -10,6 +10,7 @@ module OasRails
   autoload :OasRoute, "oas_rails/oas_route"
   autoload :Utils, "oas_rails/utils"
   autoload :JsonSchemaGenerator, "oas_rails/json_schema_generator"
+  autoload :ActiveRecordExampleFinder, "oas_rails/active_record_example_finder"
 
   module Builders
     autoload :OperationBuilder, "oas_rails/builders/operation_builder"
