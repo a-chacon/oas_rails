@@ -60,10 +60,15 @@ module OasRails
       end
 
       def docstring
-        # TODO: this should be optimized. There is no need to save entire docstring now. Tags are in another variable.
         comment_lines = controller_class.constantize.instance_method(method).comment.lines
         processed_lines = comment_lines.map { |line| line.sub(/^# /, '') }
-        ::YARD::Docstring.parser.parse(processed_lines.join).to_docstring
+
+        filtered_lines = processed_lines.reject do |line|
+          line.include?('rubocop') ||
+            line.include?('TODO')
+        end
+
+        ::YARD::Docstring.parser.parse(filtered_lines.join).to_docstring
       end
 
       def tags
