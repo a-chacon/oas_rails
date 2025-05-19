@@ -56,9 +56,59 @@ module OasRails
         end
 
         def valid_routes
-          Rails.application.routes.routes.select do |route|
-            valid_api_route?(route)
+          all_routes = []
+
+          # Add main application routes
+          Rails.application.routes.routes.each do |route|
+            all_routes << route if valid_api_route?(route)
           end
+
+          # Add engine routes
+          collect_engine_routes.each do |engine_route_info|
+            route = engine_route_info[:route]
+            full_path = engine_route_info[:full_path]
+
+            # For engine routes we need to check against the full path (with mount prefix)
+            if valid_engine_api_route?(route, full_path)
+              # Create a route wrapper that provides the correct path
+              all_routes << EngineRouteWrapper.new(route, full_path)
+            end
+          end
+
+          all_routes
+        end
+
+        # Collect all routes from mounted engines with their full paths
+        def collect_engine_routes
+          engine_routes = []
+
+          Rails.application.routes.routes.each do |route|
+            # Check if this route is a mounted engine
+            next unless route.app.is_a?(Class) && route.app.ancestors.include?(Rails::Engine)
+
+            # Get the engine instance and its mount path
+            engine = route.app.instance
+            engine_mount_path = route.path.spec.to_s.chomp('/')
+
+            # Add all routes from this engine with their full paths
+            engine.routes.routes.each do |engine_route|
+              full_path = File.join(engine_mount_path, engine_route.path.spec.to_s).gsub(%r{/+}, '/')
+              engine_routes << { route: engine_route, full_path: full_path }
+            end
+          end
+
+          engine_routes
+        end
+
+        # Check if an engine route should be included
+        def valid_engine_api_route?(route, full_path)
+          return false unless valid_route_implementation?(route)
+          return false if RAILS_DEFAULT_CONTROLLERS.any? { |default| route.defaults[:controller].start_with?(default) }
+          return false if RAILS_DEFAULT_PATHS.any? { |path| full_path.include?(path) }
+          return false unless full_path.start_with?(OasRails.config.api_path)
+          return false if ignore_custom_actions(route)
+
+          true
         end
 
         def valid_api_route?(route)
