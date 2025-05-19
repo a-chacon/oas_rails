@@ -17,6 +17,7 @@ module OasRails
       assert_equal "Hash{ status: !Integer, error: String }", @config.response_body_of_default
       assert_equal :rails, @config.rapidoc_theme
       assert_equal :all, @config.include_mode
+      assert_equal Rails.application, @config.routes_provider
     end
 
     test "sets and gets servers" do
@@ -72,6 +73,22 @@ module OasRails
         assert_respond_to @config, "response_body_of_#{response}="
         assert_respond_to @config, "response_body_of_#{response}"
       end
+    end
+
+    test "validates routes_provider" do
+      # Test with an object that responds to :routes (should work)
+      mock_routes_provider = Class.new do
+        def routes
+          []
+        end
+      end.new
+
+      @config.routes_provider = mock_routes_provider
+      assert_equal mock_routes_provider, @config.routes_provider
+
+      # Test with an object that doesn't respond to :routes (should raise error)
+      assert_raises(ArgumentError) { @config.routes_provider = "invalid" }
+      assert_raises(ArgumentError) { @config.routes_provider = 123 }
     end
   end
 end

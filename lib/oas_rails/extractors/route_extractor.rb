@@ -56,8 +56,8 @@ module OasRails
         end
 
         def valid_routes
-          Rails.application.routes.routes.select do |route|
-            valid_api_route?(route)
+          OasRails.config.routes_provider.routes.routes.select do |route|
+            route if valid_api_route?(route)
           end
         end
 

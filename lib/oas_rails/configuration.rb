@@ -15,7 +15,7 @@ module OasRails
                   :use_model_names,
                   :rapidoc_theme
 
-    attr_reader :servers, :tags, :security_schema, :include_mode, :response_body_of_default
+    attr_reader :servers, :tags, :security_schema, :include_mode, :response_body_of_default, :routes_provider
 
     def initialize
       @info = Spec::Info.new
@@ -38,6 +38,7 @@ module OasRails
       @use_model_names = false
       @rapidoc_theme = :rails
       @include_mode = :all
+      @routes_provider = Rails.application
 
       @possible_default_responses.each do |response|
         method_name = "response_body_of_#{response}="
@@ -72,6 +73,12 @@ module OasRails
 
     def tags=(value)
       @tags = value.map { |t| Spec::Tag.new(name: t[:name], description: t[:description]) }
+    end
+
+    def routes_provider=(value)
+      raise ArgumentError, "routes_provider must have routes" unless value.respond_to?(:routes)
+
+      @routes_provider = value
     end
 
     def excluded_columns_incoming
