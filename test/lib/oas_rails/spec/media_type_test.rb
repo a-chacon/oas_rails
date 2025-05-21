@@ -2,7 +2,7 @@ require "test_helper"
 
 module OasRails
   module Spec
-    class MediaTypeTest < ActiveSupport::TestCase
+    class MediaTypeTest < Minitest::Test
       # test "create one example for one tag" do
       #   tag = YARD::OasYARDFactory.new.parse_tag_with_request_body_example(
       #     :request_body_example,

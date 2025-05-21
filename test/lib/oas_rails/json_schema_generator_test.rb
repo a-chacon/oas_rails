@@ -1,7 +1,7 @@
 require "test_helper"
 
 module OasRails
-  class JsonSchemaGeneratorTest < ActiveSupport::TestCase
+  class JsonSchemaGeneratorTest < Minitest::Test
     def test_process_string
       input = "!Hash{message: !String, data: Hash{availabilities: Array<String>, details: Array<Hash{id: !Integer, name: !String}>}, metadata: Hash{id: !Integer, tags: Array<String>}}"
       result = JsonSchemaGenerator.process_string(input)
