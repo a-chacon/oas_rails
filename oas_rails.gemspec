@@ -24,5 +24,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'easy_talk_two', '~> 1.1.2'
   spec.add_dependency 'method_source', '~> 1.0'
+  spec.add_dependency "rack", '~> 3.1'
   spec.add_dependency 'yard', '~> 0.9'
 end

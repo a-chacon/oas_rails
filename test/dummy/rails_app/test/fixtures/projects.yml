@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  title: MyString
+  description: MyText
+  start_date: 2025-05-19 04:44:04
+  end_date: 2025-05-19 04:44:04
+  status: MyString
+  budget: 9.99
+
+two:
+  user: two
+  title: MyString
+  description: MyText
+  start_date: 2025-05-19 04:44:04
+  end_date: 2025-05-19 04:44:04
+  status: MyString
+  budget: 9.99

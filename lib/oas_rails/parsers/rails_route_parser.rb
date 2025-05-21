@@ -18,7 +18,6 @@ module OasRails
           method: method,
           verb: verb,
           path: path,
-          rails_route: @rails_route,
           docstring: docstring,
           source_string: source_string,
           tags: tags

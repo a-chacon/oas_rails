@@ -1,7 +1,13 @@
 require "test_helper"
 
-class OasRailsTest < ActiveSupport::TestCase
-  test "it has a version number" do
+class OasRailsTest < Minitest::Test
+  def test_it_has_version_number
     assert OasRails::VERSION
+  end
+
+  def test_rails_app
+    load_dummy(:rails)
+
+    assert defined?(Rails), 'Rails is not defined'
   end
 end

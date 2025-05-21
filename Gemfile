@@ -4,18 +4,16 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 # Specify your gem's dependencies in oas_rails.gemspec.
 gemspec
 
-gem 'puma'
-
-gem 'sqlite3', "~> 1.4"
-
-gem 'sprockets-rails'
-
-gem 'rack-cors'
-
-gem 'rails', '~> 7.0'
-
 group :development, :test do
+  gem "puma"
+
+  gem 'rack-cors'
+
+  gem "sqlite3"
+
   gem "rubocop"
+
+  gem "sprockets-rails"
 
   gem "bcrypt", "~> 3.1.7"
 
@@ -24,6 +22,10 @@ group :development, :test do
   gem 'jwt'
 
   gem 'faker'
+
+  gem "rails", "~> 8.0"
+
+  gem 'minitest-reporters'
 end
 
 # Start debugger with binding.b [https://github.com/ruby/debug]

@@ -1,6 +1,7 @@
 require "yard"
 require "method_source"
 require "easy_talk"
+require "rack"
 
 module OasRails
   require "oas_rails/version"
