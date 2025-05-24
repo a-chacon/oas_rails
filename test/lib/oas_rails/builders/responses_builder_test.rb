@@ -3,18 +3,26 @@ require "test_helper"
 module OasRails
   module Builders
     class ResponsesBuilderTest < Minitest::Test
-      # def setup
-      #   @specification = Spec::Specification.new
-      #
-      #   @oas_route_login = find_oas_route("users", "login")
-      #   @oas_route_show = find_oas_route("users", "show")
-      #   @oas_route_create = find_oas_route("users", "create")
-      #   @oas_route_update = find_oas_route("users", "update")
-      # end
-      #
+      def setup
+        @specification = Spec::Specification.new
+      end
+
       # def test_add_autodiscover_responses
+      #   oas_route = build_oas_route({
+      #                                 source_string: <<~RUBY
+      #                                   def create
+      #                                     @post = Post.new(post_params)
+      #                                     if @post.save
+      #                                       render json: @post, status: :created
+      #                                     else
+      #                                       render json: @post.errors, status: :unprocessable_entity
+      #                                     end
+      #                                   end
+      #                                 RUBY
+      #                               })
+      #
       #   OasRails.config.autodiscover_responses = true
-      #   @responses = ResponsesBuilder.new(@specification).add_autodiscovered_responses(@oas_route_login).build
+      #   @responses = ResponsesBuilder.new(@specification).add_autodiscovered_responses(oas_route).build
       #
       #   assert @responses.responses.any?
       # end

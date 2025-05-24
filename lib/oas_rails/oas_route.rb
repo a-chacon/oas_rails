@@ -1,6 +1,6 @@
 module OasRails
   class OasRoute
-    attr_accessor :controller_class, :controller_action, :controller, :controller_path, :method, :verb, :path, :docstring, :source_string
+    attr_accessor :controller_class, :controller_action, :controller, :method, :verb, :path, :docstring, :source_string
     attr_writer :tags
 
     def initialize(attributes = {})

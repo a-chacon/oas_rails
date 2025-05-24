@@ -12,7 +12,8 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create project" do
     assert_difference("Project.count") do
-      post projects_url, params: { project: { budget: @project.budget, description: @project.description, end_date: @project.end_date, start_date: @project.start_date, status: @project.status, title: @project.title, user_id: @project.user_id } }, as: :json
+      post projects_url,
+           params: { project: { budget: @project.budget, description: @project.description, end_date: @project.end_date, start_date: @project.start_date, status: @project.status, title: @project.title, user_id: @project.user_id } }, as: :json
     end
 
     assert_response :created
@@ -24,7 +25,8 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update project" do
-    patch project_url(@project), params: { project: { budget: @project.budget, description: @project.description, end_date: @project.end_date, start_date: @project.start_date, status: @project.status, title: @project.title, user_id: @project.user_id } }, as: :json
+    patch project_url(@project),
+          params: { project: { budget: @project.budget, description: @project.description, end_date: @project.end_date, start_date: @project.start_date, status: @project.status, title: @project.title, user_id: @project.user_id } }, as: :json
     assert_response :success
   end
 

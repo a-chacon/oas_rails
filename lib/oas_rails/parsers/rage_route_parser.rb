@@ -14,7 +14,6 @@ module OasRails
           controller_class: controller_class,
           controller_action: controller_action,
           controller: controller,
-          controller_path: controller_path,
           method: method,
           verb: verb,
           path: path,
@@ -36,11 +35,6 @@ module OasRails
 
       def controller
         @rage_route[:meta][:controller]
-      end
-
-      # TODO: remove. aparently is not in use.
-      def controller_path
-        ""
       end
 
       def method

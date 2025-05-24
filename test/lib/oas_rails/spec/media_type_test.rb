@@ -3,66 +3,34 @@ require "test_helper"
 module OasRails
   module Spec
     class MediaTypeTest < Minitest::Test
-      # test "create one example for one tag" do
-      #   tag = YARD::OasYARDFactory.new.parse_tag_with_request_body_example(
-      #     :request_body_example,
-      #     'basic user [Hash] {user: {name: "Luis", email: "luis@gmail.ocom"}}'
-      #   )
-      #
-      #   result = Spec::MediaType.tags_to_examples(tags: [tag])
-      #
-      #   assert_equal(
-      #     { "basic_user" => { "summary" => "basic user", "value" => { user: { name: "Luis", email: "luis@gmail.ocom" } } } },
-      #     result
-      #   )
-      # end
-      #
-      # test "create media type from model class" do
-      #   media_type = Spec::MediaType.from_model_class(klass: User)
-      #
-      #   assert_instance_of Spec::MediaType, media_type
-      #   assert_equal "object", media_type.schema[:type]
-      #   assert_includes media_type.schema[:properties], "user"
-      #   assert_kind_of Hash, media_type.schema[:properties]["user"]
-      #   assert_empty media_type.schema[:properties]["user"]["required"]
-      # end
-      #
-      # test "search for examples using FactoryBot" do
-      #   utils = mock_detect_test_framework(:factory_bot)
-      #   examples = Spec::MediaType.search_for_examples_in_tests(klass: User, utils:)
-      #
-      #   assert_equal 3, examples.size
-      #
-      #   utils.verify
-      # end
-      #
-      # test "search for examples using fixtures" do
-      #   utils = mock_detect_test_framework(:fixtures)
-      #   examples = Spec::MediaType.search_for_examples_in_tests(klass: User, utils:)
-      #
-      #   assert_equal 2, examples.size
-      #
-      #   utils.verify
-      # end
-      #
-      # test "search for examples with unrecognized test framework" do
-      #   mock_utils = Minitest::Mock.new
-      #   mock_utils.expect :detect_test_framework, :unknown_framework
-      #
-      #   examples = Spec::MediaType.search_for_examples_in_tests(klass: User, utils: mock_utils)
-      #
-      #   assert_empty examples
-      #
-      #   mock_utils.verify
-      # end
-      #
-      # private
-      #
-      # def mock_detect_test_framework(should_respond)
-      #   mock_utils = Minitest::Mock.new
-      #   mock_utils.expect :detect_test_framework, should_respond
-      #   mock_utils
-      # end
+      def setup
+        @specification = { schema: {}, example: {}, examples: {} }
+        @media_type = MediaType.new(@specification)
+      end
+
+      def test_initialization
+        assert_equal @specification, @media_type.instance_variable_get(:@specification)
+        assert_equal({}, @media_type.schema)
+        assert_equal({}, @media_type.example)
+        assert_equal({}, @media_type.examples)
+        assert_nil @media_type.encoding
+      end
+
+      def test_attribute_accessors
+        @media_type.schema = { key: "value" }
+        @media_type.example = { key: "value" }
+        @media_type.examples = { key: "value" }
+        @media_type.encoding = { key: "value" }
+
+        assert_equal({ key: "value" }, @media_type.schema)
+        assert_equal({ key: "value" }, @media_type.example)
+        assert_equal({ key: "value" }, @media_type.examples)
+        assert_equal({ key: "value" }, @media_type.encoding)
+      end
+
+      def test_oas_fields
+        assert_equal [:schema, :example, :examples, :encoding], @media_type.oas_fields
+      end
     end
   end
 end

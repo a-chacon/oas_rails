@@ -1,5 +1,5 @@
-# Load the Rails application.
 require_relative "application"
 
-# Initialize the Rails application.
+Rails.application.config.eager_load = true
+
 Rails.application.initialize!
