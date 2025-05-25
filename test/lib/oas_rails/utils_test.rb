@@ -3,75 +3,56 @@ require "test_helper"
 module OasRails
   class UtilsTest < Minitest::Test
     def test_detect_test_framework
-      skip "Pending: Test needs to be updated for new framework detection logic"
-      # Mock Rails and FactoryBot for testing
-      Object.const_set(:Rails, Module.new) unless defined?(Rails)
-      Object.const_set(:FactoryBot, Module.new) unless defined?(FactoryBot)
-      Object.const_set(:ActiveRecord, Module.new) unless defined?(ActiveRecord)
-      ActiveRecord.const_set(:Base, Class.new) unless defined?(ActiveRecord::Base)
-
-      # Test with FactoryBot defined
-      assert_equal :factory_bot, OasRails::Utils.detect_test_framework
-
-      # Remove FactoryBot and test with ActiveRecord table
-      Object.send(:remove_const, :FactoryBot)
-      ActiveRecord::Base.define_singleton_method(:connection) do
-        Struct.new(:table_exists?).new(true)
-      end
-      assert_equal :fixtures, OasRails::Utils.detect_test_framework
-
-      # Remove ActiveRecord table and test unknown
-      ActiveRecord::Base.define_singleton_method(:connection) do
-        Struct.new(:table_exists?).new(false)
-      end
-      assert_equal :unknown, OasRails::Utils.detect_test_framework
-    ensure
-      Object.send(:remove_const, :Rails) if defined?(Rails)
-      Object.send(:remove_const, :FactoryBot) if defined?(FactoryBot)
-      Object.send(:remove_const, :ActiveRecord) if defined?(ActiveRecord)
+      assert_equal :fixtures, Utils.detect_test_framework
     end
 
     def test_hash_to_json_schema
-      schema = OasRails::Utils.hash_to_json_schema({ name: "String", age: 30 })
-      assert_equal 'object', schema[:type]
-      assert schema[:properties].key?(:name)
-      assert schema[:properties].key?(:age)
-      assert_empty schema[:required]
+      hash = { name: "Test", age: 30, active: true }
+      schema = Utils.hash_to_json_schema(hash)
+
+      assert_equal "object", schema[:type]
+      assert_equal %i[name age active], schema[:properties].keys
+      assert_equal [], schema[:required]
+    end
+
+    def test_ruby_type_to_json_type
+      assert_equal "string", Utils.ruby_type_to_json_type("String")
+      assert_equal "number", Utils.ruby_type_to_json_type("Integer")
+      assert_equal "boolean", Utils.ruby_type_to_json_type("TrueClass")
+      assert_equal "null", Utils.ruby_type_to_json_type("NilClass")
+      assert_equal "object", Utils.ruby_type_to_json_type("Hash")
+      assert_equal "string", Utils.ruby_type_to_json_type("UnknownClass")
     end
 
     def test_status_to_integer
-      assert_equal 200, OasRails::Utils.status_to_integer(nil)
-      assert_equal 200, OasRails::Utils.status_to_integer('200')
-      assert_equal 404, OasRails::Utils.status_to_integer(:not_found)
+      assert_equal 200, Utils.status_to_integer(nil)
+      assert_equal 200, Utils.status_to_integer("200")
+      assert_equal 404, Utils.status_to_integer(:not_found)
+      assert_equal 422, Utils.status_to_integer("unprocessable_entity")
     end
 
     def test_get_definition
-      assert_equal "The request has succeeded.", OasRails::Utils.get_definition(200)
-      assert_equal "Definition not found for status code 999", OasRails::Utils.get_definition(999)
+      assert_equal "The request has succeeded.", Utils.get_definition(200)
+      assert_equal "The requested resource could not be found.", Utils.get_definition(404)
+      assert_equal "Definition not found for status code 999", Utils.get_definition(999)
     end
 
     def test_class_to_symbol
-      klass = Class.new { def self.name = "TestClass" }
-      assert_equal :test_class, OasRails::Utils.class_to_symbol(klass)
+      assert_equal :user, Utils.class_to_symbol(User)
     end
 
     def test_find_model_from_route
-      Object.const_set(:User, Class.new)
-      assert_equal User, OasRails::Utils.find_model_from_route('/users')
-    ensure
-      Object.send(:remove_const, :User) if defined?(User)
+      # Assuming the dummy app has a User model
+      assert_equal User, Utils.find_model_from_route("/users")
+      assert_equal Admin::User, Utils.find_model_from_route("/admin/users") if defined?(Admin::User)
+      assert_nil Utils.find_model_from_route("/nonexistent")
     end
 
     def test_active_record_class?
-      # Mock an ActiveRecord class for testing
-      Object.const_set(:ActiveRecord, Module.new)
-      ActiveRecord.const_set(:Base, Class.new)
-      ar_class = Class.new(ActiveRecord::Base)
-
-      assert OasRails::Utils.active_record_class?(ar_class)
-      refute OasRails::Utils.active_record_class?('String')
-    ensure
-      Object.send(:remove_const, :ActiveRecord) if defined?(ActiveRecord)
+      assert Utils.active_record_class?(User)
+      assert Utils.active_record_class?("User")
+      refute Utils.active_record_class?("String")
+      refute Utils.active_record_class?(String)
     end
   end
 end

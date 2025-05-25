@@ -1,9 +1,9 @@
 module OasRails
   class ActiveRecordExampleFinder
-    def initialize(context: :incoming, utils: Utils, factory_bot: FactoryBot, erb: ERB, yaml: YAML, file: File)
+    def initialize(context: :incoming, utils: Utils, factory_bot: nil, erb: ERB, yaml: YAML, file: File)
       @context = context
       @utils = utils
-      @factory_bot = factory_bot
+      @factory_bot = defined?(FactoryBot) ? FactoryBot : factory_bot
       @erb = erb
       @yaml = yaml
       @file = file
@@ -13,7 +13,7 @@ module OasRails
     def search(klass)
       case @utils.detect_test_framework
       when :factory_bot
-        fetch_factory_bot_examples(klass: klass)
+        @factory_bot ? fetch_factory_bot_examples(klass: klass) : {}
       when :fixtures
         fetch_fixture_examples(klass: klass)
       else

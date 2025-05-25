@@ -4,8 +4,6 @@ module OasRails
   module Extractors
     class RailsRouteExtractorTest < Minitest::Test
       def setup
-        load_dummy(:rails)
-
         @extractor = RailsRouteExtractor.new
       end
 
@@ -35,7 +33,7 @@ module OasRails
       end
 
       def test_valid_route_implementation?
-        route = Rails.application.routes.routes.first
+        route = Rails.application.routes.routes.select { |r| r.name == "projects" }.first
         assert @extractor.send(:valid_route_implementation?, route)
       end
 

@@ -6,7 +6,7 @@ class OasRailsTest < Minitest::Test
   end
 
   def test_rails_app
-    load_dummy(:rails)
+    # load_dummy(:rails)
 
     assert defined?(Rails), 'Rails is not defined'
   end

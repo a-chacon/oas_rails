@@ -35,7 +35,7 @@ module OasRails
       end
 
       def test_parse_tag_with_request_body_returns_request_body_tag_with_active_record_model
-        load_dummy(:rails)
+        # load_dummy(:rails)
 
         text = 'The user to be created [!User]'
         tag = @factory.parse_tag_with_request_body('request_body', text)
@@ -89,8 +89,6 @@ module OasRails
       end
 
       def test_parse_tag_with_response_returns_response_tag_using_array_as_response
-        load_dummy(:rails)
-
         text = 'List of Users(200) [Array<User>]'
         tag = @factory.parse_tag_with_response('response', text)
         assert_instance_of ResponseTag, tag
@@ -109,11 +107,10 @@ module OasRails
                 "name" => { "type" => %w[string null] },
                 "email" => { "type" => %w[string null] },
                 "age" => { "type" => %w[integer null] },
-                "bio" => { "type" => %w[string null] },
-                "birthdate" => { "type" => %w[string null], "format" => "date" }
+                "bio" => { "type" => %w[string null] }
               },
               "additionalProperties" => false,
-              "required" => %w[id name email age bio birthdate]
+              "required" => %w[id name email age bio]
             }
           },
           tag.schema

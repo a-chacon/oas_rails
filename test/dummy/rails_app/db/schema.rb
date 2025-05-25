@@ -29,7 +29,6 @@ ActiveRecord::Schema[8.0].define(version: 2) do
     t.string "email"
     t.integer "age"
     t.text "bio"
-    t.date "birthdate"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true

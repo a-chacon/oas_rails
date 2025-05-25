@@ -4,8 +4,6 @@ module OasRails
   module Parsers
     class RailsRouteParserTest < Minitest::Test
       def setup
-        load_dummy(:rails)
-
         @route = find_route("users", "index")
         @parser = OasRails::Parsers::RailsRouteParser.new(@route)
       end

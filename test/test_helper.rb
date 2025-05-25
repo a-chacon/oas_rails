@@ -1,44 +1,20 @@
-$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
-require "oas_rails"
-
 require "minitest/autorun"
 require "minitest/mock"
 require 'minitest/reporters'
 require "debug"
 
+ENV["RAILS_ENV"] ||= "test"
+ENV["BACKTRACE"] ||= "test"
+require_relative "../test/dummy/rails_app/config/environment"
+require "rails/test_help"
+
+# ENV["RAGE_ENV"] ||= "test"
+# require_relative '../test/dummy/rage_app/config/environment'
+
+# $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
+# require "oas_rails"
+
 Minitest::Reporters.use! [Minitest::Reporters::DefaultReporter.new(color: true)]
-
-# Helper method to find a Rails route by controller and action
-def find_route(controller_name, action_name)
-  # Rails.application.routes.routes.find do |route|
-  #   defaults = route.defaults
-  #   defaults[:controller] == controller_name && defaults[:action] == action_name
-  # end
-end
-
-def find_oas_route(controller_name, action_name)
-  OasRails::Builders::OasRouteBuilder.build_from_rails_route(find_route(controller_name, action_name))
-end
-
-# Required for run Rails test
-def load_dummy(framework)
-  case framework
-  when :rails
-    ENV["RAILS_ENV"] ||= "test"
-    require_relative "../test/dummy/rails_app/config/environment"
-    require "rails/test_help"
-
-    # require specific Rails Clases
-    $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
-    require "oas_rails/parsers/rails_route_parser"
-    require "oas_rails/extractors/rails_route_extractor"
-  when :sinatra
-    require 'rack/test'
-    require_relative '../dummy/sinatra_app/app'
-  else
-    raise ArgumentError, "Unsupported framework: #{framework}"
-  end
-end
 
 def generate_yard_comment
   <<~YARD
