@@ -3,13 +3,23 @@ require "minitest/mock"
 require 'minitest/reporters'
 require "debug"
 
+ENV["OAS_RAILS_ENV"] ||= "test"
+
 ENV["RAILS_ENV"] ||= "test"
 ENV["BACKTRACE"] ||= "test"
 require_relative "../test/dummy/rails_app/config/environment"
 require "rails/test_help"
 
-# ENV["RAGE_ENV"] ||= "test"
-# require_relative '../test/dummy/rage_app/config/environment'
+ENV["RAGE_ENV"] ||= "test"
+
+# Mock the root method of the Rage framework
+module Rage
+  def self.root
+    Pathname.new(File.expand_path("../test/dummy/rage_app", __dir__))
+  end
+end
+
+require_relative '../test/dummy/rage_app/config/environment'
 
 # $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 # require "oas_rails"

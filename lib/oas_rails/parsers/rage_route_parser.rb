@@ -26,19 +26,20 @@ module OasRails
       private
 
       def controller_class
-        "#{@rage_route[:meta][:controller].camelize}Controller"
+        controller_name = @rage_route[:meta][:raw_handler].split("#").first
+        "#{controller_name.camelize}Controller"
       end
 
       def controller_action
-        "#{controller_class}##{@rage_route[:meta][:action]}"
+        "#{controller_class}##{@rage_route[:meta][:raw_handler].split('#').last}"
       end
 
       def controller
-        @rage_route[:meta][:controller]
+        @rage_route[:meta][:raw_handler].split("#").first
       end
 
       def method
-        @rage_route[:meta][:action]
+        @rage_route[:meta][:raw_handler].split("#").last
       end
 
       def verb

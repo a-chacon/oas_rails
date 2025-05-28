@@ -6,6 +6,16 @@ require "rack"
 module OasRails
   require "oas_rails/version"
 
+  class << self
+    def supports_rails?
+      ENV['OAS_RAILS_ENV'] == 'test' || defined?(Rails)
+    end
+
+    def supports_rage?
+      ENV['OAS_RAILS_ENV'] == 'test' || defined?(Rage)
+    end
+  end
+
   autoload :Configuration, "oas_rails/configuration"
   autoload :OasRoute, "oas_rails/oas_route"
   autoload :Utils, "oas_rails/utils"
@@ -58,15 +68,15 @@ module OasRails
   end
 
   module Extractors
-    autoload :RenderResponseExtractor, 'oas_rails/extractors/render_response_extractor'
     autoload :OasRouteExtractor, "oas_rails/extractors/oas_route_extractor"
-    autoload :RailsRouteExtractor, "oas_rails/extractors/rails_route_extractor" if defined?(Rails)
-    autoload :RageRouteExtractor, "oas_rails/extractors/rage_route_extractor" if defined?(Rage)
+    autoload :RenderResponseExtractor, 'oas_rails/extractors/render_response_extractor'
+    autoload :RailsRouteExtractor, "oas_rails/extractors/rails_route_extractor" if OasRails.supports_rails?
+    autoload :RageRouteExtractor, "oas_rails/extractors/rage_route_extractor" if OasRails.supports_rage?
   end
 
   module Parsers
-    autoload :RailsRouteParser, "oas_rails/parsers/rails_route_parser" if defined?(Rails)
-    autoload :RageRouteParser, "oas_rails/parsers/rage_route_parser" if defined?(Rage)
+    autoload :RailsRouteParser, "oas_rails/parsers/rails_route_parser" if OasRails.supports_rails?
+    autoload :RageRouteParser, "oas_rails/parsers/rage_route_parser" if OasRails.supports_rage?
   end
 
   module Web

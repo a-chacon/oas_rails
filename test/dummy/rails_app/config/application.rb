@@ -8,7 +8,7 @@ require "rails/all"
 # require "active_storage/engine"
 
 Bundler.require(*Rails.groups)
-require "oas_rails"
+# require "oas_rails"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.

@@ -1,8 +1,6 @@
 require "bundler/setup"
 require "rage"
-
-# $LOAD_PATH.unshift File.expand_path("../../../../lib", __dir__)
-# require "oas_rails"
+require "oas_rails"
 
 require "rage/all"
 
