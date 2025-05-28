@@ -22,7 +22,7 @@ module OasRails
           from_model_class(klass: tag.klass, description: tag.text, required: tag.required, examples_tags:)
         else
           @request_body.description = tag.text
-          @request_body.content = ContentBuilder.new(@specification, :incoming).with_schema(tag.schema).with_examples_from_tags(examples_tags).build
+          @request_body.content = ContentBuilder.new(@specification, :incoming).with_schema(tag.schema).with_examples_from_tags(examples_tags).with_content_type(tag.content_type).build
           @request_body.required = tag.required
         end
 

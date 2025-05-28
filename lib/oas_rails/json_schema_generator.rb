@@ -124,6 +124,7 @@ module OasRails
       when 'nil' then { type: "null" }
       when 'date' then { type: "string", format: "date" }
       when 'datetime' then { type: "string", format: "date-time" }
+      when 'file' then { type: "string", format: "binary" }
       else type.to_s.downcase
       end
     end

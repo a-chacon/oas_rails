@@ -13,6 +13,16 @@ module OasRails
         expected_hash = { message: "Hello", data: { availabilities: %w[one two three], dates: ["10-06-2020"] } }
         assert_equal expected_hash, response.content
       end
+
+      def test_parse_tag_with_request_body
+        request_body = OasRailsFactory.new.parse_tag_with_request_body(:request_body,
+                                                                       'Avatar(multipart/form-data) [!Hash{file: File}]')
+
+        assert request_body.is_a?(RequestBodyTag)
+        assert_equal 'Avatar', request_body.text
+        assert_equal 'multipart/form-data', request_body.content_type
+        assert_equal 'file', request_body.schema[:properties][:file]
+      end
     end
   end
 end
