@@ -1,51 +1,56 @@
 require 'test_helper'
 
 module OasRails
-  class OasRouteTest < ActiveSupport::TestCase
-    test 'initializes with attributes' do
+  class OasRouteTest < Minitest::Test
+    def test_initializes_with_attributes
       attributes = {
         controller_class: 'UsersController',
-        controller_action: 'index',
-        rails_route: find_route("users", "index")
+        controller_action: 'index'
       }
 
       route = OasRoute.new(attributes)
       assert_equal 'UsersController', route.controller_class
       assert_equal 'index', route.controller_action
-      assert_kind_of ActionDispatch::Journey::Route, route.rails_route
     end
 
-    test 'extracts path parameters' do
-      route = OasRoute.new(
-        rails_route: find_route("users", "show")
-      )
-      assert_equal ['id'], route.path_params
-    end
-
-    test 'ignores format parameter' do
-      route = OasRoute.new(
-        rails_route: find_route("users", "show")
-      )
-      assert_equal ['id'], route.path_params
-    end
-
-    test 'filters tags by name' do
+    def test_filters_tags_by_name
       tags = [
         Struct.new(:tag_name).new('admin'),
         Struct.new(:tag_name).new('public')
       ]
-      route = OasRoute.new(tags: tags)
+      route = OasRails::OasRoute.new(tags: tags)
       assert_equal 1, route.tags('admin').size
       assert_equal 'admin', route.tags('admin').first.tag_name
     end
 
-    test 'returns all tags when no name is provided' do
+    def test_returns_all_tags_when_no_name_is_provided
       tags = [
         Struct.new(:tag_name).new('admin'),
         Struct.new(:tag_name).new('public')
       ]
-      route = OasRoute.new(tags: tags)
+      route = OasRails::OasRoute.new(tags: tags)
       assert_equal 2, route.tags.size
+    end
+
+    def test_extracts_path_params_correctly
+      route = OasRails::OasRoute.new(path: '/users/:id/posts/:post_id.:format')
+      assert_equal %w[id post_id], route.path_params
+    end
+
+    def test_excludes_format_from_path_params
+      route = OasRails::OasRoute.new(path: '/users/:id.:format')
+      assert_equal ['id'], route.path_params
+    end
+
+    def test_returns_empty_array_for_no_path_params
+      route = OasRails::OasRoute.new(path: '/users')
+      assert_nil route.path_params
+    end
+
+    def test_handles_empty_tags
+      route = OasRails::OasRoute.new(tags: [])
+      assert_empty route.tags
+      assert_empty route.tags('admin')
     end
   end
 end

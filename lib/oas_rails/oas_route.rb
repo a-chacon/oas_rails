@@ -1,7 +1,6 @@
 module OasRails
   class OasRoute
-    attr_accessor :controller_class, :controller_action, :controller, :controller_path, :method, :verb, :path,
-                  :rails_route, :docstring, :source_string
+    attr_accessor :controller_class, :controller_action, :controller, :method, :verb, :path, :docstring, :source_string
     attr_writer :tags
 
     def initialize(attributes = {})
@@ -9,7 +8,7 @@ module OasRails
     end
 
     def path_params
-      @rails_route.path.spec.to_s.scan(/:(\w+)/).flatten.reject! { |e| e == 'format' }
+      @path.scan(/:(\w+)/).flatten.reject! { |e| e == 'format' }
     end
 
     def tags(name = nil)

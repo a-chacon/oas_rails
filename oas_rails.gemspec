@@ -17,12 +17,13 @@ Gem::Specification.new do |spec|
   # spec.metadata['changelog_uri'] = 'https://github.com/a-chacon/oas_rails'
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
-    Dir['{app,config,db,lib,public}/**/*', 'LICENSE', 'Rakefile', 'README.md']
+    Dir['{lib,public}/**/*', 'LICENSE', 'Rakefile', 'README.md']
   end
 
   spec.required_ruby_version = ">= 3.1"
 
   spec.add_dependency 'easy_talk_two', '~> 1.1.2'
   spec.add_dependency 'method_source', '~> 1.0'
+  spec.add_dependency "rack", '>= 2.0'
   spec.add_dependency 'yard', '~> 0.9'
 end
