@@ -20,8 +20,8 @@ module OasRails
         @paths = Spec::Paths.new(self)
       end
 
-      def build(route_extractor: Extractors::RouteExtractor)
-        route_extractor.host_paths.each do |path|
+      def build
+        OasRails.config.route_extractor.host_paths.each do |path|
           @paths.add_path(path)
         end
       end
@@ -31,7 +31,7 @@ module OasRails
       # @return [void]
       def clear_cache
         MethodSource.clear_cache
-        Extractors::RouteExtractor.clear_cache
+        OasRails.config.route_extractor.clear_cache
       end
 
       def oas_fields

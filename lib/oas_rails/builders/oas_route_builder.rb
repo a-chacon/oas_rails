@@ -52,7 +52,7 @@ module OasRails
       end
 
       def path
-        Extractors::RouteExtractor.clean_route(@rails_route.path.spec.to_s)
+        OasRails.config.route_extractor.clean_route(@rails_route.path.spec.to_s)
       end
 
       def source_string

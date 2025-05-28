@@ -73,5 +73,21 @@ module OasRails
         assert_respond_to @config, "response_body_of_#{response}"
       end
     end
+
+    MockRouteExtractor = Struct.new(:host_routes, :host_routes_by_path, :clear_cache, :host_paths, :clean_route)
+
+    test "validates route_extractor" do
+      # Test with an object that responds to :routes (should work)
+      mock_route_extractor = MockRouteExtractor.new([], [], proc {}, [], proc {})
+
+      @config.route_extractor = mock_route_extractor
+
+      assert_equal mock_route_extractor, @config.route_extractor
+
+      # Test with an object that doesn't respond to :routes (should raise error)
+      assert_raises(ArgumentError) { @config.route_extractor = "invalid" }
+      assert_raises(ArgumentError) { @config.route_extractor = 123 }
+      assert_raises(ArgumentError) { @config.route_extractor = Class.new }
+    end
   end
 end
