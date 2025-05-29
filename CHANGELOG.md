@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.15.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.14.0...oas_rails/v0.15.0) (2025-05-28)
+
+
+### Features
+
+* add configurable route extractor to configuration ([#134](https://github.com/a-chacon/oas_rails/issues/134)) ([7e6d36c](https://github.com/a-chacon/oas_rails/commit/7e6d36cf8dd47095add4d5552be011214162444a))
+
 ## [0.14.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.13.0...oas_rails/v0.14.0) (2025-05-18)
 
 
