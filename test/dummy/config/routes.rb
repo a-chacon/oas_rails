@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get "/users/new", to: "users#new" # This route is for testing purpose
   resources :users, shallow: true do
     resources :projects
+    resource :avatar, only: [:update], controller: 'users/avatar'
   end
   match 'users', to: 'users#index', via: [:get, :options]
   mount OasRails::Engine => '/docs'
