@@ -10,7 +10,7 @@ module OasRails
 
       def test_build_returns_an_oas_route_object
         users_index_oas_route = OasRouteBuilder.build_from_rails_route(@users_index_route)
-        assert_instance_of OasRoute, users_index_oas_route
+        assert_instance_of ::OasCore::OasRoute, users_index_oas_route
       end
 
       def test_build_sets_correct_controller_class
@@ -36,7 +36,7 @@ module OasRails
 
       def test_build_sets_correct_method
         users_index_oas_route = OasRouteBuilder.build_from_rails_route(@users_index_route)
-        assert_equal "index", users_index_oas_route.method
+        assert_equal "index", users_index_oas_route.method_name
       end
 
       def test_build_sets_correct_verb
