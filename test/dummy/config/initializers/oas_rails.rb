@@ -1,5 +1,5 @@
 OasRails.configure do |config|
-  config.info.title = 'Dummy API REST'
+  config.info.title = 'Dummy API REST+'
   config.info.summary = 'Core endpoints of Dummy App.'
   config.info.description = <<~HEREDOC
     # Adimuntque regni fuerit

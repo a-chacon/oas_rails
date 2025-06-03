@@ -27,6 +27,8 @@ module OasRails
 
   class << self
     def build
+      OasCore.config = config
+
       host_routes = Extractors::RouteExtractor.host_routes
       oas = OasCore::Builders::SpecificationBuilder.new.with_oas_routes(host_routes).build
 
