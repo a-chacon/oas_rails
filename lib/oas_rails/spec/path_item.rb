@@ -13,8 +13,8 @@ module OasRails
         @delete = nil
       end
 
-      def fill_from(path, route_extractor: Extractors::RouteExtractor)
-        route_extractor.host_routes_by_path(path).each do |oas_route|
+      def fill_from(path)
+        OasRails.config.route_extractor.host_routes_by_path(path).each do |oas_route|
           add_operation(oas_route.verb.downcase, Spec::Operation.new(@specification).fill_from(oas_route))
         end
 

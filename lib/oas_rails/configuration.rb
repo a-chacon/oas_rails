@@ -15,7 +15,7 @@ module OasRails
                   :use_model_names,
                   :rapidoc_theme
 
-    attr_reader :servers, :tags, :security_schema, :include_mode, :response_body_of_default
+    attr_reader :servers, :tags, :security_schema, :include_mode, :response_body_of_default, :route_extractor
 
     def initialize
       @info = Spec::Info.new
@@ -38,6 +38,7 @@ module OasRails
       @use_model_names = false
       @rapidoc_theme = :rails
       @include_mode = :all
+      @route_extractor = Extractors::RouteExtractor
 
       @possible_default_responses.each do |response|
         method_name = "response_body_of_#{response}="
@@ -72,6 +73,19 @@ module OasRails
 
     def tags=(value)
       @tags = value.map { |t| Spec::Tag.new(name: t[:name], description: t[:description]) }
+    end
+
+    def route_extractor=(value)
+      unless value.respond_to?(:host_routes) &&
+             value.respond_to?(:host_routes_by_path) &&
+             value.respond_to?(:clear_cache) &&
+             value.respond_to?(:host_paths) &&
+             value.respond_to?(:clean_route)
+        raise ArgumentError,
+              "Route extractor must have the following methods: host_routes, host_routes_by_path, clear_cache, host_paths, and clean_route"
+      end
+
+      @route_extractor = value
     end
 
     def excluded_columns_incoming
