@@ -16,12 +16,12 @@ module OasRails
 
       def test_parse_tag_with_request_body
         request_body = OasRailsFactory.new.parse_tag_with_request_body(:request_body,
-                                                                       'Avatar(multipart/form-data) [!Hash{file: File}]')
+                                                                       "Avatar(multipart/form-data) [!Hash{file: File}]")
 
         assert request_body.is_a?(RequestBodyTag)
-        assert_equal 'Avatar', request_body.text
-        assert_equal 'multipart/form-data', request_body.content_type
-        assert_equal 'file', request_body.schema[:properties][:file]
+        assert_equal "Avatar", request_body.text
+        assert_equal "multipart/form-data", request_body.content_type
+        assert_equal ({ type: "string", format: "binary" }), request_body.schema[:properties][:file]
       end
     end
   end

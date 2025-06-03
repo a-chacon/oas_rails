@@ -121,7 +121,7 @@ module OasRails
       # @param input [String] The input text to parse.
       # @return [Array] An array containing the name and location.
       def extract_text_and_parentheses_content(input)
-        return unless input =~ /^(.+?)\(([^)]+)\)/
+        return input unless input =~ /^(.+?)\(([^)]+)\)/
 
         text = ::Regexp.last_match(1).strip
         parenthesis_content = ::Regexp.last_match(2).strip

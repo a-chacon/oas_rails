@@ -15,7 +15,7 @@ module OasRails
 
       def test_without_custom_routes
         result = Extractors::RouteExtractor.host_routes
-        assert_equal 14, result.count
+        assert_equal 16, result.count
       end
 
       def test_with_custom_controllers_actions
@@ -36,7 +36,7 @@ module OasRails
       def test_extract_host_routes_with_tags_mode
         OasRails.config.include_mode = :with_tags
         result = Extractors::RouteExtractor.host_routes
-        assert_equal 10, result.count
+        assert_equal 12, result.count
       end
 
       def test_extract_host_routes_explicit_mode
