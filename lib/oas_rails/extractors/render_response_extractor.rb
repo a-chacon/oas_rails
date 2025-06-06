@@ -62,7 +62,7 @@ module OasRails
 
           if Utils.active_record_class?(klass)
             schema = Builders::EsquemaBuilder.build_outgoing_schema(klass:)
-            if test_singularity(maybe_a_model)
+            if test_singularity?(maybe_a_model)
               build_singular_model_schema_and_examples(maybe_a_model, errors, klass, schema)
             else
               build_array_model_schema_and_examples(maybe_a_model, klass, schema)
@@ -118,7 +118,7 @@ module OasRails
         #
         # @param str [String] The string to test.
         # @return [Boolean] True if the string is a singular model, false otherwise.
-        def test_singularity(str)
+        def test_singularity?(str)
           str.pluralize != str && str.singularize == str
         end
 
