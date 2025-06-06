@@ -13,7 +13,8 @@ module OasRails
                   :possible_default_responses,
                   :http_verbs,
                   :use_model_names,
-                  :rapidoc_theme
+                  :rapidoc_theme,
+                  :route_overrides
 
     attr_reader :servers, :tags, :security_schema, :include_mode, :response_body_of_default, :route_extractor
 
@@ -39,6 +40,7 @@ module OasRails
       @rapidoc_theme = :rails
       @include_mode = :all
       @route_extractor = Extractors::RouteExtractor
+      @route_overrides = {}
 
       @possible_default_responses.each do |response|
         method_name = "response_body_of_#{response}="

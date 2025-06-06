@@ -2,6 +2,8 @@ module OasRails
   module Extractors
     module OasRouteExtractor
       def extract_summary(oas_route:)
+        override = OasRails.config.route_overrides[oas_route.path]
+        return override[:summary] if override && override[:summary]
         oas_route.tags(:summary).first.try(:text) || generate_crud_name(oas_route.method, oas_route.controller.downcase) || "#{oas_route.verb} #{oas_route.path}"
       end
 

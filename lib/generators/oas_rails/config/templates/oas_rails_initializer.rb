@@ -110,4 +110,18 @@ OasRails.configure do |config|
   # config.possible_default_responses = [:not_found, :unauthorized, :forbidden, :internal_server_error, :unprocessable_entity]
   # config.response_body_of_default = "Hash{ message: String }"
   # config.response_body_of_unprocessable_entity= "Hash{ errors: Array<String> }"
+
+  # ###########################
+  # Route Overrides
+  # ###########################
+  # Overrides the default route information (for example, to add or change information on nested routes since they use the same action, and thus cannot be documented separately).
+  # Example:
+  # config.route_overrides = {
+  #   "/users/{user_id}/projects" => {
+  #     summary: "List projects for a user",
+  #     parameters: [
+  #       { name: "user_id", in: "path", type: "integer", required: true, description: "ID of the user" }
+  #     ]
+  #   }
+  # }
 end
