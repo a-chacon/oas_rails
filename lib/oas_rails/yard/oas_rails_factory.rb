@@ -6,8 +6,8 @@ module OasRails
       # @param text [String] The tag text to parse.
       # @return [RequestBodyTag] The parsed request body tag object.
       def parse_tag_with_request_body(tag_name, text)
-        description, klass, schema, required = extract_description_and_schema(text.squish)
-        RequestBodyTag.new(tag_name, description, klass, schema:, required:)
+        description, klass, schema, required, content_type = extract_description_and_schema(text.squish)
+        RequestBodyTag.new(tag_name, description, klass, schema:, required:, content_type:)
       end
 
       # Parses a tag that represents a request body example.
@@ -66,11 +66,13 @@ module OasRails
 
       # Specific method to extract description and schema for request body tags.
       # @param text [String] The text to parse.
-      # @return [Array] An array containing the description, class, schema, and required flag.
+      # @return [Array] An array containing the description, class, schema, required flag and content type.
       def extract_description_and_schema(text)
         description, type, = extract_description_type_and_content(text)
+        description, content_type = extract_text_and_parentheses_content(description)
         klass, schema, required = type_text_to_schema(type)
-        [description, klass, schema, required]
+
+        [description, klass, schema, required, content_type]
       end
 
       # Specific method to extract name, location, and schema for parameters.
@@ -119,7 +121,7 @@ module OasRails
       # @param input [String] The input text to parse.
       # @return [Array] An array containing the name and location.
       def extract_text_and_parentheses_content(input)
-        return unless input =~ /^(.+?)\(([^)]+)\)/
+        return input unless input =~ /^(.+?)\(([^)]+)\)/
 
         text = ::Regexp.last_match(1).strip
         parenthesis_content = ::Regexp.last_match(2).strip

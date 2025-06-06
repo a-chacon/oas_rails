@@ -2,17 +2,18 @@ require "test_helper"
 
 class ProjectsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    @user = users(:one)
     @project = projects(:one)
   end
 
   test "should get index" do
-    get projects_url, as: :json
+    get user_projects_url(@user), as: :json
     assert_response :success
   end
 
   test "should create project" do
     assert_difference("Project.count") do
-      post projects_url, params: { project: { description: @project.description, name: @project.name, user_id: @project.user_id } }, as: :json
+      post user_projects_url(@user), params: { project: { description: "new project", name: "new_project", user_id: @user.id } }, as: :json
     end
 
     assert_response :created

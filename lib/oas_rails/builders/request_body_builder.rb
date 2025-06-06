@@ -19,10 +19,10 @@ module OasRails
 
       def from_tags(tag:, examples_tags: [])
         if Utils.active_record_class?(tag.klass)
-          from_model_class(klass: tag.klass, description: tag.text, required: tag.required, examples_tags:)
+          from_model_class(klass: tag.klass, description: tag.text, required: tag.required, content_type: tag.content_type, examples_tags:)
         else
           @request_body.description = tag.text
-          @request_body.content = ContentBuilder.new(@specification, :incoming).with_schema(tag.schema).with_examples_from_tags(examples_tags).build
+          @request_body.content = ContentBuilder.new(@specification, :incoming).with_schema(tag.schema).with_examples_from_tags(examples_tags).with_content_type(tag.content_type).build
           @request_body.required = tag.required
         end
 
@@ -31,7 +31,7 @@ module OasRails
 
       def from_model_class(klass:, **kwargs)
         @request_body.description = kwargs[:description] || klass.to_s
-        @request_body.content = ContentBuilder.new(@specification, :incoming).from_model_class(klass).with_examples_from_tags(kwargs[:examples_tags] || {}).build
+        @request_body.content = ContentBuilder.new(@specification, :incoming).from_model_class(klass).with_examples_from_tags(kwargs[:examples_tags] || {}).with_content_type(kwargs[:content_type]).build
         @request_body.required = kwargs[:required]
 
         self
