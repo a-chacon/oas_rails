@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.15.0...oas_rails/v0.16.0) (2025-06-06)
+
+
+### Features
+
+* Add support for file uploads ([#137](https://github.com/a-chacon/oas_rails/issues/137)) ([5c79a84](https://github.com/a-chacon/oas_rails/commit/5c79a8475f70b0eab69964067efc1b7824ada14d))
+
 ## [0.15.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.14.0...oas_rails/v0.15.0) (2025-05-28)
 
 
