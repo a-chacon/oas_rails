@@ -14,11 +14,8 @@ module OasRails
       @layout = nil
 
       # TODO: implement
-      # layout
       # autodiscover_request_body
       # autodiscover_responses
-      # ignored_actions
-      # rapidoc_theme
     end
 
     def include_mode=(value)

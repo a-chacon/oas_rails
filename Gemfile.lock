@@ -238,7 +238,7 @@ GEM
       prism (~> 1.4)
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
-    sorbet-runtime (0.5.12157)
+    sorbet-runtime (0.5.12163)
     sprockets (4.2.2)
       concurrent-ruby (~> 1.0)
       logger

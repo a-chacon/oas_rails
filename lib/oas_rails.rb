@@ -1,5 +1,3 @@
-require "yard"
-require "method_source"
 require "easy_talk"
 require "oas_core"
 
@@ -26,7 +24,13 @@ module OasRails
   end
 
   class << self
+    OasCore::JsonSchemaGenerator.register_type_parser(
+      ->(t) { Utils.active_record_class?(t) },
+      ->(type, _required) { Builders::EsquemaBuilder.build_outgoing_schema(klass: type.constantize) }
+    )
+
     def build
+      clear_cache
       OasCore.config = config
 
       host_routes = Extractors::RouteExtractor.host_routes
@@ -41,6 +45,13 @@ module OasRails
 
     def config
       @config ||= Configuration.new
+    end
+
+    def clear_cache
+      return if Rails.env.production?
+
+      MethodSource.clear_cache
+      OasRails::Extractors::RouteExtractor.clear_cache
     end
   end
 end
