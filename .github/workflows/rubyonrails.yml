@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        gemfile: [rails-7.0, rails-7.1, rails-7.2, rails-8.0.0-beta1]
+        gemfile: [rails-7.0, rails-7.1, rails-7.2, rails-8.0.0]
     runs-on: ubuntu-latest
     env:
       RAILS_ENV: test
@@ -25,8 +25,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
-        # with:
-          # bundler-cache: true
+        with:
+          bundler-cache: true
       - name: Run tests
         run: bin/rails t
 
