@@ -10,15 +10,14 @@ module OasRails
       end
 
       def build
-        OasRoute.new(
+        OasCore::OasRoute.new(
           controller_class: controller_class,
           controller_action: controller_action,
           controller: controller,
           controller_path: controller_path,
-          method: method,
+          method_name: method,
           verb: verb,
           path: path,
-          rails_route: @rails_route,
           docstring: docstring,
           source_string: source_string,
           tags: tags

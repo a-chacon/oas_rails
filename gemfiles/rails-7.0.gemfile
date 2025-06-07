@@ -3,11 +3,15 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'rails', '~> 7.0.0'
 
+gem 'oas_core'
+
 gem 'easy_talk_two', '~> 1.0'
 
-gem 'method_source', '~> 1.0'
+gem 'bigdecimal', '~> 3.2', '>= 3.2.2'
 
-gem 'yard', '~> 0.9'
+gem 'mutex_m', '~> 0.3.0'
+
+gem 'drb', '~> 2.2', '>= 2.2.3'
 
 gem 'puma'
 
