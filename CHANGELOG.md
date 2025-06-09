@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.16.0...oas_rails/v0.17.0) (2025-06-09)
+
+
+### Features
+
+* migrate to oas_core gem ([#136](https://github.com/a-chacon/oas_rails/issues/136)) ([5c38011](https://github.com/a-chacon/oas_rails/commit/5c3801110f77d38891bf644ec0ca9e0191195d83))
+
 ## [0.16.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.15.0...oas_rails/v0.16.0) (2025-06-06)
 
 
