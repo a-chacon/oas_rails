@@ -9,6 +9,8 @@
 
 OasRails is a Rails engine for generating **automatic interactive documentation for your Rails APIs**. It generates an **OAS 3.1** document and displays it using **[RapiDoc](https://rapidocweb.com)**.
 
+It relies on the [OasCore](https://github.com/a-chacon/oas_core) gem.
+
 ### 🚀 Demo App
 
 Explore the interactive documentation live:
@@ -47,7 +49,7 @@ The goal is to minimize the effort required to create comprehensive documentatio
 
 ## Documentation
 
-For see how to install, configure and use OasRails please refere to the [OasRailsBook](http://a-chacon.com/oas_rails)
+For see how to install, configure and use OasRails please refere to the [OasCore MDBook](http://a-chacon.com/oas_core)
 
 ## Contributing
 
