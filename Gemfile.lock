@@ -3,8 +3,7 @@ PATH
   specs:
     oas_rails (0.16.0)
       easy_talk_two (~> 1.1.2)
-      method_source (~> 1.0)
-      yard (~> 0.9)
+      oas_core (~> 0.4.0)
 
 GEM
   remote: https://rubygems.org/
@@ -158,6 +157,9 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.8-x86_64-linux-gnu)
       racc (~> 1.4)
+    oas_core (0.4.0)
+      method_source (~> 1.0)
+      yard (~> 0.9)
     parallel (1.27.0)
     parser (3.3.8.0)
       ast (~> 2.4.1)
@@ -236,7 +238,7 @@ GEM
       prism (~> 1.4)
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
-    sorbet-runtime (0.5.12157)
+    sorbet-runtime (0.5.12163)
     sprockets (4.2.2)
       concurrent-ruby (~> 1.0)
       logger
