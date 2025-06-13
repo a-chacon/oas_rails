@@ -23,7 +23,7 @@ Explore the interactive documentation live:
 <https://vimeo.com/1013687332>
 🎬
 
-![Screenshot](https://a-chacon.com/assets/images/oas_rails_ui.png)
+![Screenshot](https://a-chacon.com/oas_core/assets/rails_theme.png)
 
 ## Related Projects
 
