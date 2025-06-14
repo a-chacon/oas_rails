@@ -11,10 +11,7 @@ module OasRails
 
       def build
         OasCore::OasRoute.new(
-          controller_class: controller_class,
-          controller_action: controller_action,
           controller: controller,
-          controller_path: controller_path,
           method_name: method,
           verb: verb,
           path: path,
@@ -30,16 +27,8 @@ module OasRails
         "#{@rails_route.defaults[:controller].camelize}Controller"
       end
 
-      def controller_action
-        "#{controller_class}##{@rails_route.defaults[:action]}"
-      end
-
       def controller
         @rails_route.defaults[:controller]
-      end
-
-      def controller_path
-        Rails.root.join("app/controllers/#{controller}_controller.rb").to_s
       end
 
       def method

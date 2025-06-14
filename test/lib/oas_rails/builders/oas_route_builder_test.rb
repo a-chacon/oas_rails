@@ -13,25 +13,9 @@ module OasRails
         assert_instance_of ::OasCore::OasRoute, users_index_oas_route
       end
 
-      def test_build_sets_correct_controller_class
-        users_index_oas_route = OasRouteBuilder.build_from_rails_route(@users_index_route)
-        assert_equal "UsersController", users_index_oas_route.controller_class
-      end
-
-      def test_build_sets_correct_controller_action
-        users_index_oas_route = OasRouteBuilder.build_from_rails_route(@users_index_route)
-        assert_equal "UsersController#index", users_index_oas_route.controller_action
-      end
-
       def test_build_sets_correct_controller
         users_index_oas_route = OasRouteBuilder.build_from_rails_route(@users_index_route)
         assert_equal "users", users_index_oas_route.controller
-      end
-
-      def test_build_sets_correct_controller_path
-        users_index_oas_route = OasRouteBuilder.build_from_rails_route(@users_index_route)
-        expected_path = Rails.root.join("app/controllers/users_controller.rb").to_s
-        assert_equal expected_path, users_index_oas_route.controller_path
       end
 
       def test_build_sets_correct_method
