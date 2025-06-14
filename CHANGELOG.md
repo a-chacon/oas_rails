@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.17.1](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.17.0...oas_rails/v0.17.1) (2025-06-14)
+
+
+### Bug Fixes
+
+* remove unused oas route variables ([a386b9e](https://github.com/a-chacon/oas_rails/commit/a386b9e35c37569616c93f61971d7ce168a98861))
+
+
+### Documentation
+
+* update screenshot of readme ([0fc582a](https://github.com/a-chacon/oas_rails/commit/0fc582a54afdab2cfd27608ba2e88538232a15b9))
+
 ## [0.17.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.16.0...oas_rails/v0.17.0) (2025-06-09)
 
 
