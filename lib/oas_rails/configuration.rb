@@ -18,6 +18,14 @@ module OasRails
       # autodiscover_responses
     end
 
+    def excluded_columns_incoming
+      %i[id created_at updated_at deleted_at]
+    end
+
+    def excluded_columns_outgoing
+      []
+    end
+
     def include_mode=(value)
       valid_modes = %i[all with_tags explicit]
       raise ArgumentError, "include_mode must be one of #{valid_modes}" unless valid_modes.include?(value)
