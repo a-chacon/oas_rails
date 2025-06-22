@@ -66,7 +66,7 @@ module OasRails
           return false if RAILS_DEFAULT_CONTROLLERS.any? { |default| route.defaults[:controller].start_with?(default) }
           return false if RAILS_DEFAULT_PATHS.any? { |path| route.path.spec.to_s.include?(path) }
           return false unless route.path.spec.to_s.start_with?(OasRails.config.api_path)
-          return false if ignore_custom_actions(route)
+          return false if ignore_custom_actions?(route)
 
           true
         end
@@ -99,7 +99,7 @@ module OasRails
         # Support controller name only to ignore all controller actions.
         # Support ignoring "controller#action"
         # Ignoring "controller#action" AND "api_path/controller#action"
-        def ignore_custom_actions(route)
+        def ignore_custom_actions?(route)
           api_path = "#{OasRails.config.api_path.sub(%r{\A/}, '')}/".sub(%r{/+$}, '/')
           ignored_actions = OasRails.config.ignored_actions.flat_map do |custom_route|
             if custom_route.start_with?(api_path)
