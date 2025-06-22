@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.17.1...oas_rails/v1.0.0) (2025-06-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* implement source oas and bumping to oas_core 1.0.0 ([#143](https://github.com/a-chacon/oas_rails/issues/143))
+
+### Features
+
+* implement source oas and bumping to oas_core 1.0.0 ([#143](https://github.com/a-chacon/oas_rails/issues/143)) ([c02889b](https://github.com/a-chacon/oas_rails/commit/c02889b7d6fb948a6a69a5c5b438f987e230c507))
+
 ## [0.17.1](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.17.0...oas_rails/v0.17.1) (2025-06-14)
 
 
