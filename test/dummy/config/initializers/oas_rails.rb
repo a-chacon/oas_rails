@@ -1,4 +1,5 @@
 OasRails.configure do |config|
+  config.source_oas_path = "lib/oas.json"
   config.info.title = 'Dummy API REST+'
   config.info.summary = 'Core endpoints of Dummy App.'
   config.info.description = <<~HEREDOC

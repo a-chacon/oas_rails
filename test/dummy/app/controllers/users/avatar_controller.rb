@@ -10,7 +10,7 @@ module Users
     #
     # Uploads an avatar for the user. The avatar must be a valid image file (JPEG, PNG, GIF, SVG or WEBP).
     # @request_body Avatar Image (multipart/form-data) [!Hash{avatar: !File}]
-    # @request_body_example Test Avatar [Hash] {avatar: 'path/to/avatar.jpg'}
+    # @request_body_example Test Avatar [JSON{ "avatar": 'path/to/avatar.jpg'}]
     # @response Avatar uploaded successfully(200) [Hash{success: Boolean, message: String}]
     def update
       if @user.avatar.attach(avatar_params)

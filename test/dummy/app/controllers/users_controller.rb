@@ -2,24 +2,24 @@
 
 # Manage Users Here
 #
-# @response_example Another 405 Error (405) [Hash]
+# @response_example Another 405 Error (405)
+#   [JSON
 #   {
-#     message: "another",
-#     data: {
-#       availabilities: [
+#     "message": "another",
+#     "data": {
+#       "availabilities": [
 #         "three"
 #       ],
-#       dates: []
+#       "dates": []
 #     }
 #   }
+#   ]
 class UsersController < ApplicationController
   before_action :authorize!, except: [:create, :login]
   before_action :set_user, only: %i[show update destroy]
 
   # @summary Login
-  # @request_body Valid Login Params [!Hash{email: !String, password: !String}]
-  # @request_body_example Test User [Hash] {email: 'oas@test.com', password: 'Test12345'}
-  # @request_body_example The Appointment to be created [Hash] {appointment: {start_date: '14/07/2024 10:00',end_date: '14/07/2024 10:30', comment: 'For my son.'}, appointment_services: [1, 2]}
+  # @request_body_ref #/components/requestBodies/LoginRequest
   # @no_auth
   def login
     @user = User.find_by_email(params[:email])
@@ -41,7 +41,7 @@ class UsersController < ApplicationController
   # @parameter offset(query) [Integer]  Used for pagination of response data (default: 25 items per response). Specifies the offset of the next block of data to receive.
   # @parameter status(query) [!String]   Filter by status. (e.g. status=inactive).
   # @parameter stages(query) [Array<String>]   Filter by stages. (e.g. status=inactive).
-  # @parameter X-Page(header) [String] Header for identify
+  # @parameter_ref #/components/parameters/userId
   # @response Users list(200) [Array<User>]
   def index
     @users = User.all
@@ -53,7 +53,8 @@ class UsersController < ApplicationController
   #
   # This method show a User by ID. The id must exist of other way it will be returning a 404.
   # @parameter id(path) [!Integer] Used for identify the user.
-  # @response A nice user(200) [Hash{user: Hash{name: String, email: String, created_at: DateTime }}]
+  # @response A nice user(200) [Reference:#/components/schemas/User]
+  # @response_ref (201) #/components/responses/UserResponse
   # @response User not found by the provided Id(404) [Hash{success: Boolean, message: String}]
   # @response You dont have the rigth persmissions for access to this reasource(403) [Hash{success: Boolean, message: String}]
   # @response A test response from an Issue(405)
@@ -67,8 +68,8 @@ class UsersController < ApplicationController
   #     }
   #   ]
   #
-  # @response_example Nice 405 Error(405) [Hash]
-  #   {message: "Hello", data: {availabilities: ["one", "two", "three"], dates: ["10-06-2020"]}}
+  # @response_example Nice 405 Error(405)
+  #   [JSON{ "message": "Hello", "data": { "availabilities": ["one", "two", "three"], "dates": ["10-06-2020"]}}]
   def show
     render json: @user
   end
@@ -81,14 +82,16 @@ class UsersController < ApplicationController
   # The value is set per-request as shown in the adjacent code sample. Methods on the returned object reuse the same account ID.ased on the strings
   #
   # @request_body The user to be created. At least include an `email`. [!User]
-  # @request_body_example basic user [Hash]
+  # @request_body_example basic user
+  #   [JSON
   #   {
-  #     user: {
-  #       name: "Oas",
-  #       email: "oas@test.com",
-  #       password: "Test12345"
+  #     "user": {
+  #       "name": "Oas",
+  #       "email": "oas@test.com",
+  #       "password": "Test12345"
   #     }
   #   }
+  #   ]
   def create
     @user = User.new(user_params)
 
@@ -104,23 +107,9 @@ class UsersController < ApplicationController
   # A `user` can be updated with this method
   # - There is no option
   # - It must work
-  # @request_body User to be created
-  #   [
-  #     !Hash{
-  #       user: Hash{
-  #         name: String,
-  #         email: String,
-  #         age: Integer,
-  #         cars: Array<
-  #           Hash{
-  #             identifier: String
-  #           }
-  #         >
-  #       }
-  #     }
-  #   ]
-  # @request_body_example Update user [Hash] {user: {name: "Luis", email: "luis@gmail.com"}}
-  # @request_body_example Complete User [Hash] {user: {name: "Luis", email: "luis@gmail.com", age: 21}}
+  # @request_body User to be created [Reference:#/components/schemas/User]
+  # @request_body_example Update user [Reference:#/components/examples/UserExample]
+  # @request_body_example Complete User [JSON{"user": {"name": "Luis", "email": "luis@gmail.com", "age": 21}}]
   def update
     if @user.update(user_params)
       render json: @user

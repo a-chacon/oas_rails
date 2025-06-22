@@ -1,0 +1,138 @@
+{
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The user's full name"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "The user's email address"
+          },
+          "age": {
+            "type": "integer",
+            "description": "The user's age",
+            "minimum": 0
+          },
+          "password": {
+            "type": "string",
+            "description": "The user's password",
+            "minLength": 6
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
+        "example": {
+          "name": "John Doe",
+          "email": "john.doe@example.com",
+          "age": 30,
+          "password": "securepassword123"
+        }
+      }
+    },
+    "examples": {
+      "UserExample": {
+        "summary": "An example of a User object",
+        "value": {
+          "name": "Jane Smith",
+          "email": "jane.smith@example.com",
+          "age": 28,
+          "password": "anothersecurepassword"
+        }
+      }
+    },
+    "parameters": {
+      "userId": {
+        "name": "userId",
+        "in": "path",
+        "description": "ID of the user to retrieve",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "example": "12345"
+      }
+    },
+    "requestBodies": {
+      "LoginRequest": {
+        "description": "A JSON object containing login credentials",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "format": "email",
+                  "description": "The user's email address"
+                },
+                "password": {
+                  "type": "string",
+                  "description": "The user's password",
+                  "minLength": 6
+                }
+              },
+              "required": [
+                "email",
+                "password"
+              ]
+            },
+            "examples": {
+              "TestUser": {
+                "summary": "Test user login credentials",
+                "value": {
+                  "email": "oas@test.com",
+                  "password": "Test12345"
+                }
+              },
+              "AdminUser": {
+                "summary": "Admin user login credentials",
+                "value": {
+                  "email": "admin@example.com",
+                  "password": "AdminSecure123"
+                }
+              },
+              "GuestUser": {
+                "summary": "Guest user login credentials",
+                "value": {
+                  "email": "guest@example.com",
+                  "password": "GuestPass456"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "UserResponse": {
+        "description": "A JSON object representing a user",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/User"
+            },
+            "examples": {
+              "success": {
+                "summary": "A successful response",
+                "value": {
+                  "name": "Bob Brown",
+                  "email": "bob.brown@example.com",
+                  "age": 35,
+                  "password": "bobpassword123"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
