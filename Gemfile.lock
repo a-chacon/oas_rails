@@ -3,7 +3,7 @@ PATH
   specs:
     oas_rails (0.17.1)
       easy_talk_two (~> 1.1.2)
-      oas_core (~> 0.5.3)
+      oas_core (~> 1.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -92,6 +92,7 @@ GEM
     debug (1.10.0)
       irb (~> 1.10)
       reline (>= 0.3.8)
+    deep_merge (1.2.2)
     drb (2.2.3)
     easy_talk_two (1.1.2)
       activemodel (>= 7.0)
@@ -157,8 +158,9 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.8-x86_64-linux-gnu)
       racc (~> 1.4)
-    oas_core (0.5.3)
+    oas_core (1.0.0)
       activesupport (>= 7.0)
+      deep_merge (~> 1.2, >= 1.2.2)
       method_source (~> 1.0)
       yard (~> 0.9)
     parallel (1.27.0)
