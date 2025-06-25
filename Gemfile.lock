@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    oas_rails (1.0.0)
+    oas_rails (1.0.1)
       easy_talk_two (~> 1.1.2)
       oas_core (~> 1.0.0)
 

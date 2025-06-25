@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.0.0...oas_rails/v1.0.1) (2025-06-25)
+
+
+### Bug Fixes
+
+* custom route extractor usage ([#147](https://github.com/a-chacon/oas_rails/issues/147)) ([99976a8](https://github.com/a-chacon/oas_rails/commit/99976a8a6ac92db10cad44cbac85d5eb2dcc1e2d))
+
 ## [1.0.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v0.17.1...oas_rails/v1.0.0) (2025-06-22)
 
 
