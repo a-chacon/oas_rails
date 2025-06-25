@@ -33,7 +33,7 @@ module OasRails
       clear_cache
       OasCore.config = config
 
-      host_routes = Extractors::RouteExtractor.host_routes
+      host_routes = config.route_extractor.host_routes
       oas_source = config.source_oas_path ? read_source_oas_file : {}
 
       OasCore.build(host_routes, oas_source: oas_source)
