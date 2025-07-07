@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.0.1...oas_rails/v1.1.0) (2025-07-07)
+
+
+### Features
+
+* change to MIT license ([#150](https://github.com/a-chacon/oas_rails/issues/150)) ([bd40a66](https://github.com/a-chacon/oas_rails/commit/bd40a662f4d2c316fd6c3771c29fa1a2c9027410))
+
 ## [1.0.1](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.0.0...oas_rails/v1.0.1) (2025-06-25)
 
 
