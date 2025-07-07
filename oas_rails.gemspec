@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.description =
     'OasRails is a Rails engine for generating automatic interactive documentation for your Rails APIs. It generates an OAS 3.1 document and displays it using RapiDoc.'
 
-  spec.license = 'GPL-3.0-only'
+  spec.license = 'MIT'
 
   spec.metadata['homepage_uri'] = spec.homepage
   # spec.metadata['source_code_uri'] = 'https://github.com/a-chacon/oas_rails'
@@ -23,5 +23,5 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 3.1"
 
   spec.add_dependency 'easy_talk_two', '~> 1.1.2'
-  spec.add_dependency 'oas_core', '~> 1.0.0'
+  spec.add_dependency 'oas_core', '>= 1.1.0'
 end
