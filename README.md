@@ -65,7 +65,7 @@ If you plan a big feature, first open an issue to discuss it before any developm
 
 ## License
 
-The gem is available as open source under the terms of the [GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.en.html#license-text).
+OasRails is released under the [MIT License](https://opensource.org/licenses/MIT).
 
 ## Star History
 
