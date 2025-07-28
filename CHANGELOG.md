@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.1.0...oas_rails/v1.1.1) (2025-07-28)
+
+
+### Bug Fixes
+
+* add option for persist auth in rapidoc ([f6c01f7](https://github.com/a-chacon/oas_rails/commit/f6c01f7597aa5a6b7c4c4d5f661dc349fc49e72d))
+
 ## [1.1.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.0.1...oas_rails/v1.1.0) (2025-07-07)
 
 
