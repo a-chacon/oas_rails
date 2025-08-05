@@ -12,8 +12,8 @@ module OasRails
       @ignored_actions = []
       @rapidoc_theme = :rails
       @layout = nil
-      @rapi_docs_configuration = {}
-      @rapi_docs_logo_url = nil
+      @rapidoc_configuration = {}
+      @rapidoc_logo_url = nil
       @source_oas_path = nil
 
       # TODO: implement
