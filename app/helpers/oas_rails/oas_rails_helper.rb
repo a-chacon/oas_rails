@@ -1,6 +1,6 @@
 module OasRails
   module OasRailsHelper
-    def rapi_docs_configuration_attributes
+    def rapidoc_configuration_attributes
       {
         "spec-url" => "#{OasRails::Engine.routes.find_script_name({})}.json",
         "show-header" => "true",
@@ -11,11 +11,11 @@ module OasRails
         "schema-style" => "table",
         "sort-tags" => "true",
         "persist-auth" => "true"
-      }.merge(OasRails.config.rapi_docs_configuration).map { |k, v| %(#{k}=#{ERB::Util.html_escape(v)}) }.join(' ')
+      }.merge(OasRails.config.rapidoc_configuration).map { |k, v| %(#{k}=#{ERB::Util.html_escape(v)}) }.join(' ')
     end
 
-    def rapi_docs_logo_url
-      OasRails.config.rapi_docs_logo_url
+    def rapidoc_logo_url
+      OasRails.config.rapidoc_logo_url
     end
   end
 end
