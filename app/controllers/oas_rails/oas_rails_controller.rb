@@ -2,7 +2,8 @@ module OasRails
   class OasRailsController < ApplicationController
     # Include URL help if the layout is a user-customized layout.
     include Rails.application.routes.url_helpers
-
+    include OasRailsHelper
+    
     def index
       respond_to do |format|
         format.html { render "index", layout: OasRails.config.layout }
