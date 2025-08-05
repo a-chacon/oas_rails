@@ -3,7 +3,7 @@ module OasRails
     def rapidoc_configuration_attributes
       {
         "spec-url" => "#{OasRails::Engine.routes.find_script_name({})}.json",
-        "show-header" => "true",
+        "show-header" => "false",
         "font-size" => "largest",
         "show-method-in-nav-bar" => "as-colored-text",
         "nav-item-spacing" => "relaxed",
