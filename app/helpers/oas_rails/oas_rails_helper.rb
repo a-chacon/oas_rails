@@ -1,6 +1,6 @@
 module OasRails
   module OasRailsHelper
-    def rapi_doc_config
+    def rapi_docs_config
       {
         "spec-url" => "#{OasRails::Engine.routes.find_script_name({})}.json",
         "show-header" => "true",
