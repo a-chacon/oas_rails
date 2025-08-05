@@ -1,6 +1,6 @@
 module OasRails
   class Configuration < OasCore::Configuration
-    attr_accessor :autodiscover_request_body, :autodiscover_responses, :ignored_actions, :rapidoc_theme, :layout, :source_oas_path
+    attr_accessor :autodiscover_request_body, :autodiscover_responses, :ignored_actions, :rapidoc_theme, :layout, :source_oas_path, :rapi_docs_configuration, :rapi_docs_logo_url
     attr_reader :route_extractor, :include_mode
 
     def initialize
@@ -12,6 +12,8 @@ module OasRails
       @ignored_actions = []
       @rapidoc_theme = :rails
       @layout = nil
+      @rapi_docs_configuration = {}
+      @rapi_docs_logo_url = nil
       @source_oas_path = nil
 
       # TODO: implement
