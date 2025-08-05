@@ -16,7 +16,6 @@ module OasRails
 
     def rapi_docs_logo_url
       OasRails.config.rapi_docs_logo_url
-      false
     end
   end
 end
