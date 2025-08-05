@@ -11,7 +11,7 @@ module OasRails
         "schema-style" => "table",
         "sort-tags" => "true",
         "persist-auth" => "true"
-      }.map { |k, v| %(#{k}="#{ERB::Util.html_escape(v)}") }.join(' ')
+      }.map { |k, v| %(#{k}=#{ERB::Util.html_escape(v)}) }.join(' ')
     end
 
     def logo_url
