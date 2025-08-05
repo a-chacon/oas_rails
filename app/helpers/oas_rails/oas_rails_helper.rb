@@ -11,10 +11,11 @@ module OasRails
         "schema-style" => "table",
         "sort-tags" => "true",
         "persist-auth" => "true"
-      }.map { |k, v| %(#{k}=#{ERB::Util.html_escape(v)}) }.join(' ')
+      }.merge(OasRails.config.rapi_docs_configuration).map { |k, v| %(#{k}=#{ERB::Util.html_escape(v)}) }.join(' ')
     end
 
-    def logo_url
+    def rapi_docs_logo_url
+      OasRails.config.rapi_docs_logo_url
       false
     end
   end
