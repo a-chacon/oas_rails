@@ -18,7 +18,7 @@ module OasRails
       OasRails.config.rapidoc_logo_url
     end
 
-        THEME_ATTRIBUTES = %w[
+    THEME_ATTRIBUTES = %w[
       theme bg-color text-color nav-bg-color nav-text-color
       nav-hover-bg-color nav-hover-text-color nav-accent-color primary-color
     ].freeze

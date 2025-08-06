@@ -1,6 +1,7 @@
 module OasRails
   class Configuration < OasCore::Configuration
-    attr_accessor :autodiscover_request_body, :autodiscover_responses, :ignored_actions, :rapidoc_theme, :layout, :source_oas_path, :rapidoc_configuration, :rapidoc_logo_url, :rapidoc_theme_configuration
+    attr_accessor :autodiscover_request_body, :autodiscover_responses, :ignored_actions, :rapidoc_theme, :layout, :source_oas_path, :rapidoc_configuration, :rapidoc_logo_url,
+                  :rapidoc_theme_configuration
     attr_reader :route_extractor, :include_mode
 
     def initialize
