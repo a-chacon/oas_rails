@@ -70,6 +70,14 @@ OasRails.configure do |config|
   # Default: false
   # config.layout = "application"
 
+  # Override general rapi-doc settings
+  # config.rapidoc_configuration
+  # default: {}
+
+  # Add a logo to rapi-doc
+  # config.rapidoc_logo_url
+  # default: nil
+
   # Excluding custom controllers or controllers#action
   # Example: ["projects", "users#new"]
   # config.ignored_actions = []

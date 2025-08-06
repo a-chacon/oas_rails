@@ -125,17 +125,13 @@
     </script>
   </head>
   <body>
-    <rapi-doc
-      spec-url="<%= OasRails::Engine.routes.find_script_name({}) %>.json"
-      show-header="false"
-      font-size="largest"
-      show-method-in-nav-bar="as-colored-text"
-      nav-item-spacing="relaxed"
-      allow-spec-file-download="true"
-      schema-style="table"
-      sort-tags="true"
-      persist-auth="true"
-    >
+    <rapi-doc <%= rapidoc_configuration_attributes %> >
+      <% if rapidoc_logo_url %>
+        <img
+          slot="nav-logo"
+          src="<%= rapidoc_logo_url %>"
+        />
+      <% end %>
     </rapi-doc>
 
     <style>
