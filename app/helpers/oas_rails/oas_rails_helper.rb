@@ -1,5 +1,5 @@
 module OasRails
-  module OasRailsHelper
+  module OasRailsHelper # rubocop:disable Metrics/ModuleLength
     def rapidoc_configuration_attributes
       {
         "spec-url" => "#{OasRails::Engine.routes.find_script_name({})}.json",
