@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.1.1...oas_rails/v1.2.0) (2025-08-06)
+
+
+### Features
+
+* Support providing some rapi-doc config  ([#157](https://github.com/a-chacon/oas_rails/issues/157)) ([0604067](https://github.com/a-chacon/oas_rails/commit/06040678255fb6c5def1e5fae8f82721c5e463d3))
+
 ## [1.1.1](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.1.0...oas_rails/v1.1.1) (2025-07-28)
 
 
