@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.1](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.2.0...oas_rails/v1.2.1) (2025-08-08)
+
+
+### Bug Fixes
+
+* move to a partial ([#160](https://github.com/a-chacon/oas_rails/issues/160)) ([e2df77a](https://github.com/a-chacon/oas_rails/commit/e2df77ab4cd44cf0dd475d2cd3132ea1f243b775))
+* remove unused rails files for prevent dependency conflicts ([#163](https://github.com/a-chacon/oas_rails/issues/163)) ([f38fe9d](https://github.com/a-chacon/oas_rails/commit/f38fe9d4b5e6bc9ebeedd7d64f96dd6fd35a8a52))
+
 ## [1.2.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.1.1...oas_rails/v1.2.0) (2025-08-06)
 
 
