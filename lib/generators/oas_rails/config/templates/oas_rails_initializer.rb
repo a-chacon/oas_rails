@@ -70,13 +70,17 @@ OasRails.configure do |config|
   # Default: false
   # config.layout = "application"
 
-  # Override general rapi-doc settings
+  # Override general rapidoc settings
   # config.rapidoc_configuration
   # default: {}
 
-  # Add a logo to rapi-doc
+  # Add a logo to rapidoc
   # config.rapidoc_logo_url
   # default: nil
+
+  # Override specific rapidoc theme settings
+  # config.rapidoc_theme_configuration
+  # default: {}
 
   # Excluding custom controllers or controllers#action
   # Example: ["projects", "users#new"]
