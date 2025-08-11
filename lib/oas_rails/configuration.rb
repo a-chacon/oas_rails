@@ -10,8 +10,8 @@ module OasRails
       @autodiscover_request_body = true
       @autodiscover_responses = true
       @ignored_actions = []
-      @rapidoc_theme = :rails
       @layout = nil
+      @rapidoc_theme = :rails
       @rapidoc_configuration = {}
       @rapidoc_logo_url = nil
       @source_oas_path = nil
