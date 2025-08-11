@@ -1,6 +1,6 @@
 module OasRails
   module OasRailsHelper # rubocop:disable Metrics/ModuleLength
-    def rapidoc_configuration_attributes
+    def rapidoc_configuration_defaults
       {
         "spec-url" => "#{OasRails::Engine.routes.find_script_name({})}.json",
         "show-header" => "false",
@@ -11,20 +11,18 @@ module OasRails
         "schema-style" => "table",
         "sort-tags" => "true",
         "persist-auth" => "true"
-      }.merge(OasRails.config.rapidoc_configuration).map { |k, v| %(#{k}=#{ERB::Util.html_escape(v)}) }.join(' ')
+      }
+    end
+
+    def rapidoc_configuration_attributes
+      rapidoc_configuration_defaults.merge(
+        rapidoc_theme(OasRails.config.rapidoc_theme),
+        OasRails.config.rapidoc_configuration
+      ).map { |k, v| %(#{k}=#{ERB::Util.html_escape(v)}) }.join(' ')
     end
 
     def rapidoc_logo_url
       OasRails.config.rapidoc_logo_url
-    end
-
-    THEME_ATTRIBUTES = %w[
-      theme bg-color text-color nav-bg-color nav-text-color
-      nav-hover-bg-color nav-hover-text-color nav-accent-color primary-color
-    ].freeze
-
-    def rapidoc_theme_attributes
-      THEME_ATTRIBUTES
     end
 
     THEMES = {
@@ -142,7 +140,7 @@ module OasRails
     }.freeze
 
     def rapidoc_theme(theme_name)
-      (THEMES[theme_name] || {}).merge(OasRails.config.rapidoc_theme_configuration)
+      THEMES[theme_name] || {}
     end
   end
 end

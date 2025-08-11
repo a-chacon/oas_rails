@@ -7,23 +7,6 @@
     <meta charset="utf-8">
     <!-- Important: rapi-doc uses utf8 characters -->
     <script type="module" src="/oas-rails-assets/rapidoc-min.js"></script>
-    <script>
-      function applyTheme() {
-        const docEl = document.querySelector('rapi-doc');
-       
-       const themeAttributes = <%= rapidoc_theme_attributes.to_json.html_safe %>;
-        themeAttributes.forEach(attr => {
-          docEl.removeAttribute(attr);
-        });
-
-        const themeConfig = <%= rapidoc_theme(OasRails.config.rapidoc_theme).to_json.html_safe %>;
-        Object.entries(themeConfig).forEach(([key, value]) => {
-          docEl.setAttribute(key, value);
-        });
-      }
-
-      document.addEventListener('DOMContentLoaded', applyTheme);
-    </script>
   </head>
   <body>
     <rapi-doc <%= rapidoc_configuration_attributes %> >
