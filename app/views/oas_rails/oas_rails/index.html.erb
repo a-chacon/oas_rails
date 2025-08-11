@@ -6,7 +6,7 @@
     <%= csp_meta_tag %>
     <meta charset="utf-8">
     <!-- Important: rapi-doc uses utf8 characters -->
-    <%= render partial: 'rapidoc_script' %>
+    <script nonce="<%= content_security_policy_nonce %>" type="module" src="/oas-rails-assets/rapidoc-min.js"></script>
     <script>
       function applyTheme() {
         const theme = "<%= OasRails.config.rapidoc_theme %>";
