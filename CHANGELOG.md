@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.2.1...oas_rails/v1.3.0) (2025-08-11)
+
+
+### Features
+
+* Provide ability to override specific theme attributes ([#159](https://github.com/a-chacon/oas_rails/issues/159)) ([d48c646](https://github.com/a-chacon/oas_rails/commit/d48c646c5b23c400c6a0d094ea725b2cb4c206de))
+
 ## [1.2.1](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.2.0...oas_rails/v1.2.1) (2025-08-08)
 
 
