@@ -1,10 +1,11 @@
 module OasRails
   class Configuration < OasCore::Configuration
-    attr_accessor :autodiscover_request_body, :autodiscover_responses, :ignored_actions, :rapidoc_theme, :layout, :source_oas_path, :rapidoc_configuration, :rapidoc_logo_url
+    attr_accessor :autodiscover_request_body, :autodiscover_responses, :ignored_actions, :rapidoc_theme, :layout, :source_oas_path, :rapidoc_configuration, :rapidoc_logo_url, :mounted_path
     attr_reader :route_extractor, :include_mode
 
     def initialize
       super
+      @mounted_path = default_mounted_path
       @route_extractor = Extractors::RouteExtractor
       @include_mode = :all
       @autodiscover_request_body = true
@@ -47,6 +48,18 @@ module OasRails
       end
 
       @route_extractor = value
+    end
+
+    def default_mounted_path
+      mount_route = Rails.application.routes.routes.detect do |r|
+        r.app.respond_to?(:app) && r.app.app == OasRails::Engine
+      end
+
+      if mount_route
+        mount_route.path.spec.to_s.sub(/\(\.:format\)\z/, '')
+      else
+        '/docs'
+      end
     end
   end
 end
