@@ -23,7 +23,7 @@ Explore the interactive documentation live:
 <https://vimeo.com/1013687332>
 🎬
 
-![Screenshot](https://a-chacon.com/oas_core/assets/rails_theme.png)
+![Screenshot](https://a-chacon.github.io/oas_core/assets/rails_theme.png)
 
 ## Related Projects
 
@@ -49,7 +49,7 @@ The goal is to minimize the effort required to create comprehensive documentatio
 
 ## Documentation
 
-For see how to install, configure and use OasRails please refere to the [OasCore MDBook](http://a-chacon.com/oas_core)
+For see how to install, configure and use OasRails please refere to the [OasCore MDBook](https://a-chacon.github.io/oas_core)
 
 ## Contributing
 
