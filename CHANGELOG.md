@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.1](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.3.0...oas_rails/v1.3.1) (2025-10-13)
+
+
+### Bug Fixes
+
+* take the route from app routes for a better detection of mounted path, otherwise just configure it with config ([#167](https://github.com/a-chacon/oas_rails/issues/167)) ([ebdade5](https://github.com/a-chacon/oas_rails/commit/ebdade51ac06e9fcc6ef35ab28485f7103269dcc))
+
+
+### Documentation
+
+* update oas core documentation url ([e4980c8](https://github.com/a-chacon/oas_rails/commit/e4980c84c2cda51a0013e035bc6e72840aca25b5))
+
 ## [1.3.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.2.1...oas_rails/v1.3.0) (2025-08-11)
 
 
