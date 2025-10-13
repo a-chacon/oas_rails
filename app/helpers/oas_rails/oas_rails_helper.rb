@@ -2,7 +2,7 @@ module OasRails
   module OasRailsHelper # rubocop:disable Metrics/ModuleLength
     def rapidoc_configuration_defaults
       {
-        "spec-url" => "#{OasRails::Engine.routes.find_script_name({})}.json",
+        "spec-url" => "#{OasRails.config.mounted_path}.json",
         "show-header" => "false",
         "font-size" => "largest",
         "show-method-in-nav-bar" => "as-colored-text",
