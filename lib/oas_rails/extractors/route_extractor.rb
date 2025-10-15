@@ -2,21 +2,11 @@ module OasRails
   module Extractors
     class RouteExtractor
       RAILS_DEFAULT_CONTROLLERS = %w[
-        rails/info
-        rails/mailers
-        active_storage/blobs
-        active_storage/disk
-        active_storage/direct_uploads
-        active_storage/representations
-        rails/conductor/continuous_integration
-        rails/conductor/multiple_databases
-        rails/conductor/action_mailbox
-        rails/conductor/action_text
+        rails
+        action_mailbox
         action_cable
-      ].freeze
-
-      RAILS_DEFAULT_PATHS = %w[
-        /rails/action_mailbox/
+        active_storage
+        turbo/native
       ].freeze
 
       class << self
@@ -64,7 +54,6 @@ module OasRails
         def valid_api_route?(route)
           return false unless valid_route_implementation?(route)
           return false if RAILS_DEFAULT_CONTROLLERS.any? { |default| route.defaults[:controller].start_with?(default) }
-          return false if RAILS_DEFAULT_PATHS.any? { |path| route.path.spec.to_s.include?(path) }
           return false unless route.path.spec.to_s.start_with?(OasRails.config.api_path)
           return false if ignore_custom_actions?(route)
 
