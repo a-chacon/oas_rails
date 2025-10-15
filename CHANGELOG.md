@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.2](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.3.1...oas_rails/v1.3.2) (2025-10-15)
+
+
+### Bug Fixes
+
+* skip turbo routes for prevent errors ([#173](https://github.com/a-chacon/oas_rails/issues/173)) ([069d75c](https://github.com/a-chacon/oas_rails/commit/069d75c3f5f64b612fcb19e364c984a9adf24772))
+
 ## [1.3.1](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.3.0...oas_rails/v1.3.1) (2025-10-13)
 
 
