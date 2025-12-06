@@ -6,8 +6,10 @@
     <%= csp_meta_tag %>
     <!-- Important: rapi-doc uses utf8 characters -->
     <meta charset="utf-8">
-    <%= javascript_include_tag "#{OasRails::Engine.config.assets_prefix}/rapidoc-min.js",
-    type: "module" %>
+    <script
+      type="module"
+      src="<%= OasRails.config.prefix_path %>/oas-rails-assets/rapidoc-min.js"
+    ></script>
   </head>
   <body>
     <rapi-doc <%= rapidoc_configuration_attributes %>>

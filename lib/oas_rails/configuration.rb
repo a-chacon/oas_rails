@@ -1,10 +1,12 @@
 module OasRails
   class Configuration < OasCore::Configuration
-    attr_accessor :autodiscover_request_body, :autodiscover_responses, :ignored_actions, :rapidoc_theme, :layout, :source_oas_path, :rapidoc_configuration, :rapidoc_logo_url
-    attr_reader :route_extractor, :include_mode
+    attr_accessor :autodiscover_request_body, :autodiscover_responses, :ignored_actions, :rapidoc_theme, :layout, :source_oas_path, :rapidoc_configuration, :rapidoc_logo_url, :prefix_path
+    attr_reader :route_extractor, :include_mode, :mounted_path
 
     def initialize
       super
+      @mounted_path = ""
+      self.prefix_path = ENV["RAILS_RELATIVE_URL_ROOT"] || Rails.application.config.relative_url_root || ""
       @route_extractor = Extractors::RouteExtractor
       @include_mode = :all
       @autodiscover_request_body = true
@@ -19,6 +21,10 @@ module OasRails
       # TODO: implement
       # autodiscover_request_body
       # autodiscover_responses
+    end
+
+    def mounted_path=(_value)
+      warn "[DEPRECATION] `mounted_path` option is deprecated and will be removed in a future release. It is not used anymore."
     end
 
     def excluded_columns_incoming
@@ -47,6 +53,14 @@ module OasRails
       end
 
       @route_extractor = value
+    end
+
+    def prefix_path=(value)
+      @prefix_path = if value.nil? || value.empty?
+                       ""
+                     else
+                       value.start_with?("/") ? value : "/" + value
+                     end
     end
   end
 end
