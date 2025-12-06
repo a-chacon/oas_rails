@@ -4,20 +4,18 @@
     <title><%= OasRails.config.info.title %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <meta charset="utf-8">
     <!-- Important: rapi-doc uses utf8 characters -->
-    <script type="module" src="/oas-rails-assets/rapidoc-min.js"></script>
+    <meta charset="utf-8">
+    <%= javascript_include_tag "#{OasRails::Engine.config.assets_prefix}/rapidoc-min.js",
+    type: "module" %>
   </head>
   <body>
-    <rapi-doc <%= rapidoc_configuration_attributes %> >
+    <rapi-doc <%= rapidoc_configuration_attributes %>>
       <% if rapidoc_logo_url %>
-        <img
-          slot="nav-logo"
-          src="<%= rapidoc_logo_url %>"
-        />
+        <img slot="nav-logo" src="<%= rapidoc_logo_url %>"/>
       <% end %>
     </rapi-doc>
 
-    <%= render partial: 'rapidoc_style_parts' %>
+    <%= render partial: "rapidoc_style_parts" %>
   </body>
 </html>
