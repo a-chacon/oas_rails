@@ -1,7 +1,7 @@
 module OasRails
   class Configuration < OasCore::Configuration
-    attr_accessor :autodiscover_request_body, :autodiscover_responses, :ignored_actions, :rapidoc_theme, :layout, :source_oas_path, :rapidoc_configuration, :rapidoc_logo_url, :prefix_path
-    attr_reader :route_extractor, :include_mode, :mounted_path
+    attr_accessor :autodiscover_request_body, :autodiscover_responses, :ignored_actions, :rapidoc_theme, :layout, :source_oas_path, :rapidoc_configuration, :rapidoc_logo_url
+    attr_reader :route_extractor, :include_mode, :mounted_path, :prefix_path
 
     def initialize
       super
@@ -59,7 +59,7 @@ module OasRails
       @prefix_path = if value.nil? || value.empty?
                        ""
                      else
-                       value.start_with?("/") ? value : "/" + value
+                       value.start_with?("/") ? value : "/#{value}"
                      end
     end
   end
