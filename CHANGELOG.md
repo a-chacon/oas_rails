@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.3](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.3.2...oas_rails/v1.3.3) (2026-01-01)
+
+
+### Bug Fixes
+
+* mount path with find_script and prefix from config ([#178](https://github.com/a-chacon/oas_rails/issues/178)) ([d8ad6bb](https://github.com/a-chacon/oas_rails/commit/d8ad6bb8b93bc4ddf1c2c0865ff33024ecf3b42d))
+
 ## [1.3.2](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.3.1...oas_rails/v1.3.2) (2025-10-15)
 
 
