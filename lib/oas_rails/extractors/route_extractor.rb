@@ -79,7 +79,7 @@ module OasRails
           if controller_class.nil?
             false
           else
-            controller_class.instance_methods.include?(action_name.to_sym)
+            controller_class.method_defined?(action_name.to_sym)
           end
         end
 

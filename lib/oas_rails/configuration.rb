@@ -1,11 +1,12 @@
 module OasRails
   class Configuration < OasCore::Configuration
-    attr_accessor :autodiscover_request_body, :autodiscover_responses, :ignored_actions, :rapidoc_theme, :layout, :source_oas_path, :rapidoc_configuration, :rapidoc_logo_url, :mounted_path
-    attr_reader :route_extractor, :include_mode
+    attr_accessor :autodiscover_request_body, :autodiscover_responses, :ignored_actions, :rapidoc_theme, :layout, :source_oas_path, :rapidoc_configuration, :rapidoc_logo_url
+    attr_reader :route_extractor, :include_mode, :mounted_path, :prefix_path
 
     def initialize
       super
-      @mounted_path = default_mounted_path
+      @mounted_path = ""
+      self.prefix_path = ENV["RAILS_RELATIVE_URL_ROOT"] || Rails.application.config.relative_url_root || ""
       @route_extractor = Extractors::RouteExtractor
       @include_mode = :all
       @autodiscover_request_body = true
@@ -20,6 +21,10 @@ module OasRails
       # TODO: implement
       # autodiscover_request_body
       # autodiscover_responses
+    end
+
+    def mounted_path=(_value)
+      warn "[DEPRECATION] `mounted_path` option is deprecated and will be removed in a future release. It is not used anymore."
     end
 
     def excluded_columns_incoming
@@ -50,16 +55,12 @@ module OasRails
       @route_extractor = value
     end
 
-    def default_mounted_path
-      mount_route = Rails.application.routes.routes.detect do |r|
-        r.app.respond_to?(:app) && r.app.app == OasRails::Engine
-      end
-
-      if mount_route
-        mount_route.path.spec.to_s.sub(/\(\.:format\)\z/, '')
-      else
-        '/docs'
-      end
+    def prefix_path=(value)
+      @prefix_path = if value.nil? || value.empty?
+                       ""
+                     else
+                       value.start_with?("/") ? value : "/#{value}"
+                     end
     end
   end
 end

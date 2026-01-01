@@ -40,7 +40,7 @@ module OasRails
       end
 
       def path
-        OasRails.config.route_extractor.clean_route(@rails_route.path.spec.to_s)
+        OasRails.config.prefix_path + OasRails.config.route_extractor.clean_route(@rails_route.path.spec.to_s)
       end
 
       def source_string
