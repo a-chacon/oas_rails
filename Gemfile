@@ -29,6 +29,7 @@ group :development, :test do
   gem 'debug', platforms: %i[mri windows]
 
   gem 'minitest', '~> 5.27'
+  gem 'minitest-mock', '~> 5.27'
 end
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]

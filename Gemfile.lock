@@ -156,6 +156,7 @@ GEM
     method_source (1.1.0)
     mini_mime (1.1.5)
     minitest (5.27.0)
+    minitest-mock (5.27.0)
     msgpack (1.8.0)
     net-imap (0.6.2)
       date
@@ -316,6 +317,7 @@ DEPENDENCIES
   jbuilder
   jwt
   minitest (~> 5.27)
+  minitest-mock (~> 5.27)
   oas_rails!
   puma (>= 5.0)
   rack-cors

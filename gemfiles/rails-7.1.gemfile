@@ -23,4 +23,7 @@ group :development, :test do
   gem 'jwt'
 
   gem 'faker'
+
+  gem 'minitest', '~> 5.27'
+  gem 'minitest-mock', '~> 5.27'
 end
