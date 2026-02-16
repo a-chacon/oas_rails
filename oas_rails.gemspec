@@ -22,6 +22,6 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = ">= 3.1"
 
-  spec.add_dependency 'easy_talk_two', '~> 1.1.2'
+  spec.add_dependency 'easy_talk_two', '~> 1.1.3'
   spec.add_dependency 'oas_core', '>= 1.1.0'
 end
