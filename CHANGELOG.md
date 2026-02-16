@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.4](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.3.3...oas_rails/v1.3.4) (2026-02-16)
+
+
+### Bug Fixes
+
+* update to new easy talk fork gem version to fix active record conversion problems ([#183](https://github.com/a-chacon/oas_rails/issues/183)) ([6a494a2](https://github.com/a-chacon/oas_rails/commit/6a494a2b849429dc052126a438a62108a4a265c6))
+
 ## [1.3.3](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.3.2...oas_rails/v1.3.3) (2026-01-01)
 
 
