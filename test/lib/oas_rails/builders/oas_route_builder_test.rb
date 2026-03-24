@@ -48,6 +48,29 @@ module OasRails
         assert_not_nil users_index_oas_route.tags
         assert(users_index_oas_route.tags.all? { |tag| tag.respond_to?(:tag_name) })
       end
+
+      # Tests for Sorbet/runtime-wrapper compatibility
+      # When a library like Sorbet replaces methods at runtime (via sig blocks),
+      # instance_method.source_location points to the wrapper gem rather than
+      # the application code. These tests verify the fallback behaviour.
+
+      def test_wrapped_by_runtime_returns_false_for_unwrapped_method
+        builder = OasRouteBuilder.new(@users_index_route)
+        unbound = UsersController.instance_method(:index)
+        refute builder.send(:wrapped_by_runtime?, unbound)
+      end
+
+      def test_method_comment_safe_returns_string
+        builder = OasRouteBuilder.new(@users_index_route)
+        comment = builder.send(:method_comment_safe)
+        assert_kind_of String, comment
+      end
+
+      def test_class_comment_safe_returns_string
+        builder = OasRouteBuilder.new(@users_index_route)
+        comment = builder.send(:class_comment_safe)
+        assert_kind_of String, comment
+      end
     end
   end
 end
