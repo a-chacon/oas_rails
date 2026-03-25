@@ -131,6 +131,7 @@ module OasRails
 
       # Walk backwards from +target_idx+ collecting contiguous comment lines,
       # skipping blank lines and non-comment lines (like +sig { void }+).
+      # Leading whitespace is stripped so output matches method_source format.
       def collect_comments_before(lines, target_idx)
         comment_lines = []
         idx = target_idx - 1
@@ -138,7 +139,7 @@ module OasRails
         while idx >= 0
           stripped = lines[idx].strip
           if stripped.start_with?("#")
-            comment_lines.unshift(lines[idx])
+            comment_lines.unshift("#{stripped}\n")
           elsif stripped.empty? || stripped.match?(/\Asig\s*[{(]/)
             # skip blank lines and Sorbet sig blocks
           else
