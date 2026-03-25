@@ -13,7 +13,7 @@ module OasRails
       assert_equal true, @config.autodiscover_request_body
       assert_equal true, @config.autodiscover_responses
       assert_equal true, @config.authenticate_all_routes_by_default
-      assert_equal [:get, :post, :put, :patch, :delete], @config.http_verbs
+      assert_equal [:get, :post, :put, :patch, :delete, :options, :head, :trace], @config.http_verbs
       assert_equal "Hash{ status: !Integer, error: String }", @config.response_body_of_default
       assert_equal :rails, @config.rapidoc_theme
       assert_equal :all, @config.include_mode
