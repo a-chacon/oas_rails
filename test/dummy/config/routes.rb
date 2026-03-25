@@ -6,5 +6,6 @@ Rails.application.routes.draw do
     resource :avatar, only: [:update], controller: 'users/avatar'
   end
   match 'users', to: 'users#index', via: [:get, :options]
+  resources :typed, only: [:index, :show]
   mount OasRails::Engine => '/docs'
 end

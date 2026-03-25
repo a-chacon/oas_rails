@@ -15,6 +15,8 @@ gem 'sprockets-rails'
 
 gem 'rack-cors'
 
+gem 'sorbet-runtime'
+
 group :development, :test do
   gem "bcrypt", "~> 3.1.7"
 

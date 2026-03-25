@@ -5,7 +5,7 @@ module OasRails
       # +instance_method.source_location+ to point to the wrapper rather than
       # the original source file. We detect this and fall back to reading the
       # source file directly so that OasRails annotations remain readable.
-      KNOWN_RUNTIME_WRAPPERS = %w[sorbet-runtime dry-initializer].freeze
+      KNOWN_RUNTIME_WRAPPERS = %w[sorbet-runtime].freeze
 
       def self.build_from_rails_route(rails_route)
         new(rails_route).build
@@ -51,8 +51,6 @@ module OasRails
 
       def source_string
         controller_class.constantize.instance_method(method).source
-      rescue MethodSource::SourceNotFoundError
-        ""
       end
 
       def docstring
@@ -89,14 +87,14 @@ module OasRails
         unbound = controller_class.constantize.instance_method(method)
         return unbound.comment unless wrapped_by_runtime?(unbound)
 
-        read_comment_from_source_file(method)
+        read_comment_from_source(method)
       end
 
       def class_comment_safe
         unbound = controller_class.constantize.instance_method(method)
         return unbound.class_comment unless wrapped_by_runtime?(unbound)
 
-        read_class_comment_from_source_file
+        read_comment_from_source(:class)
       end
 
       # Returns true when the unbound method's source_location points to a
@@ -108,42 +106,34 @@ module OasRails
         KNOWN_RUNTIME_WRAPPERS.any? { |wrapper| loc.first.include?(wrapper) }
       end
 
-      # Reads the contiguous comment block immediately above +def <action>+ in
+      # Reads the contiguous comment block above a +def+ or +class+ line in
       # the controller source file, skipping over non-comment lines such as
       # +sig { void }+ injected by Sorbet.
-      def read_comment_from_source_file(action_name)
+      #
+      # When +target+ is +:class+, finds the class declaration line.
+      # Otherwise, finds +def <target>+.
+      def read_comment_from_source(target)
         source_file = find_source_file
         return "" unless source_file
 
         lines = File.readlines(source_file)
-        def_line_idx = lines.index { |l| l.match?(/^\s+def #{Regexp.escape(action_name.to_s)}\b/) }
-        return "" unless def_line_idx
+        target_idx = if target == :class
+                       lines.index { |l| l.match?(/^\s*class\s+\w+/) }
+                     else
+                       lines.index { |l| l.match?(/^\s+def #{Regexp.escape(target.to_s)}\b/) }
+                     end
+        return "" unless target_idx
 
-        collect_comments_before(lines, def_line_idx)
+        collect_comments_before(lines, target_idx)
       rescue StandardError
         ""
       end
 
-      # Reads the class-level comment block (lines before +class Foo <+) from
-      # the source file.
-      def read_class_comment_from_source_file
-        source_file = find_source_file
-        return "" unless source_file
-
-        lines = File.readlines(source_file)
-        class_line_idx = lines.index { |l| l.match?(/^\s+class \w+/) }
-        return "" unless class_line_idx
-
-        collect_comments_before(lines, class_line_idx)
-      rescue StandardError
-        ""
-      end
-
-      # Walk backwards from +def_line_idx+ collecting contiguous comment lines,
+      # Walk backwards from +target_idx+ collecting contiguous comment lines,
       # skipping blank lines and non-comment lines (like +sig { void }+).
-      def collect_comments_before(lines, def_line_idx)
+      def collect_comments_before(lines, target_idx)
         comment_lines = []
-        idx = def_line_idx - 1
+        idx = target_idx - 1
 
         while idx >= 0
           stripped = lines[idx].strip
@@ -173,10 +163,10 @@ module OasRails
         end
 
         # Fall back to searching autoload paths for the expected filename
-        expected_filename = "#{controller.tr('/', '_')}.rb"
+        expected_path = "#{controller}_controller.rb"
         Rails.autoloaders.main.dirs.each do |dir|
-          candidates = Dir.glob(File.join(dir, "**", expected_filename))
-          return candidates.first if candidates.any?
+          candidate = File.join(dir, expected_path)
+          return candidate if File.exist?(candidate)
         end
 
         nil

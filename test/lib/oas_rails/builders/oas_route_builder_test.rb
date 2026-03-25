@@ -6,6 +6,7 @@ module OasRails
       def setup
         @users_index_route = find_route("users", "index")
         @projects_show_route = find_route("projects", "show")
+        @typed_index_route = find_route("typed", "index")
       end
 
       def test_build_returns_an_oas_route_object
@@ -49,10 +50,7 @@ module OasRails
         assert(users_index_oas_route.tags.all? { |tag| tag.respond_to?(:tag_name) })
       end
 
-      # Tests for Sorbet/runtime-wrapper compatibility
-      # When a library like Sorbet replaces methods at runtime (via sig blocks),
-      # instance_method.source_location points to the wrapper gem rather than
-      # the application code. These tests verify the fallback behaviour.
+      # Tests for Sorbet runtime-wrapper compatibility
 
       def test_wrapped_by_runtime_returns_false_for_unwrapped_method
         builder = OasRouteBuilder.new(@users_index_route)
@@ -60,16 +58,43 @@ module OasRails
         refute builder.send(:wrapped_by_runtime?, unbound)
       end
 
-      def test_method_comment_safe_returns_string
-        builder = OasRouteBuilder.new(@users_index_route)
-        comment = builder.send(:method_comment_safe)
-        assert_kind_of String, comment
+      def test_wrapped_by_runtime_returns_true_for_sorbet_wrapped_method
+        builder = OasRouteBuilder.new(@typed_index_route)
+        unbound = TypedController.instance_method(:index)
+        assert builder.send(:wrapped_by_runtime?, unbound)
       end
 
-      def test_class_comment_safe_returns_string
+      def test_method_comment_safe_returns_annotations_for_unwrapped_method
         builder = OasRouteBuilder.new(@users_index_route)
+        comment = builder.send(:method_comment_safe)
+        assert_includes comment, "@parameter offset(query)"
+        assert_includes comment, "@response Users list"
+      end
+
+      def test_method_comment_safe_returns_annotations_for_sorbet_wrapped_method
+        builder = OasRouteBuilder.new(@typed_index_route)
+        comment = builder.send(:method_comment_safe)
+        assert_includes comment, "@summary List typed items"
+        assert_includes comment, "@response Typed items list"
+      end
+
+      def test_class_comment_safe_returns_class_annotations_for_sorbet_wrapped_method
+        builder = OasRouteBuilder.new(@typed_index_route)
         comment = builder.send(:class_comment_safe)
-        assert_kind_of String, comment
+        assert_includes comment, "@tags Typed"
+        assert_includes comment, "Typed Items API"
+      end
+
+      def test_build_works_for_sorbet_wrapped_controller
+        oas_route = OasRouteBuilder.build_from_rails_route(@typed_index_route)
+        assert_instance_of ::OasCore::OasRoute, oas_route
+        assert_equal "typed", oas_route.controller
+        assert_equal "index", oas_route.method_name
+        assert_equal "GET", oas_route.verb
+
+        summary_tags = oas_route.tags.select { |t| t.tag_name == "summary" }
+        assert_equal 1, summary_tags.size
+        assert_equal "List typed items", summary_tags.first.text
       end
     end
   end
