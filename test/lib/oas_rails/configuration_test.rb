@@ -7,7 +7,7 @@ module OasRails
     end
 
     test "initializes with default values" do
-      assert_equal "3.1.0", @config.instance_variable_get(:@swagger_version)
+      assert_equal "3.2.0", @config.instance_variable_get(:@swagger_version)
       assert_equal "/", @config.api_path
       assert_equal [], @config.ignored_actions
       assert_equal true, @config.autodiscover_request_body
