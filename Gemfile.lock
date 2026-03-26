@@ -305,6 +305,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-24
+  arm64-darwin-25
   x86_64-linux
 
 DEPENDENCIES
@@ -324,6 +325,7 @@ DEPENDENCIES
   rails (~> 8.0, >= 8.0.2)
   rubocop
   selenium-webdriver
+  sorbet-runtime
   sprockets-rails
   sqlite3 (~> 2.1)
   tzinfo-data
