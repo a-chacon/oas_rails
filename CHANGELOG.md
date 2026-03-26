@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.5](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.3.4...oas_rails/v1.3.5) (2026-03-26)
+
+
+### Bug Fixes
+
+* handle Sorbet/runtime-wrapper method wrapping in OasRouteBuilder ([#185](https://github.com/a-chacon/oas_rails/issues/185)) ([95fb864](https://github.com/a-chacon/oas_rails/commit/95fb8642a76d306f8f52d5aea896a70301264126))
+* security updates ([#187](https://github.com/a-chacon/oas_rails/issues/187)) ([5c922d9](https://github.com/a-chacon/oas_rails/commit/5c922d968f98beeb122883cd46341f368da2f320))
+
 ## [1.3.4](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.3.3...oas_rails/v1.3.4) (2026-02-16)
 
 
