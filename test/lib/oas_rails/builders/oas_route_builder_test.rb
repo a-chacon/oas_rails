@@ -5,6 +5,7 @@ module OasRails
     class OasRouteBuilderTest < ActiveSupport::TestCase
       def setup
         @users_index_route = find_route("users", "index")
+        @users_create_route = find_route("users", "create")
         @projects_show_route = find_route("projects", "show")
         @typed_index_route = find_route("typed", "index")
       end
@@ -37,6 +38,19 @@ module OasRails
       def test_build_sets_correct_docstring
         users_index_oas_route = OasRouteBuilder.build_from_rails_route(@users_index_route)
         assert_not_nil users_index_oas_route.docstring
+      end
+
+      def test_docstring_blank_comment_lines_produce_paragraph_breaks
+        oas_route = OasRouteBuilder.build_from_rails_route(@users_create_route)
+        docstring_text = oas_route.docstring.to_s
+
+        # The comment contains a bare `#` line between "Invite a user..." and
+        # "To act as connected accounts...". With the old regex (/^# /) that
+        # line was left as a literal "#" in the output. The fixed regex
+        # (/^# ?/) strips it to an empty line, producing a proper paragraph.
+        assert_includes docstring_text, "Invite a user to an organization."
+        assert_includes docstring_text, "To act as connected accounts"
+        refute_includes docstring_text, "#", "bare '#' must not appear in the parsed docstring"
       end
 
       def test_build_sets_correct_source_string
