@@ -78,6 +78,8 @@ class UsersController < ApplicationController
   # @no_auth
   # @tags 1. First
   #
+  # Invite a user to an organization.
+  #
   # To act as connected accounts, clients can issue requests using the Stripe-Account special header. Make sure that this header contains a Stripe account ID, which usually starts with the acct_ prefix.
   # The value is set per-request as shown in the adjacent code sample. Methods on the returned object reuse the same account ID.ased on the strings
   #

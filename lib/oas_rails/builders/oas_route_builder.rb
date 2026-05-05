@@ -56,7 +56,7 @@ module OasRails
       def docstring
         comment = method_comment_safe
         comment_lines = comment.lines
-        processed_lines = comment_lines.map { |line| line.sub(/^# /, '') }
+        processed_lines = comment_lines.map { |line| line.sub(/^# ?/, '') }
 
         filtered_lines = processed_lines.reject do |line|
           line.include?('rubocop') ||
