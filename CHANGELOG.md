@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.6](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.3.5...oas_rails/v1.3.6) (2026-05-05)
+
+
+### Bug Fixes
+
+* description corruption in multilines comments ([#189](https://github.com/a-chacon/oas_rails/issues/189)) ([94de8aa](https://github.com/a-chacon/oas_rails/commit/94de8aa9e5e8b407fe352406c99dcd263d0b7cff))
+
 ## [1.3.5](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.3.4...oas_rails/v1.3.5) (2026-03-26)
 
 
