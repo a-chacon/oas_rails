@@ -24,39 +24,48 @@ module OasRails
   end
 
   class << self
+    # NOTE: This lambda is called back by OasCore during build and has no way to receive
+    # a named config as a parameter. It falls back to OasRails.config(:default).
+    # This is a known limitation: excluded_columns in EsquemaBuilder will always use
+    # the default config when invoked from this re-entry point.
     OasCore::JsonSchemaGenerator.register_type_parser(
       ->(t) { Utils.active_record_class?(t) },
       ->(type, _required) { Builders::EsquemaBuilder.build_outgoing_schema(klass: type.constantize) }
     )
 
-    def build
-      clear_cache
+    def build(config: OasRails.config)
+      clear_cache(config:)
       OasCore.config = config
 
-      host_routes = config.route_extractor.host_routes
-      oas_source = config.source_oas_path ? read_source_oas_file : {}
+      host_routes = config.route_extractor.host_routes(config:)
+      oas_source = config.source_oas_path ? read_source_oas_file(config:) : {}
 
       OasCore.build(host_routes, oas_source: oas_source)
     end
 
-    def configure
-      yield config
+    def configure(name = :default)
+      cfg = Configuration.new
+      yield cfg
+      cfg.instance_variable_set(:@name, name)
+      @configs ||= {}
+      @configs[name] = cfg
     end
 
-    def config
-      @config ||= Configuration.new
+    def config(name = :default)
+      @configs ||= {}
+      @configs[name] ||= Configuration.new
     end
 
     private
 
-    def clear_cache
+    def clear_cache(config:)
       return if Rails.env.production?
 
       MethodSource.clear_cache
-      OasRails::Extractors::RouteExtractor.clear_cache
+      OasRails::Extractors::RouteExtractor.clear_cache(config:)
     end
 
-    def read_source_oas_file
+    def read_source_oas_file(config:)
       file_path = Rails.root.join(config.source_oas_path)
       JSON.parse(File.read(file_path), symbolize_names: true)
     rescue Errno::ENOENT => e
