@@ -6,7 +6,7 @@ module Users
     before_action :set_user
 
     # @summary Upload an avatar
-    # @tags 3. Third
+    # @tags Users
     #
     # Uploads an avatar for the user. The avatar must be a valid image file (JPEG, PNG, GIF, SVG or WEBP).
     # @request_body Avatar Image (multipart/form-data) [!Hash{avatar: !File}]

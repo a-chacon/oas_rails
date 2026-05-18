@@ -2,7 +2,7 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: %i[show update destroy]
 
-  # @tags projects
+  # @tags Projects
   def index
     @projects = Project.all
 
@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
     render json: @project
   end
 
-  # @tags projects
+  # @tags Projects
   def create
     @project = Project.new(project_params)
 

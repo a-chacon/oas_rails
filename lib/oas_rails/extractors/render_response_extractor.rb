@@ -2,6 +2,12 @@ module OasRails
   module Extractors
     # Extracts and processes render responses from a given source.
     module RenderResponseExtractor
+      # NOTE: This module is invoked as a callback by OasCore during the build pipeline.
+      # Because OasCore controls the call site, it is not possible to inject a named config
+      # here via dependency injection. As a result, calls to EsquemaBuilder and
+      # ActiveRecordExampleFinder from this module will use OasRails.config(:default).
+      # This is a known limitation of the multi-config feature.
+
       class << self
         # Extracts responses from the provided source string.
         #
