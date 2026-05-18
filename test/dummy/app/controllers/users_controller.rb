@@ -76,7 +76,7 @@ class UsersController < ApplicationController
 
   # @summary Create a User New
   # @no_auth
-  # @tags 1. First
+  # @tags Users
   #
   # Invite a user to an organization.
   #
@@ -105,7 +105,7 @@ class UsersController < ApplicationController
   end
 
   # Update a user.
-  # @tags 2. Second
+  # @tags Users, Update
   # A `user` can be updated with this method
   # - There is no option
   # - It must work

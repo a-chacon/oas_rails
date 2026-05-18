@@ -12,3 +12,9 @@ Metrics/ParameterLists:
 
 Metrics/ClassLength:
   Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
