@@ -7,7 +7,7 @@ class OasRailsTest < ActiveSupport::TestCase
 
   class MockRouteExtractor < OasRails::Extractors::RouteExtractor
     def self.host_routes(config:)
-      super(config:).select { |route| route.controller.include?("users") }
+      super.select { |route| route.controller.include?("users") }
     end
   end
 
