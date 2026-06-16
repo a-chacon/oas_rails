@@ -5,12 +5,14 @@ module OasRails
         # Builds a schema for a class when it is used as incoming API data.
         #
         # @param klass [Class] The class for which the schema is built.
+        # @param config [OasRails::Configuration, nil] Optional config override; falls back to OasRails.config.
         # @return [Hash] The schema as a JSON-compatible hash.
-        def build_incoming_schema(klass:, model_to_schema_class: EasyTalk)
+        def build_incoming_schema(klass:, model_to_schema_class: EasyTalk, config: nil)
+          resolved_config = config || OasRails.config
           build_schema(
             klass: klass,
             model_to_schema_class: model_to_schema_class,
-            excluded_columns: OasRails.config.excluded_columns_incoming,
+            excluded_columns: resolved_config.excluded_columns_incoming,
             exclude_primary_key: true
           )
         end
@@ -18,12 +20,14 @@ module OasRails
         # Builds a schema for a class when it is used as outgoing API data.
         #
         # @param klass [Class] The class for which the schema is built.
+        # @param config [OasRails::Configuration, nil] Optional config override; falls back to OasRails.config.
         # @return [Hash] The schema as a JSON-compatible hash.
-        def build_outgoing_schema(klass:, model_to_schema_class: EasyTalk)
+        def build_outgoing_schema(klass:, model_to_schema_class: EasyTalk, config: nil)
+          resolved_config = config || OasRails.config
           build_schema(
             klass: klass,
             model_to_schema_class: model_to_schema_class,
-            excluded_columns: OasRails.config.excluded_columns_outgoing,
+            excluded_columns: resolved_config.excluded_columns_outgoing,
             exclude_primary_key: false
           )
         end

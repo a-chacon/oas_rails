@@ -6,7 +6,7 @@ class OasRailsTest < ActiveSupport::TestCase
   end
 
   class MockRouteExtractor < OasRails::Extractors::RouteExtractor
-    def self.host_routes
+    def self.host_routes(config:)
       super.select { |route| route.controller.include?("users") }
     end
   end
@@ -16,7 +16,7 @@ class OasRailsTest < ActiveSupport::TestCase
     config.route_extractor = MockRouteExtractor
 
     OasRails.stub(:config, config) do
-      custom_routes = OasRails.config.route_extractor.host_routes
+      custom_routes = OasRails.config.route_extractor.host_routes(config: OasRails.config)
       assert custom_routes.all? { |route| route.controller.include?("users") }, "Expected to get user routes only"
 
       oas_core_mock = Minitest::Mock.new

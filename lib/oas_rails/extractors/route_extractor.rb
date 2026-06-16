@@ -10,25 +10,36 @@ module OasRails
       ].freeze
 
       class << self
-        def host_routes_by_path(path)
-          @host_routes ||= extract_host_routes
-          @host_routes.select { |r| r.path == path }
+        def host_routes_by_path(path, config:)
+          @host_routes_cache ||= {}
+          @host_routes_cache[config.name] ||= extract_host_routes(config:)
+          @host_routes_cache[config.name].select { |r| r.path == path }
         end
 
-        def host_routes
-          @host_routes ||= extract_host_routes
+        def host_routes(config:)
+          @host_routes_cache ||= {}
+          @host_routes_cache[config.name] ||= extract_host_routes(config:)
         end
 
-        # Clear Class Instance Variable @host_routes
+        # Clear the cached routes.
         #
-        # This method clear the class instance variable @host_routes
-        # to force a extraction of the routes again.
-        def clear_cache
-          @host_routes = nil
+        # When a +config+ is given, only that config's cache entry is cleared,
+        # forcing the next call to re-extract routes for that configuration.
+        # When called without arguments, the entire cache is cleared for all
+        # configurations.
+        def clear_cache(config: nil)
+          if config
+            @host_routes_cache&.delete(config.name)
+            @host_paths_cache&.delete(config.name)
+          else
+            @host_routes_cache = nil
+            @host_paths_cache = nil
+          end
         end
 
-        def host_paths
-          @host_paths ||= host_routes.map(&:path).uniq.sort
+        def host_paths(config:)
+          @host_paths_cache ||= {}
+          @host_paths_cache[config.name] ||= host_routes(config:).map(&:path).uniq.sort
         end
 
         def clean_route(route)
@@ -37,25 +48,25 @@ module OasRails
 
         private
 
-        def extract_host_routes
-          routes = valid_routes.map { |r| Builders::OasRouteBuilder.build_from_rails_route(r) }
+        def extract_host_routes(config:)
+          routes = valid_routes(config:).map { |r| Builders::OasRouteBuilder.build_from_rails_route(r, config:) }
 
-          routes.select! { |route| route.tags.any? } if OasRails.config.include_mode == :with_tags
-          routes.select! { |route| route.tags.any? { |t| t.tag_name == "oas_include" } } if OasRails.config.include_mode == :explicit
+          routes.select! { |route| route.tags.any? } if config.include_mode == :with_tags
+          routes.select! { |route| route.tags.any? { |t| t.tag_name == "oas_include" } } if config.include_mode == :explicit
           routes
         end
 
-        def valid_routes
+        def valid_routes(config:)
           Rails.application.routes.routes.select do |route|
-            valid_api_route?(route)
+            valid_api_route?(route, config:)
           end
         end
 
-        def valid_api_route?(route)
+        def valid_api_route?(route, config:)
           return false unless valid_route_implementation?(route)
           return false if RAILS_DEFAULT_CONTROLLERS.any? { |default| route.defaults[:controller].start_with?(default) }
-          return false unless route.path.spec.to_s.start_with?(OasRails.config.api_path)
-          return false if ignore_custom_actions?(route)
+          return false unless route.path.spec.to_s.start_with?(config.api_path)
+          return false if ignore_custom_actions?(route, config:)
 
           true
         end
@@ -88,9 +99,9 @@ module OasRails
         # Support controller name only to ignore all controller actions.
         # Support ignoring "controller#action"
         # Ignoring "controller#action" AND "api_path/controller#action"
-        def ignore_custom_actions?(route)
-          api_path = "#{OasRails.config.api_path.sub(%r{\A/}, '')}/".sub(%r{/+$}, '/')
-          ignored_actions = OasRails.config.ignored_actions.flat_map do |custom_route|
+        def ignore_custom_actions?(route, config:)
+          api_path = "#{config.api_path.sub(%r{\A/}, '')}/".sub(%r{/+$}, '/')
+          ignored_actions = config.ignored_actions.flat_map do |custom_route|
             if custom_route.start_with?(api_path)
               [custom_route]
             else

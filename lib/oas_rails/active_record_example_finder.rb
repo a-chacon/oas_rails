@@ -1,12 +1,13 @@
 module OasRails
   class ActiveRecordExampleFinder
-    def initialize(context: :incoming, utils: Utils, factory_bot: FactoryBot, erb: ERB, yaml: YAML, file: File)
+    def initialize(context: :incoming, utils: Utils, factory_bot: FactoryBot, erb: ERB, yaml: YAML, file: File, config: nil)
       @context = context
       @utils = utils
       @factory_bot = factory_bot
       @erb = erb
       @yaml = yaml
       @file = file
+      @config = config
       @factory_examples = {}
     end
 
@@ -59,7 +60,8 @@ module OasRails
     end
 
     def clean_example_object(obj:)
-      obj.reject { |key, _| OasRails.config.send("excluded_columns_#{@context}").include?(key.to_sym) }
+      resolved_config = @config || OasRails.config
+      obj.reject { |key, _| resolved_config.send("excluded_columns_#{@context}").include?(key.to_sym) }
     end
   end
 end

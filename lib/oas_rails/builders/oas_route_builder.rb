@@ -7,12 +7,13 @@ module OasRails
       # source file directly so that OasRails annotations remain readable.
       KNOWN_RUNTIME_WRAPPERS = %w[sorbet-runtime].freeze
 
-      def self.build_from_rails_route(rails_route)
-        new(rails_route).build
+      def self.build_from_rails_route(rails_route, config:)
+        new(rails_route, config:).build
       end
 
-      def initialize(rails_route)
+      def initialize(rails_route, config:)
         @rails_route = rails_route
+        @config = config
       end
 
       def build
@@ -46,7 +47,7 @@ module OasRails
       end
 
       def path
-        OasRails.config.prefix_path + OasRails.config.route_extractor.clean_route(@rails_route.path.spec.to_s)
+        @config.prefix_path + @config.route_extractor.clean_route(@rails_route.path.spec.to_s)
       end
 
       def source_string

@@ -1,10 +1,11 @@
 module OasRails
   class Configuration < OasCore::Configuration
     attr_accessor :autodiscover_request_body, :autodiscover_responses, :ignored_actions, :rapidoc_theme, :layout, :source_oas_path, :rapidoc_configuration, :rapidoc_logo_url
-    attr_reader :route_extractor, :include_mode, :mounted_path, :prefix_path
+    attr_reader :name, :route_extractor, :include_mode, :mounted_path, :prefix_path
 
     def initialize
       super
+      @name = :default
       @mounted_path = ""
       self.prefix_path = ENV["RAILS_RELATIVE_URL_ROOT"] || Rails.application.config.relative_url_root || ""
       @route_extractor = Extractors::RouteExtractor

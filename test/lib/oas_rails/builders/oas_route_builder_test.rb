@@ -11,37 +11,37 @@ module OasRails
       end
 
       def test_build_returns_an_oas_route_object
-        users_index_oas_route = OasRouteBuilder.build_from_rails_route(@users_index_route)
+        users_index_oas_route = OasRouteBuilder.build_from_rails_route(@users_index_route, config: OasRails.config)
         assert_instance_of ::OasCore::OasRoute, users_index_oas_route
       end
 
       def test_build_sets_correct_controller
-        users_index_oas_route = OasRouteBuilder.build_from_rails_route(@users_index_route)
+        users_index_oas_route = OasRouteBuilder.build_from_rails_route(@users_index_route, config: OasRails.config)
         assert_equal "users", users_index_oas_route.controller
       end
 
       def test_build_sets_correct_method
-        users_index_oas_route = OasRouteBuilder.build_from_rails_route(@users_index_route)
+        users_index_oas_route = OasRouteBuilder.build_from_rails_route(@users_index_route, config: OasRails.config)
         assert_equal "index", users_index_oas_route.method_name
       end
 
       def test_build_sets_correct_verb
-        users_index_oas_route = OasRouteBuilder.build_from_rails_route(@users_index_route)
+        users_index_oas_route = OasRouteBuilder.build_from_rails_route(@users_index_route, config: OasRails.config)
         assert_equal "GET", users_index_oas_route.verb
       end
 
       def test_build_sets_correct_path
-        users_index_oas_route = OasRouteBuilder.build_from_rails_route(@users_index_route)
+        users_index_oas_route = OasRouteBuilder.build_from_rails_route(@users_index_route, config: OasRails.config)
         assert_equal "/users", users_index_oas_route.path
       end
 
       def test_build_sets_correct_docstring
-        users_index_oas_route = OasRouteBuilder.build_from_rails_route(@users_index_route)
+        users_index_oas_route = OasRouteBuilder.build_from_rails_route(@users_index_route, config: OasRails.config)
         assert_not_nil users_index_oas_route.docstring
       end
 
       def test_docstring_blank_comment_lines_produce_paragraph_breaks
-        oas_route = OasRouteBuilder.build_from_rails_route(@users_create_route)
+        oas_route = OasRouteBuilder.build_from_rails_route(@users_create_route, config: OasRails.config)
         docstring_text = oas_route.docstring.to_s
 
         # The comment contains a bare `#` line between "Invite a user..." and
@@ -54,12 +54,12 @@ module OasRails
       end
 
       def test_build_sets_correct_source_string
-        users_index_oas_route = OasRouteBuilder.build_from_rails_route(@users_index_route)
+        users_index_oas_route = OasRouteBuilder.build_from_rails_route(@users_index_route, config: OasRails.config)
         assert_not_nil users_index_oas_route.source_string
       end
 
       def test_build_sets_correct_tags
-        users_index_oas_route = OasRouteBuilder.build_from_rails_route(@projects_show_route)
+        users_index_oas_route = OasRouteBuilder.build_from_rails_route(@projects_show_route, config: OasRails.config)
         assert_not_nil users_index_oas_route.tags
         assert(users_index_oas_route.tags.all? { |tag| tag.respond_to?(:tag_name) })
       end
@@ -67,40 +67,40 @@ module OasRails
       # Tests for Sorbet runtime-wrapper compatibility
 
       def test_wrapped_by_runtime_returns_false_for_unwrapped_method
-        builder = OasRouteBuilder.new(@users_index_route)
+        builder = OasRouteBuilder.new(@users_index_route, config: OasRails.config)
         unbound = UsersController.instance_method(:index)
         refute builder.send(:wrapped_by_runtime?, unbound)
       end
 
       def test_wrapped_by_runtime_returns_true_for_sorbet_wrapped_method
-        builder = OasRouteBuilder.new(@typed_index_route)
+        builder = OasRouteBuilder.new(@typed_index_route, config: OasRails.config)
         unbound = TypedController.instance_method(:index)
         assert builder.send(:wrapped_by_runtime?, unbound)
       end
 
       def test_method_comment_safe_returns_annotations_for_unwrapped_method
-        builder = OasRouteBuilder.new(@users_index_route)
+        builder = OasRouteBuilder.new(@users_index_route, config: OasRails.config)
         comment = builder.send(:method_comment_safe)
         assert_includes comment, "@parameter offset(query)"
         assert_includes comment, "@response Users list"
       end
 
       def test_method_comment_safe_returns_annotations_for_sorbet_wrapped_method
-        builder = OasRouteBuilder.new(@typed_index_route)
+        builder = OasRouteBuilder.new(@typed_index_route, config: OasRails.config)
         comment = builder.send(:method_comment_safe)
         assert_includes comment, "@summary List typed items"
         assert_includes comment, "@response Typed items list"
       end
 
       def test_class_comment_safe_returns_class_annotations_for_sorbet_wrapped_method
-        builder = OasRouteBuilder.new(@typed_index_route)
+        builder = OasRouteBuilder.new(@typed_index_route, config: OasRails.config)
         comment = builder.send(:class_comment_safe)
         assert_includes comment, "@tags Typed"
         assert_includes comment, "Typed Items API"
       end
 
       def test_build_works_for_sorbet_wrapped_controller
-        oas_route = OasRouteBuilder.build_from_rails_route(@typed_index_route)
+        oas_route = OasRouteBuilder.build_from_rails_route(@typed_index_route, config: OasRails.config)
         assert_instance_of ::OasCore::OasRoute, oas_route
         assert_equal "typed", oas_route.controller
         assert_equal "index", oas_route.method_name

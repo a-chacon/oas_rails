@@ -2,7 +2,7 @@ module OasRails
   module OasRailsHelper # rubocop:disable Metrics/ModuleLength
     def rapidoc_configuration_defaults
       {
-        "spec-url" => "#{OasRails::Engine.routes.find_script_name(params.permit!.to_h.symbolize_keys)}.json",
+        "spec-url" => "#{request.script_name}.json",
         "show-header" => "false",
         "font-size" => "largest",
         "show-method-in-nav-bar" => "as-colored-text",
@@ -16,13 +16,13 @@ module OasRails
 
     def rapidoc_configuration_attributes
       rapidoc_configuration_defaults.merge(
-        rapidoc_theme(OasRails.config.rapidoc_theme),
-        OasRails.config.rapidoc_configuration
+        rapidoc_theme(@config.rapidoc_theme),
+        @config.rapidoc_configuration
       ).map { |k, v| %(#{k}=#{ERB::Util.html_escape(v)}) }.join(' ')
     end
 
     def rapidoc_logo_url
-      OasRails.config.rapidoc_logo_url
+      @config.rapidoc_logo_url
     end
 
     THEMES = {
