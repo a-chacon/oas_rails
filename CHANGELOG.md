@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.4.0](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.3.6...oas_rails/v1.4.0) (2026-06-16)
+
+
+### Features
+
+* inject config as dependency so we can have multiple docs instances ([c9adecb](https://github.com/a-chacon/oas_rails/commit/c9adecbd8c7a2b3e94ea3820c126423b88771ff8))
+* inject config as dependency so we can have multiple docs instances ([58f8644](https://github.com/a-chacon/oas_rails/commit/58f864443905f47bc0842f6d2ad25515cf48531a))
+
+
+### Bug Fixes
+
+* force version 7 in dummy migrations ([15589e7](https://github.com/a-chacon/oas_rails/commit/15589e75266ebaac64bec75e03ba10ad6e3a26ff))
+* linter ([129ae76](https://github.com/a-chacon/oas_rails/commit/129ae76374faff1e88114db990d6b2bad3760a5e))
+
+
+### Tests
+
+* add some examples using multiple docs configurations ([60492f2](https://github.com/a-chacon/oas_rails/commit/60492f2d11f04967a3307b16c20bc4e15adbea95))
+
 ## [1.3.6](https://github.com/a-chacon/oas_rails/compare/oas_rails/v1.3.5...oas_rails/v1.3.6) (2026-05-05)
 
 
